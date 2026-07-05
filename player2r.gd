@@ -2,6 +2,7 @@ extends CharacterBody3D
 @onready var camera_3d2: Camera3D = %Camera3D2
 @export var speed: float = 5.0
 @export var camera: Camera3D
+@onready var down_cast: RayCast3D = %RayCast3D
 
 var leave_seat_location: Vector3 = Vector3(21,5,0)
 var parent_node = get_parent()
@@ -47,8 +48,7 @@ func _physics_process(delta: float) -> void:
 		current_horizontal_velocity = direction * speed
 	else:
 		current_horizontal_velocity = current_horizontal_velocity.move_toward(Vector3.ZERO, speed * delta * 10)
-	
-	if is_on_floor():
+	if not down_cast.is_colliding():
 		current_vertical_velocity = Vector3.ZERO
 		if Input.is_action_just_pressed("jump"):
 			current_vertical_velocity = ship_basis.y * 4.5

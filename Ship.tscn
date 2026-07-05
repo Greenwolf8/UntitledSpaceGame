@@ -132,3 +132,6 @@ mesh = SubResource("CapsuleMesh_ix3uc")
 
 [node name="ShapeCast3D" type="ShapeCast3D" parent="Ship/Player2"]
 max_results = 1
+
+[node name="RayCast3D" type="RayCast3D" parent="Ship/Player2"]
+unique_name_in_owner = true
