@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://dmoq30qvu54ax"]
+
+[ext_resource type="Texture2D" uid="uid://bs43kg410obus" path="res://Solarsystemscope_texture_8k_stars.jpg" id="2_3h1ab"]
+[ext_resource type="PackedScene" uid="uid://b3ovqfvf46vnf" path="res://Ship.tscn" id="2_3vi7k"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_y35xu"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7if1s"]
+panorama = ExtResource("2_3h1ab")
+
+[sub_resource type="Sky" id="Sky_v6avs"]
+sky_material = SubResource("PanoramaSkyMaterial_7if1s")
+
+[sub_resource type="Environment" id="Environment_8qak7"]
+background_mode = 2
+sky = SubResource("Sky_v6avs")
+
+[node name="Node3D" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, 35.50037, -39.7631)
+mesh = SubResource("BoxMesh_y35xu")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 0, -39.500034, 102.169685)
+mesh = SubResource("BoxMesh_y35xu")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, -150.1142, -37.280354, -29.002892)
+mesh = SubResource("BoxMesh_y35xu")
+
+[node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
+transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 89.03636, -62.57417, -4.6390038)
+mesh = SubResource("BoxMesh_y35xu")
+
+[node name="Avro Vulcan" parent="." instance=ExtResource("2_3vi7k")]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 35.538055, 0)
+visible = false
+light_energy = 50.0
+light_size = 10.0
+omni_range = 10000.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_8qak7")

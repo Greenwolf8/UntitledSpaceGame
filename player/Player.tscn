@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3 uid="uid://c7itg0gb256a5"]
+
+[ext_resource type="Script" uid="uid://d3i1s0eatkbgn" path="res://player/player.gd" id="1_3c3w1"]
+[ext_resource type="PackedScene" uid="uid://i7byadlmhu7f" path="res://player/simple_gun/gun_model.glb" id="1_ulp21"]
+[ext_resource type="Texture2D" uid="uid://c5qd8jx3qark7" path="res://player/reticle.png" id="3_wnvi2"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ehsmr"]
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_3c3w1")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0134655, 0)
+shape = SubResource("CapsuleShape3D_ehsmr")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5089775, -0.34458575)
+
+[node name="gun_model" parent="Camera3D" instance=ExtResource("1_ulp21")]
+transform = Transform3D(-0.5, 0, -7.54979e-08, 0, 0.5, 0, 7.54979e-08, 0, -0.5, 0.5286131, -0.29354334, -0.52371013)
+
+[node name="Reticle" type="TextureRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -30.0
+offset_top = -30.0
+offset_right = 30.0
+offset_bottom = 30.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_wnvi2")
+expand_mode = 1
