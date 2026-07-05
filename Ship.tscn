@@ -83,23 +83,24 @@ omni_range = 15.0
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Ship"]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 65.86285, 1.1860003, 39.450253)
-light_energy = 100.0
-shadow_enabled = true
+light_energy = 250.0
 spot_range = 2000.0
 spot_angle = 10.0
+spot_angle_attenuation = 0.43527067
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="Ship"]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 65.29203, 1.1916075, -39.15708)
-light_energy = 100.0
-shadow_enabled = true
+light_energy = 250.0
 spot_range = 2000.0
 spot_angle = 10.0
+spot_angle_attenuation = 0.43527508
 
-[node name="Player2" parent="Ship" groups=["Player"] instance=ExtResource("3_ix3uc")]
+[node name="Player2" parent="Ship" node_paths=PackedStringArray("camera") groups=["Player"] instance=ExtResource("3_ix3uc")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.706484, 5.2056346, 0.11440277)
 script = ExtResource("4_7se24")
 speed = 5.0
+camera = NodePath("Camera3D2")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Ship/Player2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0134655, 0)
