@@ -30,7 +30,7 @@ transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, -150.1142, -37.280354, -29
 mesh = SubResource("BoxMesh_y35xu")
 
 [node name="MeshInstance3D4" type="MeshInstance3D" parent="."]
-transform = Transform3D(15, 0, 0, 0, 15, 0, 0, 0, 15, 89.03636, -62.57417, -4.6390038)
+transform = Transform3D(1000, 0, 0, 0, 1000, 0, 0, 0, 1000, 869.14636, 73.54912, -4.6390038)
 mesh = SubResource("BoxMesh_y35xu")
 
 [node name="Avro Vulcan" parent="." instance=ExtResource("2_3vi7k")]

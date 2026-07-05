@@ -82,10 +82,18 @@ light_energy = 2.0
 omni_range = 15.0
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Ship"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.95449066, 2.0150414, 0)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 65.86285, 1.1860003, 39.450253)
 light_energy = 100.0
+shadow_enabled = true
 spot_range = 2000.0
-spot_angle = 25.0
+spot_angle = 10.0
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="Ship"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 65.29203, 1.1916075, -39.15708)
+light_energy = 100.0
+shadow_enabled = true
+spot_range = 2000.0
+spot_angle = 10.0
 
 [node name="Player2" parent="Ship" groups=["Player"] instance=ExtResource("3_ix3uc")]
 unique_name_in_owner = true
