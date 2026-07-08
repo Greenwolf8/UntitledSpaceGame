@@ -3,7 +3,6 @@ extends CharacterBody3D
 @export var camera: Camera3D
 @onready var down_cast: RayCast3D = %RayCast3D
 @onready var front_cast: RayCast3D = %FrontCast
-@onready var speed_label: Label = %Speed
 
 const walk := 5
 const sprint := 10
@@ -51,7 +50,6 @@ func _physics_process(delta: float) -> void:
 	if input_dir != Vector2.ZERO:
 		direction = (forward * -input_dir.y) + (right * input_dir.x)
 	
-	var gravity_dir = -ship_basis.y
 	
 	var current_horizontal_velocity = velocity - velocity.project(ship_basis.y)
 	var current_vertical_velocity = velocity.project(ship_basis.y)
@@ -60,12 +58,12 @@ func _physics_process(delta: float) -> void:
 		current_horizontal_velocity = direction * current_speed
 	else:
 		current_horizontal_velocity = current_horizontal_velocity.move_toward(Vector3.ZERO, current_speed * delta * 10)
-	if not down_cast.is_colliding():
+	if down_cast.is_colliding():
 		current_vertical_velocity = Vector3.ZERO
 		if Input.is_action_just_pressed("jump"):
 			current_vertical_velocity = ship_basis.y * 4.5
 	else:
-		current_vertical_velocity += gravity_dir * 11 * delta
+		current_vertical_velocity += -ship_basis.y * 11 * delta
 	
 	velocity = current_horizontal_velocity + current_vertical_velocity
 	

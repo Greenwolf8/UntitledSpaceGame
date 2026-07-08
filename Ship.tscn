@@ -146,7 +146,7 @@ mesh = SubResource("CapsuleMesh_ix3uc")
 
 [node name="RayCast3D" type="RayCast3D" parent="Ship/Player2"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.09168434, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0095849, 0)
 collision_mask = 6
 
 [node name="Press E" type="Label" parent="Ship/Player2"]
@@ -183,7 +183,7 @@ mesh = SubResource("CapsuleMesh_ix3uc")
 
 [node name="BPRayCast3D" type="RayCast3D" parent="Ship/BonusPlayer"]
 unique_name_in_owner = true
-transform = Transform3D(0.8570594, 0, 0.5152176, 0, 1, 0, -0.5152176, 0, 0.8570594, 0, 0.26092768, 0)
+transform = Transform3D(0.8570594, 0, 0.5152176, 0, 1, 0, -0.5152176, 0, 0.8570594, 0, 0.9861288, 0)
 collision_mask = 6
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="Ship"]
