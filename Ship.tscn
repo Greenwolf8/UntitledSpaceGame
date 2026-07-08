@@ -96,7 +96,7 @@ spot_angle_attenuation = 0.43527508
 
 [node name="Chair" type="RigidBody3D" parent="Ship"]
 unique_name_in_owner = true
-collision_layer = 2
+collision_layer = 10
 collision_mask = 2
 
 [node name="ChairCollider" type="CollisionShape3D" parent="Ship/Chair"]
@@ -106,7 +106,7 @@ shape = SubResource("BoxShape3D_oam5h")
 [node name="Player2" parent="Ship" node_paths=PackedStringArray("camera") groups=["Player"] instance=ExtResource("3_ix3uc")]
 unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24.80692, 5.2056346, 0.11440277)
-collision_mask = 6
+collision_mask = 7
 script = ExtResource("4_7se24")
 camera = NodePath("Camera3D2")
 
@@ -123,7 +123,7 @@ current = true
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.450581e-09, 0.011189461, -0.21256447)
 target_position = Vector3(0, 0, -1.5)
-collision_mask = 2
+collision_mask = 8
 
 [node name="Reticle2" type="TextureRect" parent="Ship/Player2"]
 anchors_preset = 8
@@ -149,10 +149,28 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.09168434, 0)
 collision_mask = 6
 
+[node name="Press E" type="Label" parent="Ship/Player2"]
+unique_name_in_owner = true
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.841
+anchor_right = 0.5
+anchor_bottom = 0.841
+offset_left = -83.0
+offset_top = -30.28003
+offset_right = 88.0
+offset_bottom = 38.71997
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 50
+text = "Press E"
+vertical_alignment = 2
+
 [node name="BonusPlayer" parent="Ship" groups=["Player"] instance=ExtResource("3_ix3uc")]
 unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 23.468225, 5.2056346, 1.2494717)
-collision_mask = 6
+collision_mask = 7
 script = ExtResource("6_7se24")
 
 [node name="BPCollisionShape3D2" type="CollisionShape3D" parent="Ship/BonusPlayer"]

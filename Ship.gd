@@ -32,6 +32,7 @@ func _physics_process(_delta):
 	var pitch_input = Input.get_axis("move_back", "move_forward")
 	apply_torque(transform.basis.z * pitch_input * turn_torque)
 	
+	
 func interact_pressed():
 	var canEnter = not withPlayer
 	var hit_object = front_cast.get_collider()
@@ -56,6 +57,7 @@ func _input(_event: InputEvent) -> void:
 func _enter_ship():
 	withPlayer = true
 	%OmniLight3D.light_color = Color(1,1,1)
+	%"Press E".visible = false
 	
 	var player = get_tree().get_first_node_in_group("Player")
 	player.enter_ship()

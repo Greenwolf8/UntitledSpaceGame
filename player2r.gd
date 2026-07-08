@@ -36,7 +36,12 @@ func _physics_process(delta: float) -> void:
 	var right := cam_basis.x
 	var is_sprinting := Input.is_action_pressed("sprint")
 	var current_speed := sprint if is_sprinting else walk
-
+	
+	
+	if front_cast.is_colliding():
+		%"Press E".visible = true
+	else:
+		%"Press E".visible = false
 	
 	forward = (forward - forward.project(ship_basis.y)).normalized()
 	right = (right - right.project(ship_basis.y)).normalized()
