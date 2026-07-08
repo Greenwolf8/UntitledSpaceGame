@@ -17,7 +17,6 @@ func _physics_process(delta: float) -> void:
 	
 	var current_vertical_velocity = velocity.project(ship_basis.y)
 	var current_horizontal_velocity = velocity - velocity.project(ship_basis.y)
-
 	
 	if not down_cast.is_colliding():
 		current_vertical_velocity = Vector3.ZERO

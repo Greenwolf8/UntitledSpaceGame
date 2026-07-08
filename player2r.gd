@@ -1,10 +1,11 @@
 extends CharacterBody3D
 @onready var camera_3d2: Camera3D = %Camera3D2
-@export var speed: float = 5.0
 @export var camera: Camera3D
 @onready var down_cast: RayCast3D = %RayCast3D
 @onready var front_cast: RayCast3D = %FrontCast
 
+const walk := 5
+const sprint := 10
 var leave_seat_location: Vector3 = Vector3(21,5,0)
 var parent_node = get_parent()
 
@@ -33,6 +34,9 @@ func _physics_process(delta: float) -> void:
 	var ship_basis : Basis = parent.global_transform.basis
 	var forward := -cam_basis.z
 	var right := cam_basis.x
+	var is_sprinting := Input.is_action_pressed("sprint")
+	var current_speed := sprint if is_sprinting else walk
+
 	
 	forward = (forward - forward.project(ship_basis.y)).normalized()
 	right = (right - right.project(ship_basis.y)).normalized()
@@ -47,9 +51,9 @@ func _physics_process(delta: float) -> void:
 	var current_vertical_velocity = velocity.project(ship_basis.y)
 	
 	if direction != Vector3.ZERO:
-		current_horizontal_velocity = direction * speed
+		current_horizontal_velocity = direction * current_speed
 	else:
-		current_horizontal_velocity = current_horizontal_velocity.move_toward(Vector3.ZERO, speed * delta * 10)
+		current_horizontal_velocity = current_horizontal_velocity.move_toward(Vector3.ZERO, current_speed * delta * 10)
 	if not down_cast.is_colliding():
 		current_vertical_velocity = Vector3.ZERO
 		if Input.is_action_just_pressed("jump"):
@@ -58,7 +62,6 @@ func _physics_process(delta: float) -> void:
 		current_vertical_velocity += gravity_dir * 11 * delta
 	
 	velocity = current_horizontal_velocity + current_vertical_velocity
-	
 	
 	move_and_slide()
 

@@ -44,8 +44,6 @@ func interact_pressed():
 func _input(_event: InputEvent) -> void:
 	var cantlock = Cameralocked
 	
-	
-	
 	if Input.is_action_just_pressed("interact"):
 		interact_pressed()
 	elif Input.is_action_pressed("camera_lock") and cantlock:
@@ -54,8 +52,6 @@ func _input(_event: InputEvent) -> void:
 		Cameralocked = true		
 		%Camera3D.rotation_degrees.x = 0
 		%Camera3D.rotation_degrees.y = 90
-
-		
 
 func _enter_ship():
 	withPlayer = true

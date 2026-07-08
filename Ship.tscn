@@ -103,7 +103,6 @@ shape = SubResource("BoxShape3D_oam5h")
 unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24.80692, 5.2056346, 0.11440277)
 script = ExtResource("4_7se24")
-speed = 5.0
 camera = NodePath("Camera3D2")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Ship/Player2"]
