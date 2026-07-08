@@ -14,13 +14,18 @@ func _physics_process(delta: float) -> void:
 	
 	var ship_basis : Basis = parent.global_transform.basis
 	var gravity_dir = -ship_basis.y
-	var _current_vertical_velocity = velocity.project(ship_basis.y)
+	
+	var current_vertical_velocity = velocity.project(ship_basis.y)
+	var current_horizontal_velocity = velocity - velocity.project(ship_basis.y)
+
 	
 	if not down_cast.is_colliding():
-		_current_vertical_velocity = Vector3.ZERO
+		current_vertical_velocity = Vector3.ZERO
 		if Input.is_action_just_pressed("jump"):
-			_current_vertical_velocity = ship_basis.y * 4.5
+			current_vertical_velocity = ship_basis.y * 4.5
 	else:
-		_current_vertical_velocity += gravity_dir * 11 * delta
+		current_vertical_velocity += gravity_dir * 11 * delta
 	
+	velocity = current_horizontal_velocity + current_vertical_velocity
+
 	move_and_slide()
