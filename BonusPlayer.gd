@@ -20,8 +20,6 @@ func _physics_process(delta: float) -> void:
 	
 	if not down_cast.is_colliding():
 		current_vertical_velocity = Vector3.ZERO
-		if Input.is_action_just_pressed("jump"):
-			current_vertical_velocity = ship_basis.y * 4.5
 	else:
 		current_vertical_velocity += gravity_dir * 11 * delta
 	
