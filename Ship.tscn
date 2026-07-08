@@ -81,14 +81,14 @@ light_energy = 2.0
 omni_range = 15.0
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Ship"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 65.86285, 1.1860003, 39.450253)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 64.61, 1.2, 38.49)
 light_energy = 250.0
 spot_range = 2000.0
 spot_angle = 20.0
 spot_angle_attenuation = 0.43527067
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="Ship"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 65.29203, 1.1916075, -39.15708)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 64.619286, 1.2, -38.495605)
 light_energy = 250.0
 spot_range = 2000.0
 spot_angle = 20.0
@@ -185,3 +185,11 @@ mesh = SubResource("CapsuleMesh_ix3uc")
 unique_name_in_owner = true
 transform = Transform3D(0.8570594, 0, 0.5152176, 0, 1, 0, -0.5152176, 0, 0.8570594, 0, 0.26092768, 0)
 collision_mask = 6
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="Ship"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 2, -38.49)
+omni_range = 50.0
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="Ship"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 2, 38.49)
+omni_range = 50.0
