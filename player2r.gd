@@ -3,6 +3,7 @@ extends CharacterBody3D
 @export var camera: Camera3D
 @onready var down_cast: RayCast3D = %RayCast3D
 @onready var front_cast: RayCast3D = %FrontCast
+@onready var speed_label: Label = %Speed
 
 const walk := 5
 const sprint := 10

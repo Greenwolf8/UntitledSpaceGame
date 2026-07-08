@@ -4,7 +4,7 @@ extends RigidBody3D
 @export var turn_torque = 30.0
 @onready var camera_3d: Camera3D = %Camera3D
 @onready var front_cast: RayCast3D = %FrontCast
-
+@onready var speed_label: Label = %Speed
 var Cameralocked = true
 var withPlayer = false
 
@@ -24,6 +24,8 @@ func _physics_process(_delta):
 	if not withPlayer: return	
 	var forward_input = Input.get_axis("throttle_down", "throttle_up")
 	var forward_force = -global_transform.basis.x * forward_input * engine_power
+	var current_speed = snapped(linear_velocity.length(), 0.1)
+	
 	apply_central_force(forward_force)
 	
 	var rotation_input = Input.get_axis("move_right", "move_left")
@@ -32,6 +34,7 @@ func _physics_process(_delta):
 	var pitch_input = Input.get_axis("move_back", "move_forward")
 	apply_torque(transform.basis.z * pitch_input * turn_torque)
 	
+	speed_label.text = "Speed: " + str(current_speed)
 	
 func interact_pressed():
 	var canEnter = not withPlayer
@@ -58,13 +61,13 @@ func _enter_ship():
 	withPlayer = true
 	%OmniLight3D.light_color = Color(1,1,1)
 	%"Press E".visible = false
-	
+	%Speed.visible = true
 	var player = get_tree().get_first_node_in_group("Player")
 	player.enter_ship()
 
 func _leave_ship():
 	withPlayer = false
 	%OmniLight3D.light_color = Color(1,.25,.25)
-	
+	%Speed.visible = false
 	var player = get_tree().get_first_node_in_group("Player")
 	player.leave_ship()
