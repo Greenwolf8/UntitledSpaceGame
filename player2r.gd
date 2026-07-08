@@ -3,12 +3,14 @@ extends CharacterBody3D
 @export var speed: float = 5.0
 @export var camera: Camera3D
 @onready var down_cast: RayCast3D = %RayCast3D
+@onready var front_cast: RayCast3D = %FrontCast
 
 var leave_seat_location: Vector3 = Vector3(21,5,0)
 var parent_node = get_parent()
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	front_cast.add_exception(self)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:

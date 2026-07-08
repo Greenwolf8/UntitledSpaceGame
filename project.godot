@@ -82,6 +82,11 @@ camera_lock={
 ]
 }
 
+[layer_names]
+
+3d_physics/layer_1="World"
+3d_physics/layer_2="Interactable"
+
 [physics]
 
 common/physics_ticks_per_second=120

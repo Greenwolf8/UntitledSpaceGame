@@ -3,6 +3,7 @@ extends RigidBody3D
 @export var engine_power = 100.0
 @export var turn_torque = 30.0
 @onready var camera_3d: Camera3D = %Camera3D
+@onready var front_cast: RayCast3D = %FrontCast
 
 var Cameralocked = true
 var withPlayer = false
@@ -30,18 +31,23 @@ func _physics_process(_delta):
 	
 	var pitch_input = Input.get_axis("move_back", "move_forward")
 	apply_torque(transform.basis.z * pitch_input * turn_torque)
+	
+func interact_pressed():
+	var canEnter = not withPlayer
+	var hit_object = front_cast.get_collider()
+	if canEnter:
+		if hit_object == %Chair:
+			_enter_ship()
+	else:
+		_leave_ship()
 
 func _input(_event: InputEvent) -> void:
-	var canEnter = not withPlayer
-	var canLeave = withPlayer
 	var cantlock = Cameralocked
 	
 	
 	
-	if Input.is_action_just_pressed("interact") and canEnter:
-		_enter_ship()
-	elif Input.is_action_just_pressed("interact") and canLeave:
-		_leave_ship()
+	if Input.is_action_just_pressed("interact"):
+		interact_pressed()
 	elif Input.is_action_pressed("camera_lock") and cantlock:
 		Cameralocked = false
 	elif Input.is_action_just_released("camera_lock"):
