@@ -59,7 +59,7 @@ func _input(_event: InputEvent) -> void:
 
 func _enter_ship():
 	withPlayer = true
-	%OmniLight3D.light_color = Color(1,1,1)
+	%OmniLight3D.light_color = Color(1.0, 0.945, 0.949, 1.0)
 	%"Press E".visible = false
 	%Speed.visible = true
 	var player = get_tree().get_first_node_in_group("Player")
@@ -67,7 +67,7 @@ func _enter_ship():
 
 func _leave_ship():
 	withPlayer = false
-	%OmniLight3D.light_color = Color(1,.25,.25)
+	%OmniLight3D.light_color = Color(1.0, 0.0, 0.0, 1.0)
 	%Speed.visible = false
 	var player = get_tree().get_first_node_in_group("Player")
 	player.leave_ship()

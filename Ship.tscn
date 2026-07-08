@@ -82,6 +82,7 @@ omni_range = 15.0
 
 [node name="SpotLight3D" type="SpotLight3D" parent="Ship"]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 64.61, 1.2, 38.49)
+light_color = Color(1, 0.94588345, 0.94768494, 1)
 light_energy = 250.0
 spot_range = 2000.0
 spot_angle = 20.0
@@ -89,6 +90,7 @@ spot_angle_attenuation = 0.43527067
 
 [node name="SpotLight3D2" type="SpotLight3D" parent="Ship"]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 64.619286, 1.2, -38.495605)
+light_color = Color(1, 0.94509804, 0.9490196, 1)
 light_energy = 250.0
 spot_range = 2000.0
 spot_angle = 20.0
@@ -188,10 +190,12 @@ collision_mask = 6
 
 [node name="OmniLight3D2" type="OmniLight3D" parent="Ship"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 2, -38.49)
+light_color = Color(1, 0.94509804, 0.9490196, 1)
 omni_range = 50.0
 
 [node name="OmniLight3D3" type="OmniLight3D" parent="Ship"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 64, 2, 38.49)
+light_color = Color(1, 0.94509804, 0.9490196, 1)
 omni_range = 50.0
 
 [node name="Speed" type="Label" parent="Ship"]
