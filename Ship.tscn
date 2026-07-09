@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://b3ovqfvf46vnf"]
+[gd_scene load_steps=14 format=3 uid="uid://b3ovqfvf46vnf"]
 
 [ext_resource type="Script" uid="uid://dmt2egmpr1xr6" path="res://Ship.gd" id="1_ix3uc"]
 [ext_resource type="PackedScene" uid="uid://caf4dxmt3a5uf" path="res://AVRO.VULCAN_GAME.fbx" id="1_xljvd"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" uid="uid://btypiqakceoob" path="res://player2r.gd" id="4_7se24"]
 [ext_resource type="Texture2D" uid="uid://c5qd8jx3qark7" path="res://player/reticle.png" id="4_s441t"]
 [ext_resource type="Script" uid="uid://b6twbgdec6wj5" path="res://BonusPlayer.gd" id="6_7se24"]
+[ext_resource type="PackedScene" uid="uid://dv22jiaawgv6j" path="res://Cannon.tscn" id="7_qyh8x"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xljvd"]
 
@@ -205,3 +206,9 @@ offset_top = 25.0
 offset_right = 68.0
 offset_bottom = 48.0
 theme_override_font_sizes/font_size = 25
+
+[node name="Hardpoint_1" type="Marker3D" parent="Ship"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48, 1.8, 1)
+
+[node name="Cannon" parent="Ship/Hardpoint_1" instance=ExtResource("7_qyh8x")]
