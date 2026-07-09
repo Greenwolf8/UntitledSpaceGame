@@ -11,14 +11,15 @@ var current_state = State.CHASE
 var player_position := Vector3.ZERO
 var ai_health : int = 100
 
-
-
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player_ship") as RigidBody3D
 	ai_health_label.text = "Enemy Ship Health: " + str(ai_health)
 	$CollisionArea.area_entered.connect(_on_area_entered)
 
+
 func _physics_process(delta):
+	
+	
 	var target_position = Vector3.ZERO
 	if player:
 		player_position = player.global_position
@@ -40,6 +41,8 @@ func _physics_process(delta):
 
 func hit():
 	ai_health -= 10
+	if ai_health <0:
+		ai_health = 0
 	ai_health_label.text = "Enemy Ship Health: " + str(ai_health)
 	if ai_health <= 0:
 		self.hide()
