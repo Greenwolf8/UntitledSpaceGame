@@ -1,0 +1,46 @@
+[gd_scene load_steps=3 format=3 uid="uid://db8ho13mf013k"]
+
+[ext_resource type="Script" uid="uid://dchqc2wuhpd8b" path="res://ai_ship.gd" id="1_0jbod"]
+[ext_resource type="PackedScene" uid="uid://caf4dxmt3a5uf" path="res://AVRO.VULCAN_GAME.fbx" id="2_pnxum"]
+
+[node name="Node3D" type="Node3D" groups=["player_ship"]]
+
+[node name="AI_Ship" type="CharacterBody3D" parent="." groups=["player_ship"]]
+script = ExtResource("1_0jbod")
+
+[node name="AVRO_VULCAN_GAME" parent="AI_Ship" instance=ExtResource("2_pnxum")]
+physics_interpolation_mode = 1
+transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, 0, 0, 0.023462296)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="AI_Ship"]
+transform = Transform3D(1, 0, 5.6101932e-08, 0, 1, 0, -5.6101932e-08, 0, 1, -38.466537, 1.2, 64.63346)
+light_color = Color(1, 0.94588345, 0.94768494, 1)
+light_energy = 250.0
+spot_range = 2000.0
+spot_angle = 20.0
+spot_angle_attenuation = 0.43527067
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="AI_Ship"]
+transform = Transform3D(1, 0, 5.6101932e-08, 0, 1, 0, -5.6101932e-08, 0, 1, 38.519066, 1.2, 64.642746)
+light_color = Color(1, 0.94509804, 0.9490196, 1)
+light_energy = 250.0
+spot_range = 2000.0
+spot_angle = 20.0
+spot_angle_attenuation = 0.43527508
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="AI_Ship"]
+transform = Transform3D(1.2390542e-08, 0, -1, 0, 1, 0, 1, 0, 1.2390542e-08, 38.513466, 2, 64.02346)
+light_color = Color(1, 0.94509804, 0.9490196, 1)
+omni_range = 50.0
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="AI_Ship"]
+transform = Transform3D(1.2390542e-08, 0, -1, 0, 1, 0, 1, 0, 1.2390542e-08, -38.466537, 2, 64.02346)
+light_color = Color(1, 0.94509804, 0.9490196, 1)
+omni_range = 50.0
+
+[node name="OmniLight3D" type="OmniLight3D" parent="AI_Ship"]
+unique_name_in_owner = true
+transform = Transform3D(1.2390542e-08, 0, -1, 0, 1, 0, 1, 0, 1.2390542e-08, -0.13253804, 7.968589, 22.54504)
+light_color = Color(1, 0.90015465, 0.88309574, 1)
+light_energy = 2.0
+omni_range = 15.0

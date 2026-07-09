@@ -1,7 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dmoq30qvu54ax"]
+[gd_scene load_steps=8 format=3 uid="uid://dmoq30qvu54ax"]
 
 [ext_resource type="Texture2D" uid="uid://bs43kg410obus" path="res://Solarsystemscope_texture_8k_stars.jpg" id="2_3h1ab"]
 [ext_resource type="PackedScene" uid="uid://b3ovqfvf46vnf" path="res://Ship.tscn" id="2_3vi7k"]
+[ext_resource type="PackedScene" uid="uid://db8ho13mf013k" path="res://AI_Ship.tscn" id="3_3h1ab"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_y35xu"]
 
@@ -44,3 +45,6 @@ omni_range = 10000.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_8qak7")
+
+[node name="Node3D" parent="." instance=ExtResource("3_3h1ab")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -366.891, 100, 200)
