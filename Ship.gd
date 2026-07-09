@@ -8,6 +8,8 @@ extends RigidBody3D
 @onready var camera_3d: Camera3D = %Camera3D
 @onready var front_cast: RayCast3D = %FrontCast
 @onready var speed_label: Label = %Speed
+@onready var ai_health_label: Label = %AiHealth
+
 var Cameralocked = true
 var withPlayer = false
 

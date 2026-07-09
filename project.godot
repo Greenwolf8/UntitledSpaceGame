@@ -27,6 +27,8 @@ enabled=PackedStringArray("res://addons/godot_super-wakatime/plugin.cfg")
 [global_group]
 
 player_ship=""
+enemy_ship=""
+bullet=""
 
 [input]
 
@@ -102,6 +104,8 @@ fire={
 3d_physics/layer_1="Player"
 3d_physics/layer_2="Ship"
 3d_physics/layer_3="Outside World"
+3d_physics/layer_4="AI_Ship"
+3d_physics/layer_5="Bullets"
 
 [physics]
 

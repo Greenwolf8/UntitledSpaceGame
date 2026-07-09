@@ -1,12 +1,21 @@
-[gd_scene load_steps=3 format=3 uid="uid://db8ho13mf013k"]
+[gd_scene load_steps=5 format=3 uid="uid://db8ho13mf013k"]
 
 [ext_resource type="Script" uid="uid://dchqc2wuhpd8b" path="res://ai_ship.gd" id="1_0jbod"]
 [ext_resource type="PackedScene" uid="uid://caf4dxmt3a5uf" path="res://AVRO.VULCAN_GAME.fbx" id="2_pnxum"]
 
-[node name="Node3D" type="Node3D" groups=["player_ship"]]
+[sub_resource type="BoxShape3D" id="BoxShape3D_0jbod"]
+size = Vector3(79.699, 7.5, 31.044)
 
-[node name="AI_Ship" type="CharacterBody3D" parent="." groups=["player_ship"]]
+[sub_resource type="BoxShape3D" id="BoxShape3D_pnxum"]
+size = Vector3(1.6905518, 1, 4.5733643)
+
+[node name="Node3D" type="Node3D" groups=["enemy_ship", "player_ship"]]
+
+[node name="AI_Ship" type="CharacterBody3D" parent="." node_paths=PackedStringArray("ai_health_label") groups=["player_ship"]]
+collision_layer = 8
+collision_mask = 18
 script = ExtResource("1_0jbod")
+ai_health_label = NodePath("AiHealth")
 
 [node name="AVRO_VULCAN_GAME" parent="AI_Ship" instance=ExtResource("2_pnxum")]
 physics_interpolation_mode = 1
@@ -44,3 +53,27 @@ transform = Transform3D(1.2390542e-08, 0, -1, 0, 1, 0, 1, 0, 1.2390542e-08, -0.1
 light_color = Color(1, 0.90015465, 0.88309574, 1)
 light_energy = 2.0
 omni_range = 15.0
+
+[node name="CollisionArea" type="Area3D" parent="AI_Ship"]
+unique_name_in_owner = true
+collision_layer = 8
+collision_mask = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AI_Ship/CollisionArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20861816, 3.1207342, 59.587738)
+shape = SubResource("BoxShape3D_0jbod")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="AI_Ship/CollisionArea"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -0.51208496, 3.7247477, 24.015566)
+shape = SubResource("BoxShape3D_pnxum")
+
+[node name="AiHealth" type="Label" parent="AI_Ship"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 27.0
+offset_right = 20.0
+offset_bottom = 62.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 35

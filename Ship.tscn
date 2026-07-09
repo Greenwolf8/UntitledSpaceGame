@@ -29,7 +29,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.41161, -2.0379658, 0)
 [node name="Ship" type="RigidBody3D" parent="." groups=["player_ship"]]
 unique_name_in_owner = true
 collision_layer = 2
-collision_mask = 4
+collision_mask = 12
 continuous_cd = true
 linear_damp = 1.0
 angular_damp = 3.0
