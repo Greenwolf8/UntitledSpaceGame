@@ -1,21 +1,22 @@
 extends RigidBody3D
 
-@export var engine_power = 130.0
-@export var turn_torque = 30.0
+@export var engine_power = 130
+@export var turn_torque = 4.5
 @export var bullet_scene : PackedScene = preload("res://Bullet.tscn")
 @onready var fire_point = %Hardpoint_1/Cannon/Cannon/MuzzleExit
 @onready var fire_timer = %Hardpoint_1/Cannon/Cannon/Fire_timer
 @onready var camera_3d: Camera3D = %Camera3D
 @onready var front_cast: RayCast3D = %FrontCast
 @onready var speed_label: Label = %Speed
+@onready var health_label: Label = %HealthLabel
 
+var health: int = 100
 var Cameralocked = true
 var withPlayer = false
 
 func _ready() -> void:
-	print(fire_point)
-	print(fire_timer)
-	print(bullet_scene)
+	health_label.text = "Health: " + str(health)
+	%Exterior.area_entered.connect(_on_area_entered)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not Cameralocked and event is InputEventMouseMotion:
@@ -77,6 +78,7 @@ func shoot():
 	
 	
 func _enter_ship():
+	health_label.show()
 	withPlayer = true
 	%OmniLight3D.light_color = Color(1.0, 0.945, 0.949, 1.0)
 	%"Press E".visible = false
@@ -85,8 +87,24 @@ func _enter_ship():
 	player.enter_ship()
 
 func _leave_ship():
+	health_label.hide()
 	withPlayer = false
 	%OmniLight3D.light_color = Color(1.0, 0.0, 0.0, 1.0)
 	%Speed.visible = false
 	var player = get_tree().get_first_node_in_group("Player")
 	player.leave_ship()
+
+func _on_area_entered(area: Area3D) -> void:
+	if area.is_in_group("enemy_bullet"):
+		hit()
+		area.queue_free() 
+
+func hit():
+	health -= 10
+	if health < 0:
+		health = 0
+	health_label.text = "Ship Health: " + str(health)
+	if health <= 0:
+		self.hide()
+		print("Destroyed!")
+		set_physics_process(false)

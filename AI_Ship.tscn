@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://db8ho13mf013k"]
+[gd_scene load_steps=7 format=3 uid="uid://db8ho13mf013k"]
 
 [ext_resource type="Script" uid="uid://dchqc2wuhpd8b" path="res://ai_ship.gd" id="1_0jbod"]
+[ext_resource type="PackedScene" uid="uid://d2fwoea7kk0pp" path="res://Enemy_bullet.tscn" id="2_grfkr"]
 [ext_resource type="PackedScene" uid="uid://caf4dxmt3a5uf" path="res://AVRO.VULCAN_GAME.fbx" id="2_pnxum"]
+[ext_resource type="PackedScene" uid="uid://dv22jiaawgv6j" path="res://Cannon.tscn" id="3_pnxum"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0jbod"]
 size = Vector3(79.699, 7.5, 31.044)
@@ -13,8 +15,9 @@ size = Vector3(1.6905518, 1, 4.5733643)
 
 [node name="AI_Ship" type="CharacterBody3D" parent="." node_paths=PackedStringArray("ai_health_label") groups=["player_ship"]]
 collision_layer = 8
-collision_mask = 18
+collision_mask = 16
 script = ExtResource("1_0jbod")
+bullet_scene = ExtResource("2_grfkr")
 ai_health_label = NodePath("AiHealth")
 
 [node name="AVRO_VULCAN_GAME" parent="AI_Ship" instance=ExtResource("2_pnxum")]
@@ -82,3 +85,17 @@ theme_override_font_sizes/font_size = 35
 unique_name_in_owner = true
 wait_time = 5.0
 one_shot = true
+
+[node name="Hardpoint_1" type="Marker3D" parent="AI_Ship"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6001034, 3.2643223, 14.8791275)
+
+[node name="Cannon" parent="AI_Ship/Hardpoint_1" instance=ExtResource("3_pnxum")]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="Trigger" type="RayCast3D" parent="AI_Ship"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6001034, 3.2643223, 13.760476)
+target_position = Vector3(0, 0, -750)
+collision_mask = 256
+collide_with_areas = true

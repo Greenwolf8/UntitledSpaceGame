@@ -3,8 +3,11 @@ extends CharacterBody3D
 @export var speed := 80
 @export var rotation_speed := 1.5
 @onready var player : RigidBody3D
+@export var bullet_scene : PackedScene = preload("res://Enemy_bullet.tscn")
 @export var ai_health_label : Label
 @onready var state_timer = %StateTimer
+@onready var fire_point = %Hardpoint_1/Cannon/Cannon/MuzzleExit
+@onready var fire_timer = %Hardpoint_1/Cannon/Cannon/Fire_timer
 
 enum State { PATROL, CHASE, ATTACK, ZOOM}
 var current_state = State.CHASE
@@ -17,6 +20,8 @@ func _ready() -> void:
 	ai_health_label.text = "Enemy Ship Health: " + str(ai_health)
 	$CollisionArea.area_entered.connect(_on_area_entered)
 	current_state = State.ATTACK
+	%Trigger.add_exception(self)
+
 func _physics_process(delta):
 	
 	var current_transform = global_transform
@@ -38,9 +43,12 @@ func _physics_process(delta):
 		state_timer.start()
 		
 		target_position = current_transform.origin + (forward_direction * 500) + (upwards_direction * 500)
+	
+	if %Trigger.is_colliding():
+		shoot()
 
-	
-	
+
+
 	var target_transform = global_transform.looking_at(target_position, Vector3.UP)
 	global_transform = global_transform.interpolate_with(target_transform, rotation_speed * delta)
 	
@@ -64,3 +72,10 @@ func _on_area_entered(area: Area3D) -> void:
 	if area.is_in_group("bullet"):
 		hit()
 		area.queue_free() 
+
+func shoot():
+	if fire_timer.is_stopped():
+		fire_timer.start()
+		var bullet = bullet_scene.instantiate()
+		get_tree().root.add_child(bullet)
+		bullet.global_transform = fire_point.global_transform
