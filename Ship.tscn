@@ -84,7 +84,7 @@ omni_range = 15.0
 [node name="SpotLight3D" type="SpotLight3D" parent="Ship"]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 64.61, 1.2, 38.49)
 light_color = Color(1, 0.94588345, 0.94768494, 1)
-light_energy = 250.0
+light_energy = 150.0
 spot_range = 2000.0
 spot_angle = 20.0
 spot_angle_attenuation = 0.43527067
@@ -92,15 +92,15 @@ spot_angle_attenuation = 0.43527067
 [node name="SpotLight3D2" type="SpotLight3D" parent="Ship"]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 64.619286, 1.2, -38.495605)
 light_color = Color(1, 0.94509804, 0.9490196, 1)
-light_energy = 250.0
+light_energy = 150.0
 spot_range = 2000.0
 spot_angle = 20.0
 spot_angle_attenuation = 0.43527508
 
 [node name="Chair" type="RigidBody3D" parent="Ship"]
 unique_name_in_owner = true
-collision_layer = 10
-collision_mask = 2
+collision_layer = 34
+collision_mask = 0
 
 [node name="ChairCollider" type="CollisionShape3D" parent="Ship/Chair"]
 transform = Transform3D(0.75, 0, 0, 0, 1, 0, 0, 0, 1, 20.800072, 5.749711, -1.037703)
@@ -126,7 +126,7 @@ current = true
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.450581e-09, 0.011189461, -0.21256447)
 target_position = Vector3(0, 0, -1.5)
-collision_mask = 8
+collision_mask = 32
 
 [node name="Reticle2" type="TextureRect" parent="Ship/Player2"]
 anchors_preset = 8
