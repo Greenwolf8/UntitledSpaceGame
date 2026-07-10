@@ -77,3 +77,8 @@ offset_right = 20.0
 offset_bottom = 62.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 35
+
+[node name="StateTimer" type="Timer" parent="AI_Ship"]
+unique_name_in_owner = true
+wait_time = 5.0
+one_shot = true

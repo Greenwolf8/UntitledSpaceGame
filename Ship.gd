@@ -1,6 +1,6 @@
 extends RigidBody3D
 
-@export var engine_power = 100.0
+@export var engine_power = 130.0
 @export var turn_torque = 30.0
 @export var bullet_scene : PackedScene = preload("res://Bullet.tscn")
 @onready var fire_point = %Hardpoint_1/Cannon/Cannon/MuzzleExit
