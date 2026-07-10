@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@export var speed := 80
+@export var speed := 120
 @export var rotation_speed := 1.5
 @onready var player : RigidBody3D
 @export var bullet_scene : PackedScene = preload("res://Enemy_bullet.tscn")
@@ -37,8 +37,7 @@ func _physics_process(delta):
 	if global_position.distance_to(player_position) >= 200 and state_timer.is_stopped() and current_state == State.ZOOM:
 		current_state = State.ATTACK
 		state_timer.start()
-	
-	if global_position.distance_to(player_position) < 200 and state_timer.is_stopped() and current_state == State.ATTACK:
+	elif global_position.distance_to(player_position) < 200 and current_state == State.ATTACK:
 		current_state = State.ZOOM
 		state_timer.start()
 		
