@@ -4,7 +4,9 @@ extends RigidBody3D
 @export var turn_torque = 4.5
 @export var bullet_scene : PackedScene = preload("res://Bullet.tscn")
 @onready var fire_point = %Hardpoint_1/Cannon/Cannon/MuzzleExit
-@onready var fire_timer = %Hardpoint_1/Cannon/Cannon/Fire_timer
+@onready var fire_timer = %Hardpoint_1/Cannon/Cannon/FireTimer
+@onready var pre_fire_timer = %Hardpoint_1/Cannon/Cannon/PreFireTimer
+@onready var fire_time = %Hardpoint_1/Cannon/Cannon/FireTime
 @onready var camera_3d: Camera3D = %Camera3D
 @onready var front_cast: RayCast3D = %FrontCast
 @onready var speed_label: Label = %Speed
@@ -60,6 +62,9 @@ func _physics_process(_delta):
 	if Input.is_action_pressed("fire") and withPlayer:
 		shoot()
 	
+	if Input.is_action_just_pressed("fire") and withPlayer:
+		just_shot()
+	
 func interact_pressed():
 	var canEnter = not withPlayer
 	var hit_object = front_cast.get_collider()
@@ -81,14 +86,19 @@ func _input(_event: InputEvent) -> void:
 		%Camera3D.rotation_degrees.x = 0
 		%Camera3D.rotation_degrees.y = 90
 
+func just_shot():
+	pre_fire_timer.start()
+	await get_tree().create_timer(0.05).timeout
+	fire_time.start()
+
 func shoot():
-	if fire_timer.is_stopped():
-		fire_timer.start()
-		var bullet = bullet_scene.instantiate()
-		get_tree().root.add_child(bullet)
-		bullet.global_transform = fire_point.global_transform
-	
-	
+	await get_tree().create_timer(0.05).timeout
+	if fire_timer.is_stopped() and pre_fire_timer.is_stopped() and fire_time.time_left > 0:
+			fire_timer.start()
+			var bullet = bullet_scene.instantiate()
+			get_tree().root.add_child(bullet)
+			bullet.global_transform = fire_point.global_transform
+
 func _enter_ship():
 	health_label.show()
 	withPlayer = true
