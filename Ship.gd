@@ -8,10 +8,11 @@ extends RigidBody3D
 @onready var camera_3d: Camera3D = %Camera3D
 @onready var front_cast: RayCast3D = %FrontCast
 @onready var speed_label: Label = %Speed
-@onready var health_label: Label = %HealthLabel
+@onready var health_label: Label = %HealthLabel	
 
+var mouse_input: Vector2 = Vector2.ZERO
 var health: int = 100
-var Cameralocked = true
+var Camerafree = false
 var withPlayer = false
 
 func _ready() -> void:
@@ -19,29 +20,40 @@ func _ready() -> void:
 	%Exterior.area_entered.connect(_on_area_entered)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not Cameralocked and event is InputEventMouseMotion:
+	if Camerafree and event is InputEventMouseMotion:
 		%Camera3D.rotation_degrees.y -= event.relative.x * 0.2
 		%Camera3D.rotation_degrees.y = clamp(
 			%Camera3D.rotation_degrees.y, 0,180
 		)
 		%Camera3D.rotation_degrees.x -= event.relative.y * 0.2
 		%Camera3D.rotation_degrees.x = clamp(
-		%Camera3D.rotation_degrees.x, -60, 75
+		%Camera3D.rotation_degrees.x, -60, 75 
 		)
+	elif not Camerafree and event is InputEventMouseMotion:
+		mouse_input += event.relative
 
 func _physics_process(_delta):
 	if not withPlayer: return	
 	var forward_input = Input.get_axis("throttle_down", "throttle_up")
 	var forward_force = -global_transform.basis.x * forward_input * engine_power
 	var current_speed = snapped(linear_velocity.length(), 0.1)
-	
 	apply_central_force(forward_force)
+	
+	var yaw_input = Input
+	if not Camerafree:
+		yaw_input = -mouse_input.x * 0.15
+	apply_torque(transform.basis.y * yaw_input * turn_torque)
 	
 	var rotation_input = Input.get_axis("move_right", "move_left")
 	apply_torque(transform.basis.x * rotation_input * turn_torque)
 	
+	
 	var pitch_input = Input.get_axis("move_back", "move_forward")
+	if not Camerafree:
+		pitch_input += mouse_input.y * 0.15
 	apply_torque(transform.basis.z * pitch_input * turn_torque)
+	
+	mouse_input = Vector2.ZERO
 	
 	speed_label.text = "Speed: " + str(current_speed)
 	
@@ -58,14 +70,14 @@ func interact_pressed():
 		_leave_ship()
 
 func _input(_event: InputEvent) -> void:
-	var cantlock = Cameralocked
+	var cantlock = Camerafree
 	
 	if Input.is_action_just_pressed("interact"):
 		interact_pressed()
-	elif Input.is_action_pressed("camera_lock") and cantlock:
-		Cameralocked = false
-	elif Input.is_action_just_released("camera_lock"):
-		Cameralocked = true		
+	elif Input.is_action_just_pressed("camera_lock") and not cantlock:
+		Camerafree = true
+	elif Input.is_action_just_pressed("camera_lock") and cantlock:
+		Camerafree = false
 		%Camera3D.rotation_degrees.x = 0
 		%Camera3D.rotation_degrees.y = 90
 
