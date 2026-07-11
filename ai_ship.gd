@@ -12,7 +12,7 @@ extends CharacterBody3D
 enum State { PATROL, CHASE, ATTACK, ZOOM}
 var current_state = State.CHASE
 var player_position := Vector3.ZERO
-var ai_health : int = 100
+var ai_health : int = 200
 var target_position = Vector3.ZERO
 
 func _ready() -> void:
@@ -57,7 +57,7 @@ func _on_area_entered(area: Area3D) -> void:
 		area.queue_free() 
 
 func hit():
-	ai_health -= 10
+	ai_health -= randi_range(2, 10)
 	if ai_health <0:
 		ai_health = 0
 	ai_health_label.text = "Enemy Ship Health: " + str(ai_health)

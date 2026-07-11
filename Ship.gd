@@ -13,7 +13,7 @@ extends RigidBody3D
 @onready var health_label: Label = %HealthLabel	
 
 var mouse_input: Vector2 = Vector2.ZERO
-var health: int = 100
+var health: int = 200
 var Camerafree = false
 var withPlayer = false
 
@@ -122,7 +122,7 @@ func _on_area_entered(area: Area3D) -> void:
 		area.queue_free() 
 
 func hit():
-	health -= 10
+	health -= randi_range(2, 15)
 	if health < 0:
 		health = 0
 	health_label.text = "Ship Health: " + str(health)
