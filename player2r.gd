@@ -8,21 +8,31 @@ const walk := 5
 const sprint := 10
 var leave_seat_location: Vector3 = Vector3(21,5,0)
 var parent_node = get_parent()
+var mouse_locked = true
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	front_cast.add_exception(self)
+	mouse_locked = true
 
 func _unhandled_input(event: InputEvent) -> void:
+	if mouse_locked == false and event is not InputEventMouseMotion:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+		await get_tree().create_timer(0.05).timeout
+		mouse_locked = true
+	
+	elif event.is_action_pressed("ui_cancel") and mouse_locked == true:
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		await get_tree().create_timer(0.5).timeout
+		mouse_locked = false
+	
 	if event is InputEventMouseMotion:
 		%Camera3D2.rotation_degrees.y -= event.relative.x * 0.5
 		%Camera3D2.rotation_degrees.x -= event.relative.y * 0.5
 		%Camera3D2.rotation_degrees.x = clamp(
 			%Camera3D2.rotation_degrees.x, -80.0, 80.0
 		)
-	elif event.is_action_pressed("ui_cancel"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-
+	
 
 func _physics_process(delta: float) -> void:
 	var parent = get_parent() as RigidBody3D
