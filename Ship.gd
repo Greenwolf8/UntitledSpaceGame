@@ -1,7 +1,8 @@
 extends RigidBody3D
 
 @export var engine_power = 130
-@export var turn_torque = 4.5
+@export var roll_torque = 6
+@export var pitch_torque = 3.5
 @export var bullet_scene : PackedScene = preload("res://Bullet.tscn")
 @onready var fire_point = %Hardpoint_1/Cannon/Cannon/MuzzleExit
 @onready var fire_timer = %Hardpoint_1/Cannon/Cannon/FireTimer
@@ -35,25 +36,28 @@ func _unhandled_input(event: InputEvent) -> void:
 		mouse_input += event.relative
 
 func _physics_process(_delta):
-	if not withPlayer: return	
+	if not withPlayer: 
+		return
 	var forward_input = Input.get_axis("throttle_down", "throttle_up")
 	var forward_force = -global_transform.basis.x * forward_input * engine_power
 	var current_speed = snapped(linear_velocity.length(), 0.1)
-	apply_central_force(forward_force)
-	
 	var yaw_input = Input
-	if not Camerafree:
-		yaw_input = -mouse_input.x * 0.15
-	apply_torque(transform.basis.y * yaw_input * turn_torque)
-	
-	var rotation_input = Input.get_axis("move_right", "move_left")
-	apply_torque(transform.basis.x * rotation_input * turn_torque)
-	
-	
+	var roll_input = Input.get_axis("move_right", "move_left")
 	var pitch_input = Input.get_axis("move_back", "move_forward")
+	
 	if not Camerafree:
 		pitch_input += mouse_input.y * 0.15
-	apply_torque(transform.basis.z * pitch_input * turn_torque)
+		yaw_input = -mouse_input.x * 0.15
+	else:
+		yaw_input = 0
+	
+	pitch_input = clamp(pitch_input, -1, 1)
+	yaw_input = clamp(yaw_input, -1, 1)
+	
+	apply_central_force(forward_force)
+	apply_torque(transform.basis.z * pitch_input * pitch_torque)
+	apply_torque(transform.basis.y * yaw_input * pitch_torque)
+	apply_torque(transform.basis.x * roll_input * roll_torque)
 	
 	mouse_input = Vector2.ZERO
 	
@@ -64,10 +68,11 @@ func _physics_process(_delta):
 	
 	if Input.is_action_just_pressed("fire") and withPlayer:
 		just_shot()
-	
+
 func interact_pressed():
 	var canEnter = not withPlayer
 	var hit_object = front_cast.get_collider()
+	
 	if canEnter:
 		if hit_object == %Chair:
 			_enter_ship()
