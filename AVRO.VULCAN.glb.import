@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://ckqj8xoe3nxfw"
-path="res://.godot/imported/AVRO.VULCAN_GAME-colony.fbx-7f4dc2975023f07092c87b53cc7997ec.scn"
+uid="uid://c47xfpp33sxfd"
+path="res://.godot/imported/AVRO.VULCAN.glb-07e19d8008eca52189ae2e2d1047db8e.scn"
 
 [deps]
 
-source_file="res://AVRO.VULCAN_GAME-colony.fbx"
-dest_files=["res://.godot/imported/AVRO.VULCAN_GAME-colony.fbx-7f4dc2975023f07092c87b53cc7997ec.scn"]
+source_file="res://AVRO.VULCAN.glb"
+dest_files=["res://.godot/imported/AVRO.VULCAN.glb-07e19d8008eca52189ae2e2d1047db8e.scn"]
 
 [params]
 
@@ -30,7 +30,7 @@ meshes/force_disable_compression=false
 skins/use_named_skins=true
 animation/import=true
 animation/fps=30
-animation/trimming=true
+animation/trimming=false
 animation/remove_immutable_tracks=true
 animation/import_rest_as_RESET=false
 import_script/path=""
@@ -38,7 +38,5 @@ materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
 _subresources={}
-fbx/importer=0
-fbx/allow_geometry_helper_nodes=false
-fbx/embedded_image_handling=1
-fbx/naming_version=2
+gltf/naming_version=2
+gltf/embedded_image_handling=1
