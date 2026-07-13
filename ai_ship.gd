@@ -26,7 +26,7 @@ func _ready() -> void:
 	ai_health_label.text = "Enemy Ship Health: " + str(ai_health)
 	state_label.text = "State: " + str(current_state) + str(zooming)
 	distance_label.text = "Distance: " + str(global_position.distance_to(player_position))
-	%Exterior.area_entered.connect(_on_area_entered)
+	$CollisionArea.area_entered.connect(_on_area_entered)
 	current_state = State.BOOM
 	%Trigger.add_exception(self)
 
