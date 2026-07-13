@@ -7,29 +7,60 @@
 [ext_resource type="Texture2D" uid="uid://c5qd8jx3qark7" path="res://player/reticle.png" id="4_s441t"]
 [ext_resource type="Script" uid="uid://b6twbgdec6wj5" path="res://BonusPlayer.gd" id="6_7se24"]
 [ext_resource type="PackedScene" uid="uid://dv22jiaawgv6j" path="res://Cannon.tscn" id="7_qyh8x"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_oam5h"]
-size = Vector3(1.4182129, 1.0645142, 0.7264404)
+[ext_resource type="PackedScene" uid="uid://dn6xv7p2jc156" path="res://Radar.tscn" id="8_0p50t"]
+[ext_resource type="PackedScene" uid="uid://eoe27572ecox" path="res://Gauge.tscn" id="11_anqkt"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7se24"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_ix3uc"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qyh8x"]
-size = Vector3(1, 0.3516693, 1)
+size = Vector3(78.80298, 6.52526, 26.983994)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0p50t"]
-size = Vector3(4.6914063, 0.9174118, 0.8014221)
+size = Vector3(47.16062, 9.227827, 14.018057)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oj4er"]
+size = Vector3(119.93239, 39.461365, 128.09103)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xljvd"]
+size = Vector3(11.520943, 1.0359802, 5.3396263)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_h40nn"]
-size = Vector3(0.58647156, 1.5792236, 1)
+size = Vector3(9.577505, 3.1354978, 0.078063965)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_anqkt"]
+size = Vector3(0.64123535, 0.92388916, 2.1832275)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ipukm"]
+size = Vector3(1.5932503, 1, 1.6205292)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6xtlq"]
+size = Vector3(1.3913574, 1.0517578, 0.7267914)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_oj4er"]
+viewport_path = NodePath("Ship/RadarMesh")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ipukm"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_oj4er")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_anqkt"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_ipukm")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_anqkt"]
+viewport_path = NodePath("Ship/GaugeMesh")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6xtlq"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_anqkt")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6xtlq"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_6xtlq")
 
 [node name="Avro Vulcan" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -45.41161, -2.0379658, 0)
 
 [node name="Ship" type="RigidBody3D" parent="." groups=["player_ship"]]
 unique_name_in_owner = true
@@ -68,15 +99,6 @@ light_energy = 150.0
 spot_range = 2000.0
 spot_angle = 20.0
 spot_angle_attenuation = 0.43527508
-
-[node name="Chair" type="RigidBody3D" parent="Ship"]
-unique_name_in_owner = true
-collision_layer = 34
-collision_mask = 0
-
-[node name="ChairCollider" type="CollisionShape3D" parent="Ship/Chair"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.724041, 5.1382627, -0.70475626)
-shape = SubResource("BoxShape3D_oam5h")
 
 [node name="Player2" parent="Ship" node_paths=PackedStringArray("camera") groups=["Player"] instance=ExtResource("3_ix3uc")]
 unique_name_in_owner = true
@@ -182,32 +204,6 @@ offset_right = 68.0
 offset_bottom = 60.0
 theme_override_font_sizes/font_size = 25
 
-[node name="Hardpoint_1" type="Marker3D" parent="Ship"]
-unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.48, 1.8, 1)
-
-[node name="Cannon" parent="Ship/Hardpoint_1" instance=ExtResource("7_qyh8x")]
-
-[node name="Exterior" type="Area3D" parent="Ship"]
-unique_name_in_owner = true
-collision_layer = 128
-collision_mask = 64
-
-[node name="CollisionShape3D7" type="CollisionShape3D" parent="Ship/Exterior"]
-transform = Transform3D(-3.3657768e-06, 0, 24.999998, 0, 19.999998, 0, -76.99999, 0, -1.0927845e-06, 60.85848, 2.6847868, 0.15352356)
-shape = SubResource("BoxShape3D_qyh8x")
-
-[node name="CollisionShape3D8" type="CollisionShape3D" parent="Ship/Exterior"]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 30, 24.608246, 4.162407, 0.43624878)
-shape = SubResource("BoxShape3D_0p50t")
-
-[node name="AiShootZone" type="Area3D" parent="Ship" groups=["player_ship"]]
-collision_layer = 256
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ship/AiShootZone"]
-transform = Transform3D(140, 0, 0, 0, 40, 0, 0, 0, 140, 41.585533, 0, 0)
-shape = SubResource("BoxShape3D_oj4er")
-
 [node name="HealthLabel" type="Label" parent="Ship"]
 unique_name_in_owner = true
 visible = false
@@ -217,33 +213,78 @@ offset_right = 68.0
 offset_bottom = 107.0
 theme_override_font_sizes/font_size = 25
 
+[node name="Hardpoint_1" type="Marker3D" parent="Ship"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.687416, 3.7446733, -4.338399)
+
+[node name="Cannon" parent="Ship/Hardpoint_1" instance=ExtResource("7_qyh8x")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7868671, 0, 0.24278021)
+
+[node name="Exterior" type="Area3D" parent="Ship"]
+unique_name_in_owner = true
+collision_layer = 128
+collision_mask = 64
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="Ship/Exterior"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 58.877834, 2.8490539, 0.073810704)
+shape = SubResource("BoxShape3D_qyh8x")
+
+[node name="CollisionShape3D8" type="CollisionShape3D" parent="Ship/Exterior"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.065506, 3.5327463, 0.005194664)
+shape = SubResource("BoxShape3D_0p50t")
+
+[node name="AiShootZone" type="Area3D" parent="Ship" groups=["player_ship"]]
+collision_layer = 256
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ship/AiShootZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.929016, 1.7210999, -0.18476868)
+shape = SubResource("BoxShape3D_oj4er")
+
 [node name="Interior" type="StaticBody3D" parent="Ship"]
 collision_layer = 2
 collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ship/Interior"]
-transform = Transform3D(9, 0, 0, 0, 1, 0, 0, 0, 5, 23.042404, 4.0701466, 0.15478945)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.625797, 4.0881367, -0.018521786)
 shape = SubResource("BoxShape3D_xljvd")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Ship/Interior"]
-transform = Transform3D(14, 0, 0, 0, 2, 0, 0, 0, 1, 24.198185, 3.746964, -2.780931)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.117731, 4.9571047, -2.7214522)
 shape = SubResource("BoxShape3D_h40nn")
 
 [node name="CollisionShape3D3" type="CollisionShape3D" parent="Ship/Interior"]
-transform = Transform3D(14, 0, 0, 0, 2, 0, 0, 0, 1, 24.284073, 3.8518858, 3.14751)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.84693, 4.974569, 2.6881077)
 shape = SubResource("BoxShape3D_h40nn")
 
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="Ship/Interior"]
-transform = Transform3D(-7.8457546, 0, 0.70090926, 0, 2, 0, -7.7100024, 0, -0.71325034, 18.755127, 3.8362508, 1.7786459)
+transform = Transform3D(-0.7132504, 0, 0.7009093, 0, 1, 0, -0.7009093, 0, -0.7132504, 19.13071, 3.8362508, 1.3795879)
 shape = SubResource("BoxShape3D_h40nn")
 
 [node name="CollisionShape3D5" type="CollisionShape3D" parent="Ship/Interior"]
-transform = Transform3D(7.710001, 0, 0.7132504, 0, 2, 0, -7.845754, 0, 0.7009092, 19.03668, 3.7833147, -1.7876729)
+transform = Transform3D(0.70090926, 0, 0.71325046, 0, 1, 0, -0.71325046, 0, 0.70090926, 19.354721, 3.7833147, -1.5953691)
 shape = SubResource("BoxShape3D_h40nn")
 
 [node name="CollisionShape3D6" type="CollisionShape3D" parent="Ship/Interior"]
-transform = Transform3D(-4.808253e-07, 0, 1, 0, 2.5, 0, -11, 0, -4.371139e-08, 28.357746, 6.2384057, 0.15352356)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 30.527283, 6.1767597, 0.15352356)
 shape = SubResource("BoxShape3D_h40nn")
+
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="Ship/Interior"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.539505, 5.107467, -0.014831543)
+shape = SubResource("BoxShape3D_anqkt")
+
+[node name="ChairCollider" type="CollisionShape3D" parent="Ship/Interior"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.657354, 5.1382627, -0.44371653)
+shape = SubResource("BoxShape3D_ipukm")
+
+[node name="Chair" type="StaticBody3D" parent="Ship"]
+unique_name_in_owner = true
+collision_layer = 32
+collision_mask = 0
+
+[node name="ChairCollider" type="CollisionShape3D" parent="Ship/Chair"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.755922, 5.110919, -0.7017083)
+shape = SubResource("BoxShape3D_6xtlq")
+
 [node name="RadarScreen" type="MeshInstance3D" parent="Ship"]
 transform = Transform3D(0.04953915, 0.92454606, 0, -0.120190986, 0.38107038, 0, 0, 0, 0.13, 19.041876, 5.098584, -0.7018804)
 mesh = SubResource("PlaneMesh_anqkt")
@@ -259,3 +300,23 @@ render_target_update_mode = 4
 
 [node name="Control" parent="Ship/RadarMesh" node_paths=PackedStringArray("player_ship") instance=ExtResource("8_0p50t")]
 player_ship = NodePath("../..")
+
+[node name="GaugeRight" type="MeshInstance3D" parent="Ship"]
+transform = Transform3D(0.013718533, 0.92454606, 0, -0.03328366, 0.38107038, 0, 0, 0, 0.036, 18.97377, 5.2995462, -0.79577065)
+mesh = SubResource("PlaneMesh_6xtlq")
+skeleton = NodePath("")
+
+[node name="GaugeCentre" type="MeshInstance3D" parent="Ship"]
+transform = Transform3D(0.013718533, 0.92454606, 0, -0.03328366, 0.38107038, 0, 0, 0, 0.036, 18.97377, 5.2995462, -0.6995481)
+mesh = SubResource("PlaneMesh_6xtlq")
+skeleton = NodePath("")
+
+[node name="GaugeLeft" type="MeshInstance3D" parent="Ship"]
+transform = Transform3D(0.013718533, 0.92454606, 0, -0.03328366, 0.38107038, 0, 0, 0, 0.036, 18.97377, 5.2995462, -0.6070895)
+mesh = SubResource("PlaneMesh_6xtlq")
+skeleton = NodePath("")
+
+[node name="GaugeMesh" type="SubViewport" parent="Ship"]
+size = Vector2i(100, 100)
+
+[node name="Control" parent="Ship/GaugeMesh" instance=ExtResource("11_anqkt")]
