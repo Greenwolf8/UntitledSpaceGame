@@ -1,28 +1,30 @@
-# UntitledSpaceGame
+# Untitled Space Game
 ### Title: TBD
 ### Genre: Large-scale Cooperative Space Vehicle Combat Simulator
-### Platform: PC									Structure: Round-Based Matches (30-60 Minutes)
+### Platform: PC	
+### Structure: Round-Based Matches (30-60 Minutes)
 
 ## Concept:
-A co-op open world space vehicle combat game set in an alternate history where humanity discovered an extremely powerful fuel in the early 1900’s, allowing humans to advance spaceflight technology much earlier than our timeline. Players crew spacecraft together and fight in strategic teams to destroy the enemy’s bases. Teams of 2-6 spacecraft (each with ~4 crew members) will combat both player ships, and destroy enemy bases over large battlefields around planets, asteroid fields, or even solar systems, with a variety of exotic (and extremely destructive) weaponry.
+A co-op space vehicle combat game set in an alternate history where humanity discovered an extremely powerful fuel in the early 1900’s, allowing humans to advance spaceflight technology much earlier than our timeline. Players crew spacecraft together and fight in strategic teams to destroy the enemy’s bases. Teams of 2-4 players will both destroy ai ships, and flatten enemy bases over large battlefields around planets, asteroid fields, or even solar systems, with a variety of exotic (and extremely destructive) weaponry.
 
 ## Design pillars: 
-* PvP focused, with PvE mode available (initially only PvE)
+* PvE base attack gamemode
 * Real-time internal ship interaction
 * Crew based Cooperative Gameplay
 * Mostly realistic technology
-* Grounded, retrofuturistism/NASA-Punk aesthetic
+* Grounded, retrofuturistism / casettefuturism
 
 ## Features:
 Multiple roles for different people to cooperatively crew a ship (Pilot, Gunner, Engineer, Systems, etc)
 High Stress, dogfighting or bombing gameplay
 Customizable hardpoints for weapons, and internal systems 
+Dynamic damage system
 
 ## Gameplay:
 * Players join a match and are assigned to a team
-* Teams spawn with ~4 multi-crew ships, each with 2-4 players
+* Teams spawn in groups of 2-4 in a ship
 * Players take on roles (pilot, gunner, engineer, etc.)
-* Engage enemy players and AI defenses
+* Engage enemy ships and AI base defenses
 * Earn resources through combat and participation
 * Use resources to upgrade/replace ships when needed
 * Push toward enemy objectives
@@ -37,7 +39,7 @@ Customizable hardpoints for weapons, and internal systems
 
 ## Initial Scope:
 * A few ships per nation
-* Focused on a single core PvE game mode (still Co-op, but only one ship)
+* Focused on a single core PvE game mode
 * Designed as a mid-scope project
 * Prioritizes depth of core mechanics over pure feature bulk
 * 2-3 player roles available
