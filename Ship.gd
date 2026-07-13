@@ -53,13 +53,13 @@ func _physics_process(_delta):
 	var pitch_input = Input.get_axis("move_back", "move_forward")
 	
 	if not Camerafree:
-		pitch_input += mouse_input.y * 0.15
-		yaw_input = -mouse_input.x * 0.15
+		pitch_input += mouse_input.y * 0.1
+		yaw_input = -mouse_input.x * 0.1
 	else:
 		yaw_input = 0
 	
-	pitch_input = clamp(pitch_input, -1, 1)
-	yaw_input = clamp(yaw_input, -1, 1)
+	#pitch_input = clamp(pitch_input, -1, 1)
+	#yaw_input = clamp(yaw_input, -1, 1)
 	
 	apply_central_force(forward_force)
 	apply_torque(transform.basis.z * pitch_input * pitch_torque)
@@ -83,6 +83,8 @@ func interact_pressed():
 	if canEnter:
 		if hit_object == %Chair:
 			_enter_ship()
+		else:
+			pass
 	else:
 		_leave_ship()
 

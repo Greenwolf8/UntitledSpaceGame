@@ -1,16 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://db8ho13mf013k"]
+[gd_scene load_steps=8 format=3 uid="uid://db8ho13mf013k"]
 
 [ext_resource type="Script" uid="uid://dchqc2wuhpd8b" path="res://ai_ship.gd" id="1_0jbod"]
 [ext_resource type="PackedScene" uid="uid://caf4dxmt3a5uf" path="res://AVRO.VULCAN_GAME.fbx" id="2_pnxum"]
 [ext_resource type="PackedScene" uid="uid://dv22jiaawgv6j" path="res://Cannon.tscn" id="3_pnxum"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0jbod"]
-size = Vector3(79.699, 7.5, 31.044)
+size = Vector3(60.02215, 3.2337952, 19.179157)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pnxum"]
-size = Vector3(1.6905518, 1, 4.5733643)
+size = Vector3(1.5085754, 0.80114746, 4.034851)
 
-[node name="Node3D" type="Node3D" groups=["enemy_ship", "player_ship"]]
+[sub_resource type="BoxShape3D" id="BoxShape3D_grfkr"]
+size = Vector3(58.597824, 3.5933228, 17.475616)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dre73"]
+size = Vector3(4.3200684, 0.6503906, 2.6889648)
+
+[node name="Node3D" type="Node3D" groups=["enemy_ship"]]
 
 [node name="AI_Ship" type="CharacterBody3D" parent="." node_paths=PackedStringArray("ai_health_label", "state_label", "distance_label") groups=["player_ship"]]
 collision_layer = 8
@@ -56,19 +62,6 @@ transform = Transform3D(1.2390542e-08, 0, -1, 0, 1, 0, 1, 0, 1.2390542e-08, -0.1
 light_color = Color(1, 0.90015465, 0.88309574, 1)
 light_energy = 2.0
 omni_range = 15.0
-
-[node name="CollisionArea" type="Area3D" parent="AI_Ship"]
-unique_name_in_owner = true
-collision_layer = 8
-collision_mask = 16
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AI_Ship/CollisionArea"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.20861816, 3.1207342, 59.587738)
-shape = SubResource("BoxShape3D_0jbod")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="AI_Ship/CollisionArea"]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -0.51208496, 3.7247477, 24.015566)
-shape = SubResource("BoxShape3D_pnxum")
 
 [node name="AiHealth" type="Label" parent="AI_Ship"]
 anchors_preset = 5
@@ -119,3 +112,25 @@ offset_top = 83.0
 offset_right = 12.0
 offset_bottom = 106.0
 grow_horizontal = 2
+
+[node name="Exterior" type="Area3D" parent="AI_Ship"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.13175637, 0, 0)
+collision_layer = 8
+collision_mask = 16
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AI_Ship/Exterior"]
+transform = Transform3D(0.6691305, 0, 0.7431448, 0, 1, 0, -0.7431448, 0, 0.6691305, -15.43289, 1.8243628, 52.904602)
+shape = SubResource("BoxShape3D_0jbod")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="AI_Ship/Exterior"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -0.27389526, 4.1965494, 21.323)
+shape = SubResource("BoxShape3D_pnxum")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="AI_Ship/Exterior"]
+transform = Transform3D(-0.6691306, 0, 0.74314475, 0, 1, 0, -0.74314475, 0, -0.6691306, 15.942456, 1.5660467, 52.93795)
+shape = SubResource("BoxShape3D_grfkr")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="AI_Ship/Exterior"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0.010528982, 2.4485025, 58.85321)
+shape = SubResource("BoxShape3D_dre73")
