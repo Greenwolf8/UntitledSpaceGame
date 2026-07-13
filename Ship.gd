@@ -12,6 +12,8 @@ extends RigidBody3D
 @onready var front_cast: RayCast3D = %FrontCast
 @onready var speed_label: Label = %Speed
 @onready var health_label: Label = %HealthLabel	
+@onready var radar_mesh: MeshInstance3D = $RadarScreen
+@onready var radar_viewport: SubViewport = $RadarMesh
 
 var mouse_input: Vector2 = Vector2.ZERO
 var health: int = 200
@@ -19,8 +21,13 @@ var Camerafree = false
 var withPlayer = false
 
 func _ready() -> void:
+	var viewport_texture = radar_viewport.get_texture()
+	var mat = radar_mesh.material_override as StandardMaterial3D
 	health_label.text = "Health: " + str(health)
 	%Exterior.area_entered.connect(_on_area_entered)
+	
+	if mat:
+		mat.albedo_texture = viewport_texture
 
 func _unhandled_input(event: InputEvent) -> void:
 	if Camerafree and event is InputEventMouseMotion:

@@ -1,0 +1,204 @@
+[gd_scene load_steps=10 format=3 uid="uid://dn6xv7p2jc156"]
+
+[ext_resource type="Script" uid="uid://c0h6di5hmy424" path="res://radar.gd" id="1_0rpa0"]
+[ext_resource type="Texture2D" uid="uid://blpkvpciy1v4r" path="res://Vulcan_Radar.png" id="1_p1h1t"]
+[ext_resource type="Texture2D" uid="uid://dsno7mnctp8kw" path="res://RadarLines.png" id="2_0rpa0"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_ab6hm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qud4v"]
+albedo_color = Color(0, 0.29411766, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_p1h1t"]
+material = SubResource("StandardMaterial3D_qud4v")
+
+[sub_resource type="BoxMesh" id="BoxMesh_0rpa0"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_wc40b"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_cqmhj"]
+
+[node name="Control" type="Control"]
+top_level = true
+layout_mode = 3
+anchors_preset = 0
+offset_top = 550.0
+offset_right = 550.0
+offset_bottom = 1100.0
+rotation = -1.5707964
+script = ExtResource("1_0rpa0")
+
+[node name="WallCentre" type="MeshInstance2D" parent="."]
+modulate = Color(0, 0.33405134, 0, 1)
+z_index = 2
+position = Vector2(275, 305.49997)
+scale = Vector2(550, 489)
+mesh = SubResource("BoxMesh_ab6hm")
+
+[node name="WallLeft" type="MeshInstance2D" parent="."]
+modulate = Color(0, 0.27730417, 0, 1)
+z_index = 10
+position = Vector2(27.5, 275)
+scale = Vector2(55, 550)
+mesh = SubResource("BoxMesh_p1h1t")
+
+[node name="WallRight" type="MeshInstance2D" parent="."]
+modulate = Color(0, 0.27730417, 0, 1)
+z_index = 10
+position = Vector2(522.5, 275)
+scale = Vector2(55, 550)
+mesh = SubResource("BoxMesh_0rpa0")
+
+[node name="VulcanRadar" type="Sprite2D" parent="."]
+z_index = 10
+position = Vector2(275, 510)
+rotation = 1.5707964
+scale = Vector2(0.075, 0.075)
+texture = ExtResource("1_p1h1t")
+
+[node name="RadarTip" type="MeshInstance2D" parent="."]
+modulate = Color(0.09411765, 0.43529412, 0, 1)
+visibility_layer = 4
+z_index = 2
+position = Vector2(285, 525.00006)
+scale = Vector2(1000, 1000)
+mesh = SubResource("SphereMesh_wc40b")
+
+[node name="WallCentreTop" type="MeshInstance2D" parent="."]
+modulate = Color(0, 0.33405134, 0, 1)
+position = Vector2(275, 50)
+scale = Vector2(550, 100)
+mesh = SubResource("BoxMesh_ab6hm")
+
+[node name="RadarLines" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(275, 569)
+rotation = 1.5707964
+texture = ExtResource("2_0rpa0")
+
+[node name="RadarLine2" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(275, 619)
+rotation = 1.5707964
+texture = ExtResource("2_0rpa0")
+
+[node name="RadarLine3" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(275, 669)
+rotation = 1.5707964
+texture = ExtResource("2_0rpa0")
+
+[node name="RadarLine4" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(275, 719)
+rotation = 1.5707964
+texture = ExtResource("2_0rpa0")
+
+[node name="RadarLine5" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(275, 769)
+rotation = 1.5707964
+texture = ExtResource("2_0rpa0")
+
+[node name="RadarLine6" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(275, 819)
+rotation = 1.5707964
+texture = ExtResource("2_0rpa0")
+
+[node name="RadarLine7" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(275, 869)
+rotation = 1.5707964
+texture = ExtResource("2_0rpa0")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+modulate = Color(0, 0.33333334, 0, 1)
+z_index = 4
+position = Vector2(643.71906, 275)
+scale = Vector2(550, 617.2794)
+skew = 0.4712389
+mesh = SubResource("BoxMesh_cqmhj")
+
+[node name="MeshInstance2D2" type="MeshInstance2D" parent="."]
+modulate = Color(0, 0.33333334, 0, 1)
+z_index = 4
+position = Vector2(-93.461716, 274.5)
+scale = Vector2(550, 613.04364)
+skew = -0.4537856
+mesh = SubResource("BoxMesh_cqmhj")
+
+[node name="Label 100" type="Label" parent="."]
+z_index = 10
+layout_mode = 0
+offset_left = 190.0
+offset_top = 365.0
+offset_right = 364.0
+offset_bottom = 415.0
+text = "100                           100
+"
+
+[node name="Label 200" type="Label" parent="."]
+z_index = 10
+layout_mode = 0
+offset_left = 170.0
+offset_top = 315.0
+offset_right = 379.0
+offset_bottom = 365.0
+text = "200                                     200
+"
+
+[node name="Label 300" type="Label" parent="."]
+z_index = 10
+layout_mode = 0
+offset_left = 149.0
+offset_top = 269.0
+offset_right = 425.0
+offset_bottom = 319.0
+text = "300                                                 300
+"
+
+[node name="Label 400" type="Label" parent="."]
+z_index = 10
+layout_mode = 0
+offset_left = 125.0
+offset_top = 225.0
+offset_right = 426.0
+offset_bottom = 275.0
+text = "400                                                           400
+"
+
+[node name="Label 500" type="Label" parent="."]
+z_index = 10
+layout_mode = 0
+offset_left = 105.0
+offset_top = 180.0
+offset_right = 464.0
+offset_bottom = 230.0
+text = "500                                                                      500
+"
+
+[node name="Label 600" type="Label" parent="."]
+z_index = 10
+layout_mode = 0
+offset_left = 83.0
+offset_top = 135.0
+offset_right = 475.0
+offset_bottom = 185.0
+text = "600                                                                                600
+"
+
+[node name="Label 700" type="Label" parent="."]
+z_index = 10
+layout_mode = 0
+offset_left = 58.0
+offset_top = 92.0
+offset_right = 492.0
+offset_bottom = 142.0
+text = "700                                                                                           700
+"
+
+[node name="BlipContainer" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
