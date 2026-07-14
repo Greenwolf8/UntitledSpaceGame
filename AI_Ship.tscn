@@ -16,11 +16,11 @@ size = Vector3(58.597824, 3.5933228, 17.475616)
 [sub_resource type="BoxShape3D" id="BoxShape3D_dre73"]
 size = Vector3(4.3200684, 0.6503906, 2.6889648)
 
-[node name="Node3D" type="Node3D" groups=["enemy_ship"]]
+[node name="AI_Ship_Node" type="Node3D" groups=["enemy_ship"]]
 
 [node name="AI_Ship" type="CharacterBody3D" parent="." node_paths=PackedStringArray("ai_health_label", "state_label", "distance_label") groups=["player_ship"]]
 collision_layer = 8
-collision_mask = 16
+collision_mask = 4
 script = ExtResource("1_0jbod")
 ai_health_label = NodePath("AiHealth")
 state_label = NodePath("StateLabel")
@@ -132,5 +132,21 @@ transform = Transform3D(-0.6691306, 0, 0.74314475, 0, 1, 0, -0.74314475, 0, -0.6
 shape = SubResource("BoxShape3D_grfkr")
 
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="AI_Ship/Exterior"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0.010528982, 2.4485025, 58.85321)
+shape = SubResource("BoxShape3D_dre73")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AI_Ship"]
+transform = Transform3D(0.6691305, 0, 0.7431448, 0, 1, 0, -0.7431448, 0, 0.6691305, -15.43289, 1.8243628, 52.904602)
+shape = SubResource("BoxShape3D_0jbod")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="AI_Ship"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -0.27389526, 4.1965494, 21.323)
+shape = SubResource("BoxShape3D_pnxum")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="AI_Ship"]
+transform = Transform3D(-0.6691306, 0, 0.74314475, 0, 1, 0, -0.74314475, 0, -0.6691306, 15.942456, 1.5660467, 52.93795)
+shape = SubResource("BoxShape3D_grfkr")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="AI_Ship"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0.010528982, 2.4485025, 58.85321)
 shape = SubResource("BoxShape3D_dre73")

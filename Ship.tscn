@@ -71,8 +71,8 @@ material = SubResource("StandardMaterial3D_6xtlq")
 
 [node name="Ship" type="RigidBody3D" parent="." groups=["player_ship"]]
 unique_name_in_owner = true
-collision_layer = 0
-collision_mask = 0
+collision_layer = 128
+collision_mask = 4
 continuous_cd = true
 linear_damp = 1.0
 angular_damp = 3.0
@@ -241,6 +241,7 @@ shape = SubResource("BoxShape3D_0p50t")
 
 [node name="AiShootZone" type="Area3D" parent="Ship" groups=["player_ship"]]
 collision_layer = 256
+collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Ship/AiShootZone"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.929016, 1.7210999, -0.18476868)
@@ -359,14 +360,10 @@ stream = ExtResource("15_snmvu")
 unique_name_in_owner = true
 stream = ExtResource("16_rnkl5")
 
-[node name="BTPlayer" type="BTPlayer" parent="Ship"]
-_import_path = NodePath("")
-unique_name_in_owner = false
-process_mode = 0
-process_priority = 0
-process_physics_priority = 0
-process_thread_group = 0
-physics_interpolation_mode = 0
-auto_translate_mode = 0
-editor_description = ""
-script = null
+[node name="CollisionShape3D7" type="CollisionShape3D" parent="Ship"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 58.877834, 2.8490539, 0.073810704)
+shape = SubResource("BoxShape3D_qyh8x")
+
+[node name="CollisionShape3D8" type="CollisionShape3D" parent="Ship"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.065506, 3.5327463, 0.005194664)
+shape = SubResource("BoxShape3D_0p50t")
