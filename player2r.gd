@@ -1,6 +1,5 @@
 extends CharacterBody3D
-@onready var camera_3d2: Camera3D = %Camera3D2
-@export var camera: Camera3D
+@onready var camera: Camera3D = %PlayerCamera
 @onready var down_cast: RayCast3D = %RayCast3D
 @onready var front_cast: RayCast3D = %FrontCast
 
@@ -14,6 +13,7 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	front_cast.add_exception(self)
 	mouse_locked = true
+	camera.current = true
 
 func _unhandled_input(event: InputEvent) -> void:
 	if mouse_locked == false and event is not InputEventMouseMotion:
@@ -27,10 +27,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		mouse_locked = false
 	
 	if event is InputEventMouseMotion:
-		%Camera3D2.rotation_degrees.y -= event.relative.x * 0.5
-		%Camera3D2.rotation_degrees.x -= event.relative.y * 0.5
-		%Camera3D2.rotation_degrees.x = clamp(
-			%Camera3D2.rotation_degrees.x, -80.0, 80.0
+		camera.rotation_degrees.y -= event.relative.x * 0.5
+		camera.rotation_degrees.x -= event.relative.y * 0.5
+		camera.rotation_degrees.x = clamp(
+			camera.rotation_degrees.x, -80.0, 80.0
 		)
 	
 
@@ -40,7 +40,7 @@ func _physics_process(delta: float) -> void:
 		return
 	
 	var input_dir := Input.get_vector ("move_left","move_right","move_forward", "move_back")
-	var cam_basis := camera_3d2.global_transform.basis
+	var cam_basis := camera.global_transform.basis
 	var ship_basis : Basis = parent.global_transform.basis
 	var forward := -cam_basis.z
 	var right := cam_basis.x
@@ -82,11 +82,11 @@ func _physics_process(delta: float) -> void:
 func enter_ship():
 	set_physics_process(false)
 	hide()
-	camera_3d2.current = false
+	camera.current = false
 	
 func leave_ship():
 	position = leave_seat_location
 	velocity = get_platform_velocity()
 	set_physics_process(true)
 	show()
-	camera_3d2.current = true 
+	camera.current = true 

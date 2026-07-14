@@ -114,23 +114,22 @@ spot_range = 2000.0
 spot_angle = 20.0
 spot_angle_attenuation = 0.43527508
 
-[node name="Player2" parent="Ship" node_paths=PackedStringArray("camera") groups=["Player"] instance=ExtResource("3_ix3uc")]
+[node name="Player2" parent="Ship" groups=["Player"] instance=ExtResource("3_ix3uc")]
 unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 24.80692, 5.2056346, 0.11440277)
 collision_mask = 14
 script = ExtResource("4_7se24")
-camera = NodePath("Camera3D2")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="Ship/Player2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0134655, 0)
 shape = SubResource("CapsuleShape3D_7se24")
 
-[node name="Camera3D2" type="Camera3D" parent="Ship/Player2"]
+[node name="PlayerCamera" type="Camera3D" parent="Ship/Player2"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5089775, -0.34458575)
 current = true
 
-[node name="FrontCast" type="RayCast3D" parent="Ship/Player2/Camera3D2"]
+[node name="FrontCast" type="RayCast3D" parent="Ship/Player2/PlayerCamera"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.450581e-09, 0.011189461, -0.21256447)
 target_position = Vector3(0, 0, -1.5)
