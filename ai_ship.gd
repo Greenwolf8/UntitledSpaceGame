@@ -13,7 +13,7 @@ extends CharacterBody3D
 @onready var fire_timer = %Hardpoint_1/Cannon/Cannon/FireTimer
 @onready var player : RigidBody3D
 
-enum State { PATROL, CHASE, BOOM, ZOOM}
+enum State { PATROL, CHASE, BOOM, ZOOM, PLAYER_DESTROYED}
 var current_state = State.CHASE
 var player_position := Vector3.ZERO
 var ai_health : int = 200
@@ -51,10 +51,18 @@ func _physics_process(delta):
 				current_state = State.ZOOM
 				zooming = true
 				target_position = global_position + (upwards_direction * 400)
+			elif Global.player_ship_destroyed == true:
+				current_state = State.PLAYER_DESTROYED
 		State.ZOOM:
 			if global_position.distance_to(player_position) > 400:
 				zooming = false
 				current_state = State.BOOM
+			elif Global.player_ship_destroyed == true:
+				current_state = State.PLAYER_DESTROYED
+				
+		State.PLAYER_DESTROYED:
+			target_position = global_position + (upwards_direction * 800)
+			
 	
 	var dir_to_target = (target_position - global_position).normalized()
 	var local_forward = -global_transform.basis.z 

@@ -20,6 +20,7 @@ var health: int = 200
 var Camerafree = false
 var withPlayer = false
 
+
 func _ready() -> void:
 	var viewport_texture = radar_viewport.get_texture()
 	var mat = radar_mesh.material_override as StandardMaterial3D
@@ -57,9 +58,6 @@ func _physics_process(_delta):
 		yaw_input = -mouse_input.x * 0.1
 	else:
 		yaw_input = 0
-	
-	#pitch_input = clamp(pitch_input, -1, 1)
-	#yaw_input = clamp(yaw_input, -1, 1)
 	
 	apply_central_force(forward_force)
 	apply_torque(transform.basis.z * pitch_input * pitch_torque)
@@ -141,15 +139,19 @@ func _on_area_entered(area: Area3D) -> void:
 		hit()
 		area.queue_free() 
 
+func ship_destroyed():
+	self.hide()
+	print("Destroyed!")
+	set_physics_process(false)
+	Global.player_ship_destroyed = true
+
 func hit():
 	health -= randi_range(2, 15)
 	if health < 0:
 		health = 0
 	health_label.text = "Ship Health: " + str(health)
 	if health <= 0:
-		self.hide()
-		print("Destroyed!")
-		set_physics_process(false)
+		ship_destroyed()
 	
 	var bullet_sfx = randi_range(1, 4)
 	if bullet_sfx == 1:
