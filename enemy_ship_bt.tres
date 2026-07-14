@@ -1,0 +1,29 @@
+[gd_resource type="BehaviorTree" load_steps=3 format=3 uid="uid://tp06os0hj58i"]
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_b268q"]
+var/target_player/name = &"target_player"
+var/target_player/type = 22
+var/target_player/value = NodePath("")
+var/target_player/hint = 0
+var/target_player/hint_string = ""
+var/aggro_range/name = &"aggro_range"
+var/aggro_range/type = 3
+var/aggro_range/value = 50.0
+var/aggro_range/hint = 0
+var/aggro_range/hint_string = ""
+var/attack_range/name = &"attack_range"
+var/attack_range/type = 3
+var/attack_range/value = 500.0
+var/attack_range/hint = 0
+var/attack_range/hint_string = ""
+var/flight_speed/name = &"flight_speed"
+var/flight_speed/type = 3
+var/flight_speed/value = 15.0
+var/flight_speed/hint = 0
+var/flight_speed/hint_string = ""
+
+[sub_resource type="BTSelector" id="BTSelector_7fkph"]
+
+[resource]
+blackboard_plan = SubResource("BlackboardPlan_b268q")
+root_task = SubResource("BTSelector_7fkph")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://b3ovqfvf46vnf"]
+[gd_scene load_steps=36 format=3 uid="uid://b3ovqfvf46vnf"]
 
 [ext_resource type="Script" uid="uid://dmt2egmpr1xr6" path="res://Ship.gd" id="1_ix3uc"]
 [ext_resource type="PackedScene" uid="uid://c47xfpp33sxfd" path="res://AVRO.VULCAN.glb" id="2_qyh8x"]
@@ -66,6 +66,13 @@ albedo_texture = SubResource("ViewportTexture_anqkt")
 [sub_resource type="PlaneMesh" id="PlaneMesh_6xtlq"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_6xtlq")
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_w02ct"]
+
+[sub_resource type="BehaviorTree" id="BehaviorTree_snmvu"]
+blackboard_plan = SubResource("BlackboardPlan_w02ct")
+
+[sub_resource type="BlackboardPlan" id="BlackboardPlan_rnkl5"]
 
 [node name="Avro Vulcan" type="Node3D"]
 
@@ -359,3 +366,7 @@ stream = ExtResource("15_snmvu")
 [node name="Gun3" type="AudioStreamPlayer3D" parent="Ship"]
 unique_name_in_owner = true
 stream = ExtResource("16_rnkl5")
+
+[node name="BTPlayer" type="BTPlayer" parent="Ship"]
+behavior_tree = SubResource("BehaviorTree_snmvu")
+blackboard_plan = SubResource("BlackboardPlan_rnkl5")
