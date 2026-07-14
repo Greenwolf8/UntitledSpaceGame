@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://b3ovqfvf46vnf"]
+[gd_scene load_steps=30 format=3 uid="uid://b3ovqfvf46vnf"]
 
 [ext_resource type="Script" uid="uid://dmt2egmpr1xr6" path="res://Ship.gd" id="1_ix3uc"]
 [ext_resource type="PackedScene" uid="uid://c47xfpp33sxfd" path="res://AVRO.VULCAN.glb" id="2_qyh8x"]
@@ -8,7 +8,11 @@
 [ext_resource type="Script" uid="uid://b6twbgdec6wj5" path="res://BonusPlayer.gd" id="6_7se24"]
 [ext_resource type="PackedScene" uid="uid://dv22jiaawgv6j" path="res://Cannon.tscn" id="7_qyh8x"]
 [ext_resource type="PackedScene" uid="uid://dn6xv7p2jc156" path="res://Radar.tscn" id="8_0p50t"]
+[ext_resource type="AudioStream" uid="uid://dgv4dhpltqoxj" path="res://Bullet_Strike.mp3" id="10_ipukm"]
+[ext_resource type="AudioStream" uid="uid://ok7ri5dnvm0f" path="res://bullet_strike_2.mp3" id="11_41xxw"]
 [ext_resource type="PackedScene" uid="uid://eoe27572ecox" path="res://Gauge.tscn" id="11_anqkt"]
+[ext_resource type="AudioStream" uid="uid://os60jo5ux613" path="res://bullet_strike_3.mp3" id="12_jgit3"]
+[ext_resource type="AudioStream" uid="uid://dsdc1wfbck6at" path="res://bullet_strike_4.mp3" id="13_bunge"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7se24"]
 
@@ -320,3 +324,23 @@ skeleton = NodePath("")
 size = Vector2i(100, 100)
 
 [node name="Control" parent="Ship/GaugeMesh" instance=ExtResource("11_anqkt")]
+
+[node name="BulletStrike1" type="AudioStreamPlayer3D" parent="Ship"]
+unique_name_in_owner = true
+stream = ExtResource("10_ipukm")
+bus = &"Bullet Strike"
+
+[node name="BulletStrike2" type="AudioStreamPlayer3D" parent="Ship"]
+unique_name_in_owner = true
+stream = ExtResource("11_41xxw")
+bus = &"Bullet Strike"
+
+[node name="BulletStrike3" type="AudioStreamPlayer3D" parent="Ship"]
+unique_name_in_owner = true
+stream = ExtResource("12_jgit3")
+bus = &"Bullet Strike"
+
+[node name="BulletStrike4" type="AudioStreamPlayer3D" parent="Ship"]
+unique_name_in_owner = true
+stream = ExtResource("13_bunge")
+bus = &"Bullet Strike"

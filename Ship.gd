@@ -144,3 +144,14 @@ func hit():
 		self.hide()
 		print("Destroyed!")
 		set_physics_process(false)
+	
+	var bullet_sfx = randi_range(1, 4)
+	if bullet_sfx == 1:
+		%BulletStrike1.play()
+	elif bullet_sfx == 2:
+		%BulletStrike2.play()
+	elif bullet_sfx == 3:
+		%BulletStrike3.play()
+	elif bullet_sfx == 4:
+		%BulletStrike4.play()
+	print(bullet_sfx)
