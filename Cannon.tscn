@@ -16,8 +16,9 @@ wait_time = 0.05
 one_shot = true
 
 [node name="PreFireTimer" type="Timer" parent="Cannon"]
-wait_time = 0.5
+wait_time = 0.35
 one_shot = true
 
 [node name="FireTime" type="Timer" parent="Cannon"]
+wait_time = 1.2
 one_shot = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://b3ovqfvf46vnf"]
+[gd_scene load_steps=33 format=3 uid="uid://b3ovqfvf46vnf"]
 
 [ext_resource type="Script" uid="uid://dmt2egmpr1xr6" path="res://Ship.gd" id="1_ix3uc"]
 [ext_resource type="PackedScene" uid="uid://c47xfpp33sxfd" path="res://AVRO.VULCAN.glb" id="2_qyh8x"]
@@ -13,6 +13,9 @@
 [ext_resource type="PackedScene" uid="uid://eoe27572ecox" path="res://Gauge.tscn" id="11_anqkt"]
 [ext_resource type="AudioStream" uid="uid://os60jo5ux613" path="res://bullet_strike_3.mp3" id="12_jgit3"]
 [ext_resource type="AudioStream" uid="uid://dsdc1wfbck6at" path="res://bullet_strike_4.mp3" id="13_bunge"]
+[ext_resource type="AudioStream" uid="uid://j3iay6daueha" path="res://Gun_1 (1).wav" id="14_w02ct"]
+[ext_resource type="AudioStream" uid="uid://csj482gww7emp" path="res://Gun_2 (1).wav" id="15_snmvu"]
+[ext_resource type="AudioStream" uid="uid://b0kkpy0jrkj0f" path="res://Gun_3 (1).wav" id="16_rnkl5"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7se24"]
 
@@ -344,3 +347,15 @@ bus = &"Bullet Strike"
 unique_name_in_owner = true
 stream = ExtResource("13_bunge")
 bus = &"Bullet Strike"
+
+[node name="Gun1" type="AudioStreamPlayer3D" parent="Ship"]
+unique_name_in_owner = true
+stream = ExtResource("14_w02ct")
+
+[node name="Gun2" type="AudioStreamPlayer3D" parent="Ship"]
+unique_name_in_owner = true
+stream = ExtResource("15_snmvu")
+
+[node name="Gun3" type="AudioStreamPlayer3D" parent="Ship"]
+unique_name_in_owner = true
+stream = ExtResource("16_rnkl5")

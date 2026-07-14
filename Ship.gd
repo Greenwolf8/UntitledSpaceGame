@@ -74,7 +74,12 @@ func _physics_process(_delta):
 		shoot()
 	
 	if Input.is_action_just_pressed("fire") and withPlayer:
+		%Gun1.play()
 		just_shot()
+	
+	if Input.is_action_just_released("fire"):
+		%Gun2.stop()
+		%Gun3.play()
 
 func interact_pressed():
 	var canEnter = not withPlayer
@@ -105,9 +110,10 @@ func just_shot():
 	await get_tree().create_timer(0.05).timeout
 	fire_time.start()
 
+
 func shoot():
-	await get_tree().create_timer(0.05).timeout
 	if fire_timer.is_stopped() and pre_fire_timer.is_stopped() and fire_time.time_left > 0:
+			%Gun2.play()
 			fire_timer.start()
 			var bullet = bullet_scene.instantiate()
 			get_tree().root.add_child(bullet)
@@ -154,4 +160,3 @@ func hit():
 		%BulletStrike3.play()
 	elif bullet_sfx == 4:
 		%BulletStrike4.play()
-	print(bullet_sfx)
