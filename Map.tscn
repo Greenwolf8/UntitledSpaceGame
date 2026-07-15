@@ -24,7 +24,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 500, 0, 0)
 environment = SubResource("Environment_8qak7")
 
 [node name="AsteroidNode" parent="." instance=ExtResource("4_7if1s")]
-transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, -3500, 0, 0)
+transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, -4000, 0, 0)
 
 [node name="AsteroidNode2" parent="." instance=ExtResource("4_7if1s")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -500, 198.66833, 398.25745)
@@ -36,4 +36,4 @@ transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -691.0146, -68.485886, 
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -675.98895, 141.18442, 124.346344)
 
 [node name="AI_Ship_Node" parent="." instance=ExtResource("3_3h1ab")]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, -1000, 0, 500)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1000, 0, -1000)

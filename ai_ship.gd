@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 @export var speed := 120
 @export var rotation_speed := 1.5
-@export var pitch_speed := 1.0
+@export var pitch_speed := 0.85
 @export var bullet_scene : PackedScene = preload("res://Enemy_bullet.tscn")
 @export var ai_health_label : Label
 @export var state_label : Label
@@ -12,10 +12,11 @@ extends CharacterBody3D
 @onready var state_timer = %StateTimer
 @onready var fire_point = %Hardpoint_1/Cannon/Cannon/MuzzleExit
 @onready var fire_timer = %Hardpoint_1/Cannon/Cannon/FireTimer
+@onready var sight_area = %Sight
 @onready var player : RigidBody3D
 
-enum State { PATROL, CHASE, BOOM, ZOOM, PLAYER_DESTROYED}
-var current_state = State.CHASE
+enum State {PATROL, BOOM, ZOOM, PLAYER_DESTROYED}
+var current_state = State.PATROL
 var player_position := Vector3.ZERO
 var ai_health : int = 200
 var target_position = Vector3.ZERO
@@ -28,7 +29,6 @@ func _ready() -> void:
 	state_label.text = "State: " + str(current_state) + str(zooming)
 	distance_label.text = "Distance: " + str(global_position.distance_to(player_position))
 	%Exterior.area_entered.connect(_on_area_entered)
-	current_state = State.BOOM
 	%Trigger.add_exception(self)
 
 func _physics_process(delta):
@@ -39,12 +39,11 @@ func _physics_process(delta):
 		shoot()
 	
 	var current_transform = global_transform
-	var forward_direction = -current_transform.basis.z.normalized()
 	var upwards_direction = current_transform.basis.y.normalized()
 	
 	if player:
 		player_position = player.global_position
-	
+		
 	match current_state:
 		State.BOOM:
 			target_position = player_position
@@ -54,16 +53,21 @@ func _physics_process(delta):
 				target_position = global_position + (upwards_direction * 400)
 			elif Global.player_ship_destroyed == true:
 				current_state = State.PLAYER_DESTROYED
+		
 		State.ZOOM:
 			if global_position.distance_to(player_position) > 400:
 				zooming = false
 				current_state = State.BOOM
 			elif Global.player_ship_destroyed == true:
 				current_state = State.PLAYER_DESTROYED
-				
+		
 		State.PLAYER_DESTROYED:
 			target_position = global_position + (upwards_direction * 800)
-			
+		
+		State.PATROL:
+			target_position = global_position
+			if global_position.distance_to(player_position) <= 750:
+				current_state = State.BOOM
 	
 	var dir_to_target = (target_position - global_position).normalized()
 	var local_forward = -global_transform.basis.z 
@@ -85,6 +89,16 @@ func _physics_process(delta):
 			var pitch_step = sign(pitch_error) * min(abs(pitch_error), pitch_speed * delta)
 			rotate_object_local(Vector3.RIGHT, pitch_step)
 	
+	if current_state != 2:
+		if global_position.distance_to(target_position) <= 100:
+			speed = 75
+		elif global_position.distance_to(target_position) <= 300:
+			speed = 100
+		elif global_position.distance_to(target_position) <= 300:
+			speed = 200
+	else:
+		speed = 200
+	
 	velocity = -global_transform.basis.z.normalized() * speed
 	move_and_slide()
 
@@ -98,6 +112,8 @@ func hit():
 	if ai_health <0:
 		ai_health = 0
 	ai_health_label.text = "Enemy Ship Health: " + str(ai_health)
+	if current_state == 0:
+		current_state = State.BOOM
 	if ai_health <= 0:
 		self.hide()
 		print("Enemy Destroyed!")

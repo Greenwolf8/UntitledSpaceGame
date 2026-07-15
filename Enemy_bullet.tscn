@@ -15,7 +15,7 @@ emission_energy_multiplier = 20.0
 
 [node name="Bullet" type="CharacterBody3D" parent="."]
 collision_layer = 64
-collision_mask = 0
+collision_mask = 132
 script = ExtResource("1_55q1p")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Bullet"]
@@ -38,6 +38,6 @@ collision_mask = 0
 transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_id2sd")
 
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24.46146)
-visible = false
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Bullet"]
+transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_id2sd")

@@ -1,6 +1,6 @@
 extends RigidBody3D
 
-@export var engine_power = 250
+@export var engine_power = 150
 @export var roll_torque = 1200
 @export var pitch_torque = 1000
 @export var bullet_scene : PackedScene = preload("res://Bullet.tscn")
@@ -163,7 +163,7 @@ func ship_destroyed():
 	%Engine_2.stop()
 
 func hit():
-	health -= randi_range(2, 15)
+	health -= randi_range(1, 10)
 	if health < 0:
 		health = 0
 	health_label.text = "Ship Health: " + str(health)
