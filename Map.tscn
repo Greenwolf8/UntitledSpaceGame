@@ -18,6 +18,7 @@ sky = SubResource("Sky_v6avs")
 [node name="Node3D" type="Node3D"]
 
 [node name="Avro Vulcan" parent="." instance=ExtResource("2_3vi7k")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 500, 0, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_8qak7")

@@ -85,7 +85,8 @@ script = ExtResource("1_ix3uc")
 
 [node name="Camera3D" type="Camera3D" parent="Ship"]
 unique_name_in_owner = true
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 20.298231, 5.9077797, -0.67497003)
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 19.586086, 5.7281184, -0.67497)
+fov = 100.0
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Ship"]
 unique_name_in_owner = true
@@ -296,7 +297,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.755922, 5.110919, -0.70170
 shape = SubResource("BoxShape3D_6xtlq")
 
 [node name="RadarScreen" type="MeshInstance3D" parent="Ship"]
-transform = Transform3D(0.04953915, 0.92454606, 0, -0.120190986, 0.38107038, 0, 0, 0, 0.13, 19.041876, 5.098584, -0.7018804)
+transform = Transform3D(0.04953915, 0.92454606, 0, -0.120190986, 0.38107038, 0, 0, 0, 0.13, 18.982243, 5.248833, -0.7018804)
 mesh = SubResource("PlaneMesh_anqkt")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Ship/RadarScreen"]
@@ -312,17 +313,17 @@ render_target_update_mode = 4
 player_ship = NodePath("../..")
 
 [node name="GaugeRight" type="MeshInstance3D" parent="Ship"]
-transform = Transform3D(0.013718533, 0.92454606, 0, -0.03328366, 0.38107038, 0, 0, 0, 0.036, 18.97377, 5.2995462, -0.79577065)
+transform = Transform3D(0.013718533, 0.92454606, 0, -0.03328366, 0.38107038, 0, 0, 0, 0.036, 18.914137, 5.4497952, -0.79577065)
 mesh = SubResource("PlaneMesh_6xtlq")
 skeleton = NodePath("")
 
 [node name="GaugeCentre" type="MeshInstance3D" parent="Ship"]
-transform = Transform3D(0.013718533, 0.92454606, 0, -0.03328366, 0.38107038, 0, 0, 0, 0.036, 18.97377, 5.2995462, -0.6995481)
+transform = Transform3D(0.013718533, 0.92454606, 0, -0.03328366, 0.38107038, 0, 0, 0, 0.036, 18.914137, 5.4497952, -0.6995481)
 mesh = SubResource("PlaneMesh_6xtlq")
 skeleton = NodePath("")
 
 [node name="GaugeLeft" type="MeshInstance3D" parent="Ship"]
-transform = Transform3D(0.013718533, 0.92454606, 0, -0.03328366, 0.38107038, 0, 0, 0, 0.036, 18.97377, 5.2995462, -0.6070895)
+transform = Transform3D(0.013718533, 0.92454606, 0, -0.03328366, 0.38107038, 0, 0, 0, 0.036, 18.914137, 5.4497952, -0.6070895)
 mesh = SubResource("PlaneMesh_6xtlq")
 skeleton = NodePath("")
 
