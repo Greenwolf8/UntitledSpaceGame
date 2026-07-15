@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://b3ovqfvf46vnf"]
+[gd_scene load_steps=36 format=3 uid="uid://b3ovqfvf46vnf"]
 
 [ext_resource type="Script" uid="uid://dmt2egmpr1xr6" path="res://Ship.gd" id="1_ix3uc"]
 [ext_resource type="PackedScene" uid="uid://c47xfpp33sxfd" path="res://AVRO.VULCAN.glb" id="2_qyh8x"]
@@ -16,6 +16,9 @@
 [ext_resource type="AudioStream" uid="uid://j3iay6daueha" path="res://Gun_1 (1).wav" id="14_w02ct"]
 [ext_resource type="AudioStream" uid="uid://csj482gww7emp" path="res://Gun_2 (1).wav" id="15_snmvu"]
 [ext_resource type="AudioStream" uid="uid://b0kkpy0jrkj0f" path="res://Gun_3 (1).wav" id="16_rnkl5"]
+[ext_resource type="AudioStream" uid="uid://ct6xruwsgfar5" path="res://Engine_1 (1).wav" id="17_g0nn0"]
+[ext_resource type="AudioStream" uid="uid://qvyw5kd2eidg" path="res://Engine_2 (1).wav" id="18_s83w2"]
+[ext_resource type="AudioStream" uid="uid://rej1pfytl4o6" path="res://Engine_3 (1).wav" id="19_41uc2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7se24"]
 
@@ -350,15 +353,21 @@ bus = &"Bullet Strike"
 
 [node name="Gun1" type="AudioStreamPlayer3D" parent="Ship"]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.154766, 3.7444668, -4.3685455)
 stream = ExtResource("14_w02ct")
+volume_db = -20.0
 
 [node name="Gun2" type="AudioStreamPlayer3D" parent="Ship"]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.154766, 3.7444668, -4.3685455)
 stream = ExtResource("15_snmvu")
+volume_db = -20.0
 
 [node name="Gun3" type="AudioStreamPlayer3D" parent="Ship"]
 unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.154766, 3.7444668, -4.3685455)
 stream = ExtResource("16_rnkl5")
+volume_db = -20.0
 
 [node name="CollisionShape3D7" type="CollisionShape3D" parent="Ship"]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 58.877834, 2.8490539, 0.073810704)
@@ -367,3 +376,29 @@ shape = SubResource("BoxShape3D_qyh8x")
 [node name="CollisionShape3D8" type="CollisionShape3D" parent="Ship"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.065506, 3.5327463, 0.005194664)
 shape = SubResource("BoxShape3D_0p50t")
+
+[node name="Engine_1" type="AudioStreamPlayer3D" parent="Ship"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.10296, 2.012074, 0)
+stream = ExtResource("17_g0nn0")
+volume_db = 5.0
+bus = &"Engines"
+
+[node name="Engine_2" type="AudioStreamPlayer3D" parent="Ship"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.10296, 2.012074, 0)
+stream = ExtResource("18_s83w2")
+volume_db = -5.0
+bus = &"Engines"
+
+[node name="Engine_3" type="AudioStreamPlayer3D" parent="Ship"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.10296, 2.012074, 0)
+stream = ExtResource("19_41uc2")
+volume_db = 5.0
+bus = &"Engines"
+
+[node name="StartupTimer" type="Timer" parent="Ship"]
+unique_name_in_owner = true
+wait_time = 6.2
+one_shot = true

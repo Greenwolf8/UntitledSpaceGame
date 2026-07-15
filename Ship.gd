@@ -53,16 +53,22 @@ func _physics_process(_delta):
 	var roll_input = Input.get_axis("move_right", "move_left")
 	var pitch_input = Input.get_axis("move_back", "move_forward")
 	
+	if forward_input != 0:
+		%Engine_2.volume_db = 0
+	else:
+		%Engine_2.volume_db = -5.0
+	
 	if not Camerafree:
 		pitch_input += mouse_input.y * 0.1
 		yaw_input = -mouse_input.x * 0.1
 	else:
 		yaw_input = 0
 	
-	apply_central_force(forward_force)
-	apply_torque(transform.basis.z * pitch_input * pitch_torque)
-	apply_torque(transform.basis.y * yaw_input * pitch_torque)
-	apply_torque(transform.basis.x * roll_input * roll_torque)
+	if %StartupTimer.is_stopped():
+		apply_central_force(forward_force)
+		apply_torque(transform.basis.z * pitch_input * pitch_torque)
+		apply_torque(transform.basis.y * yaw_input * pitch_torque)
+		apply_torque(transform.basis.x * roll_input * roll_torque)
 	
 	mouse_input = Vector2.ZERO
 	
@@ -125,6 +131,11 @@ func _enter_ship():
 	%Speed.visible = true
 	var player = get_tree().get_first_node_in_group("Player")
 	player.enter_ship()
+	%Engine_1.play()
+	%StartupTimer.start()
+	await get_tree().create_timer(6.2).timeout
+	%Engine_2.play()
+	
 
 func _leave_ship():
 	health_label.hide()
@@ -133,6 +144,8 @@ func _leave_ship():
 	%Speed.visible = false
 	var player = get_tree().get_first_node_in_group("Player")
 	player.leave_ship()
+	%Engine_2.stop()
+	%Engine_3.play()
 
 func _on_area_entered(area: Area3D) -> void:
 	if area.is_in_group("enemy_bullet"):
@@ -144,6 +157,7 @@ func ship_destroyed():
 	print("Destroyed!")
 	set_physics_process(false)
 	Global.player_ship_destroyed = true
+	%Engine_2.stop()
 
 func hit():
 	health -= randi_range(2, 15)
