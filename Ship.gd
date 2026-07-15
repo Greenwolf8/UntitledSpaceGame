@@ -4,6 +4,7 @@ extends RigidBody3D
 @export var roll_torque = 1200
 @export var pitch_torque = 1000
 @export var bullet_scene : PackedScene = preload("res://Bullet.tscn")
+@export var muzzle_spread: float = 0.1
 @onready var fire_point = %Hardpoint_1/Cannon/Cannon/MuzzleExit
 @onready var fire_timer = %Hardpoint_1/Cannon/Cannon/FireTimer
 @onready var pre_fire_timer = %Hardpoint_1/Cannon/Cannon/PreFireTimer
@@ -122,6 +123,8 @@ func shoot():
 			var bullet = bullet_scene.instantiate()
 			get_tree().root.add_child(bullet)
 			bullet.global_transform = fire_point.global_transform
+			bullet.rotate_object_local(Vector3.RIGHT, randf_range(-muzzle_spread, muzzle_spread))
+			bullet.rotate_object_local(Vector3.UP, randf_range(-muzzle_spread, muzzle_spread))
 
 func _enter_ship():
 	health_label.show()

@@ -8,6 +8,7 @@ extends CharacterBody3D
 @export var state_label : Label
 @export var distance_label : Label
 @export var roll_threshold: float = 0.25
+@export var muzzle_spread: float = 0.2
 @onready var state_timer = %StateTimer
 @onready var fire_point = %Hardpoint_1/Cannon/Cannon/MuzzleExit
 @onready var fire_timer = %Hardpoint_1/Cannon/Cannon/FireTimer
@@ -108,3 +109,5 @@ func shoot():
 		var bullet = bullet_scene.instantiate()
 		get_tree().root.add_child(bullet)
 		bullet.global_transform = fire_point.global_transform
+		bullet.rotate_object_local(Vector3.RIGHT, randf_range(-muzzle_spread, muzzle_spread))
+		bullet.rotate_object_local(Vector3.UP, randf_range(-muzzle_spread, muzzle_spread))
