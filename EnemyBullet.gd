@@ -1,6 +1,6 @@
 extends CharacterBody3D
 
-@export var speed := 50
+@export var speed := 35
 
 func _physics_process(delta:):
 	var forward_direction = -global_transform.basis.y * speed

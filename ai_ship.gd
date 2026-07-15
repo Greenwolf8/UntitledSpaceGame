@@ -8,7 +8,7 @@ extends CharacterBody3D
 @export var state_label : Label
 @export var distance_label : Label
 @export var roll_threshold: float = 0.25
-@export var muzzle_spread: float = 0.2
+@export var muzzle_spread: float = 0.25
 @onready var state_timer = %StateTimer
 @onready var fire_point = %Hardpoint_1/Cannon/Cannon/MuzzleExit
 @onready var fire_timer = %Hardpoint_1/Cannon/Cannon/FireTimer
