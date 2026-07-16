@@ -383,12 +383,14 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.10296, 2.012074, 0)
 stream = ExtResource("17_g0nn0")
 volume_db = 10.0
+panning_strength = 0.5
 bus = &"Engines"
 
 [node name="Engine_2" type="AudioStreamPlayer3D" parent="Ship"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.10296, 2.012074, 0)
 stream = ExtResource("18_s83w2")
+panning_strength = 0.5
 bus = &"Engines"
 
 [node name="Engine_3" type="AudioStreamPlayer3D" parent="Ship"]
@@ -396,6 +398,7 @@ unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 63.10296, 2.012074, 0)
 stream = ExtResource("19_41uc2")
 volume_db = 10.0
+panning_strength = 0.5
 bus = &"Engines"
 
 [node name="StartupTimer" type="Timer" parent="Ship"]

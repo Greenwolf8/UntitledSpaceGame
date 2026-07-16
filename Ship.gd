@@ -55,9 +55,10 @@ func _physics_process(_delta):
 	var pitch_input = Input.get_axis("move_back", "move_forward")
 	
 	if forward_input != 0:
-		%Engine_2.volume_db = 5.0
-	else:
-		%Engine_2.volume_db = 0.0
+		if %Engine_2.volume_db < 5.0:
+			%Engine_2.volume_db += 0.05
+	elif %Engine_2.volume_db > 0.0:
+		%Engine_2.volume_db -= 0.05
 	
 	if not Camerafree:
 		pitch_input += mouse_input.y * 0.1
