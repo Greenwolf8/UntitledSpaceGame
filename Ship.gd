@@ -5,6 +5,7 @@ extends RigidBody3D
 @export var pitch_torque = 1000
 @export var bullet_scene : PackedScene = preload("res://Bullet.tscn")
 @export var muzzle_spread: float = 0.1
+@export var shoot_colliding_label: Label
 @onready var fire_point = %Hardpoint_1/Cannon/Cannon/MuzzleExit
 @onready var fire_timer = %Hardpoint_1/Cannon/Cannon/FireTimer
 @onready var pre_fire_timer = %Hardpoint_1/Cannon/Cannon/PreFireTimer
@@ -26,6 +27,7 @@ func _ready() -> void:
 	var viewport_texture = radar_viewport.get_texture()
 	var mat = radar_mesh.material_override as StandardMaterial3D
 	health_label.text = "Health: " + str(health)
+	shoot_colliding_label.text = str(Global.shoot_colliding)
 	%Exterior.area_entered.connect(_on_area_entered)
 	
 	if mat:
@@ -45,6 +47,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		mouse_input += event.relative
 
 func _physics_process(_delta):
+	shoot_colliding_label.text = str(Global.shoot_colliding)
 	if not withPlayer: 
 		return
 	var forward_input = Input.get_axis("throttle_down", "throttle_up")
@@ -53,6 +56,11 @@ func _physics_process(_delta):
 	var yaw_input = Input
 	var roll_input = Input.get_axis("move_right", "move_left")
 	var pitch_input = Input.get_axis("move_back", "move_forward")
+	
+	if %ShipShoot.is_colliding():
+		Global.shoot_colliding = true
+	else: 
+		Global.shoot_colliding = false
 	
 	if forward_input != 0:
 		if %Engine_2.volume_db < 5.0:
@@ -97,7 +105,8 @@ func interact_pressed():
 		else:
 			pass
 	else:
-		_leave_ship()
+		if hit_object == %Chair:
+			_leave_ship()
 
 func _input(_event: InputEvent) -> void:
 	var cantlock = Camerafree

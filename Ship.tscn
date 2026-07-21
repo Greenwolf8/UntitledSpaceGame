@@ -1,4 +1,4 @@
-[gd_scene load_steps=40 format=3 uid="uid://b3ovqfvf46vnf"]
+[gd_scene load_steps=42 format=3 uid="uid://b3ovqfvf46vnf"]
 
 [ext_resource type="Script" uid="uid://dmt2egmpr1xr6" path="res://Ship.gd" id="1_ix3uc"]
 [ext_resource type="PackedScene" uid="uid://c47xfpp33sxfd" path="res://AVRO.VULCAN.glb" id="2_qyh8x"]
@@ -19,6 +19,7 @@
 [ext_resource type="AudioStream" uid="uid://ct6xruwsgfar5" path="res://Engine_1 (1).wav" id="17_g0nn0"]
 [ext_resource type="AudioStream" uid="uid://qvyw5kd2eidg" path="res://Engine_2 (1).wav" id="18_s83w2"]
 [ext_resource type="AudioStream" uid="uid://rej1pfytl4o6" path="res://Engine_3 (1).wav" id="19_41uc2"]
+[ext_resource type="Script" uid="uid://bwh6r0c111yha" path="res://ladder.gd" id="20_s83w2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7se24"]
 
@@ -34,7 +35,7 @@ size = Vector3(47.16062, 9.227827, 14.018057)
 size = Vector3(119.93239, 39.461365, 128.09103)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6xtlq"]
-size = Vector3(1.3913574, 1.0517578, 0.7267914)
+size = Vector3(1.4251709, 1.1499023, 1.0093956)
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_oj4er"]
 viewport_path = NodePath("Ship/RadarMesh")
@@ -82,9 +83,12 @@ size = Vector3(5.177246, 0.075683594, 1)
 [sub_resource type="BoxShape3D" id="BoxShape3D_yemy8"]
 size = Vector3(1.493042, 1.081543, 1.6147461)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_7jh6g"]
+size = Vector3(0.18725836, 5.591797, 0.81132317)
+
 [node name="Avro Vulcan" type="Node3D"]
 
-[node name="Ship" type="RigidBody3D" parent="." groups=["player_ship"]]
+[node name="Ship" type="RigidBody3D" parent="." node_paths=PackedStringArray("shoot_colliding_label") groups=["player_ship"]]
 unique_name_in_owner = true
 collision_layer = 128
 collision_mask = 4
@@ -92,6 +96,7 @@ continuous_cd = true
 linear_damp = 1.0
 angular_damp = 3.0
 script = ExtResource("1_ix3uc")
+shoot_colliding_label = NodePath("ShootColliding")
 
 [node name="AVRO_VULCAN" parent="Ship" instance=ExtResource("2_qyh8x")]
 
@@ -103,6 +108,20 @@ fov = 100.0
 [node name="OmniLight3D" type="OmniLight3D" parent="Ship"]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.521578, 7.968589, 0.15600061)
+light_color = Color(1, 0, 0, 1)
+light_energy = 2.0
+omni_range = 15.0
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="Ship"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.837559, 3.9920053, 0.15600061)
+light_color = Color(1, 0, 0, 1)
+light_energy = 2.0
+omni_range = 15.0
+
+[node name="OmniLight3D5" type="OmniLight3D" parent="Ship"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.739344, 3.9920053, 0.15600061)
 light_color = Color(1, 0, 0, 1)
 light_energy = 2.0
 omni_range = 15.0
@@ -144,6 +163,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.450581e-09, 0.011189461, -0
 target_position = Vector3(0, 0, -1.5)
 collision_mask = 32
 collide_with_areas = true
+
+[node name="AudioListener3D" type="AudioListener3D" parent="Ship/Player2/PlayerCamera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.5089774, 0.34458542)
 
 [node name="Reticle2" type="TextureRect" parent="Ship/Player2"]
 anchors_preset = 8
@@ -242,6 +264,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20.687416, 3.7446733, -4.3383
 [node name="Cannon" parent="Ship/Hardpoint_1" instance=ExtResource("7_qyh8x")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.7868671, 0, 0.24278021)
 
+[node name="ShipShoot" type="RayCast3D" parent="Ship/Hardpoint_1/Cannon"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.7868671, 0, -0.24278021)
+target_position = Vector3(-750, -1, 0)
+collision_mask = 8
+collide_with_areas = true
+
 [node name="Exterior" type="Area3D" parent="Ship"]
 unique_name_in_owner = true
 collision_layer = 128
@@ -269,7 +298,7 @@ collision_layer = 32
 collision_mask = 0
 
 [node name="ChairCollider" type="CollisionShape3D" parent="Ship/Chair"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.755922, 5.110919, -0.7017083)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.77283, 5.1599913, -0.6691747)
 shape = SubResource("BoxShape3D_6xtlq")
 
 [node name="RadarScreen" type="MeshInstance3D" parent="Ship"]
@@ -277,7 +306,7 @@ transform = Transform3D(0.04953915, 0.92454606, 0, -0.120190986, 0.38107038, 0, 
 mesh = SubResource("PlaneMesh_anqkt")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Ship/RadarScreen"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08609009, 0.027153015, 0)
+transform = Transform3D(7.6923084, -2.3841858e-07, 0, 0, 1.0000001, 0, 0, 0, 7.692308, 0.010211945, 0.0032196045, 0)
 light_color = Color(0.1882353, 0.50980395, 0.05882353, 1)
 light_energy = 0.1
 
@@ -461,3 +490,19 @@ shape = SubResource("BoxShape3D_36nsm")
 [node name="CollisionShape3D19" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.620945, 5.2448378, -0.46611637)
 shape = SubResource("BoxShape3D_yemy8")
+
+[node name="ShootColliding" type="Label" parent="Ship"]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Ladder" type="Area3D" parent="Ship"]
+collision_layer = 0
+script = ExtResource("20_s83w2")
+
+[node name="GearLadder" type="CollisionShape3D" parent="Ship/Ladder"]
+transform = Transform3D(-0.90630776, -0.42261833, 0, 0.42261833, -0.90630776, 0, 0, 0, 1, 21.133038, -1.6550527, 0.0022382736)
+shape = SubResource("BoxShape3D_7jh6g")
+
+[node name="Inside" type="CollisionShape3D" parent="Ship/Ladder"]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 22.59394, 1.8476167, 1.9413606)
+shape = SubResource("BoxShape3D_7jh6g")

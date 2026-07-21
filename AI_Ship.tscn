@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://db8ho13mf013k"]
+[gd_scene load_steps=10 format=3 uid="uid://db8ho13mf013k"]
 
 [ext_resource type="Script" uid="uid://dchqc2wuhpd8b" path="res://ai_ship.gd" id="1_0jbod"]
 [ext_resource type="PackedScene" uid="uid://caf4dxmt3a5uf" path="res://AVRO.VULCAN_GAME.fbx" id="2_pnxum"]
@@ -14,16 +14,19 @@ size = Vector3(1.5085754, 0.80114746, 4.034851)
 size = Vector3(58.597824, 3.5933228, 17.475616)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_dre73"]
-size = Vector3(4.3200684, 0.6503906, 2.6889648)
+size = Vector3(4.3200684, 0.6503906, 3.8981934)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7l07l"]
 size = Vector3(1069.2839, 852.0584, 2891.345)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_7e1ky"]
+size = Vector3(143.96436, 70, 150)
 
 [node name="AI_Ship_Node" type="Node3D" groups=["enemy_ship"]]
 
 [node name="AI_Ship" type="CharacterBody3D" parent="." node_paths=PackedStringArray("ai_health_label", "state_label", "distance_label") groups=["player_ship"]]
 collision_layer = 8
-collision_mask = 4
+collision_mask = 132
 script = ExtResource("1_0jbod")
 ai_health_label = NodePath("AiHealth")
 state_label = NodePath("StateLabel")
@@ -79,7 +82,7 @@ theme_override_font_sizes/font_size = 35
 
 [node name="StateTimer" type="Timer" parent="AI_Ship"]
 unique_name_in_owner = true
-wait_time = 2.5
+wait_time = 1.5
 one_shot = true
 
 [node name="Hardpoint_1" type="Marker3D" parent="AI_Ship"]
@@ -135,23 +138,7 @@ transform = Transform3D(-0.6691306, 0, 0.74314475, 0, 1, 0, -0.74314475, 0, -0.6
 shape = SubResource("BoxShape3D_grfkr")
 
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="AI_Ship/Exterior"]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0.010528982, 2.4485025, 58.85321)
-shape = SubResource("BoxShape3D_dre73")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="AI_Ship"]
-transform = Transform3D(0.6691305, 0, 0.7431448, 0, 1, 0, -0.7431448, 0, 0.6691305, -15.43289, 1.8243628, 52.904602)
-shape = SubResource("BoxShape3D_0jbod")
-
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="AI_Ship"]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -0.27389526, 4.1965494, 21.323)
-shape = SubResource("BoxShape3D_pnxum")
-
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="AI_Ship"]
-transform = Transform3D(-0.6691306, 0, 0.74314475, 0, 1, 0, -0.74314475, 0, -0.6691306, 15.942456, 1.5660467, 52.93795)
-shape = SubResource("BoxShape3D_grfkr")
-
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="AI_Ship"]
-transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0.010528982, 2.4485025, 58.85321)
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0.010528982, 2.4485025, 52.807068)
 shape = SubResource("BoxShape3D_dre73")
 
 [node name="Sight" type="Area3D" parent="AI_Ship"]
@@ -162,3 +149,32 @@ collision_mask = 128
 [node name="CollisionShape3D5" type="CollisionShape3D" parent="AI_Ship/Sight"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.721115, 433.0315, -1424.2507)
 shape = SubResource("BoxShape3D_7l07l")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="AI_Ship"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27905273, 3.964264, 41.015385)
+shape = SubResource("BoxShape3D_7e1ky")
+
+[node name="DodgeTimer" type="Timer" parent="AI_Ship"]
+unique_name_in_owner = true
+one_shot = true
+
+[node name="StaticBody3D" type="StaticBody3D" parent="AI_Ship"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.27905273, 3.964264, 41.015385)
+collision_layer = 0
+collision_mask = 132
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="AI_Ship/StaticBody3D"]
+transform = Transform3D(0.6691305, 0, 0.7431448, 0, 1, 0, -0.7431448, 0, 0.6691305, -15.711943, -2.1399012, 11.889217)
+shape = SubResource("BoxShape3D_0jbod")
+
+[node name="CollisionShape3D3" type="CollisionShape3D" parent="AI_Ship/StaticBody3D"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -0.552948, 0.2322855, -19.692385)
+shape = SubResource("BoxShape3D_pnxum")
+
+[node name="CollisionShape3D4" type="CollisionShape3D" parent="AI_Ship/StaticBody3D"]
+transform = Transform3D(-0.6691306, 0, 0.74314475, 0, 1, 0, -0.74314475, 0, -0.6691306, 15.6634035, -2.3982172, 11.922565)
+shape = SubResource("BoxShape3D_grfkr")
+
+[node name="CollisionShape3D5" type="CollisionShape3D" parent="AI_Ship/StaticBody3D"]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -0.26852375, -1.5157614, 11.791683)
+shape = SubResource("BoxShape3D_dre73")

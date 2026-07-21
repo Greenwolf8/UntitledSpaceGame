@@ -1,19 +1,22 @@
 extends CharacterBody3D
+
 @onready var camera: Camera3D = %PlayerCamera
 @onready var down_cast: RayCast3D = %RayCast3D
 @onready var front_cast: RayCast3D = %FrontCast
 
-const walk := 5
-const sprint := 10
+var walk : float = 5
+var sprint : float = 10
 var leave_seat_location: Vector3 = Vector3(21,5,0)
 var parent_node = get_parent()
 var mouse_locked = true
+
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	front_cast.add_exception(self)
 	mouse_locked = true
-	camera.current = true
+	if Global.in_hangar == false:
+		camera.current = true
 
 func _unhandled_input(event: InputEvent) -> void:
 	if mouse_locked == false and event is not InputEventMouseMotion:
@@ -35,6 +38,11 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 
 func _physics_process(delta: float) -> void:
+	if front_cast.is_colliding():
+		%"Press E".visible = true
+	else:
+		%"Press E".visible = false
+	
 	var parent = get_parent() as RigidBody3D
 	if not parent:
 		return
@@ -46,12 +54,6 @@ func _physics_process(delta: float) -> void:
 	var right := cam_basis.x
 	var is_sprinting := Input.is_action_pressed("sprint")
 	var current_speed := sprint if is_sprinting else walk
-	
-	
-	if front_cast.is_colliding():
-		%"Press E".visible = true
-	else:
-		%"Press E".visible = false
 	
 	forward = (forward - forward.project(ship_basis.y)).normalized()
 	right = (right - right.project(ship_basis.y)).normalized()

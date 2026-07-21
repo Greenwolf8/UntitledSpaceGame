@@ -1,21 +1,21 @@
 extends CharacterBody3D
 
-@export var speed := 120
+@export var speed := 175
 @export var rotation_speed := 1.5
 @export var pitch_speed := 0.85
-@export var bullet_scene : PackedScene = preload("res://Enemy_bullet.tscn")
 @export var ai_health_label : Label
 @export var state_label : Label
 @export var distance_label : Label
 @export var roll_threshold: float = 0.25
 @export var muzzle_spread: float = 0.25
+@onready var bullet_scene : PackedScene = preload("res://Enemy_bullet.tscn")
 @onready var state_timer = %StateTimer
 @onready var fire_point = %Hardpoint_1/Cannon/Cannon/MuzzleExit
 @onready var fire_timer = %Hardpoint_1/Cannon/Cannon/FireTimer
 @onready var sight_area = %Sight
 @onready var player : RigidBody3D
 
-enum State {PATROL, BOOM, ZOOM, PLAYER_DESTROYED}
+enum State {PATROL, BOOM, ZOOM, PLAYER_DESTROYED, BOOM2}
 var current_state = State.PATROL
 var player_position := Vector3.ZERO
 var ai_health : int = 200
@@ -40,26 +40,30 @@ func _physics_process(delta):
 	
 	var current_transform = global_transform
 	var upwards_direction = current_transform.basis.y.normalized()
+	var right_direction = current_transform.basis.x.normalized()
+	var player_ship_local: Vector3 = player.rotation_degrees.normalized()
 	
 	if player:
 		player_position = player.global_position
-		
+	
 	match current_state:
 		State.BOOM:
 			target_position = player_position
-			if global_position.distance_to(player_position) < 100:
+			if global_position.distance_to(player_position) < 350:
+				current_state = State.BOOM2
+				state_timer.start()
+			elif global_position.distance_to(player_position) < 150:
 				current_state = State.ZOOM
 				zooming = true
-				target_position = global_position + (upwards_direction * 400)
+				target_position = global_position + Vector3(0,800,0)
+				state_timer.start()
 			elif Global.player_ship_destroyed == true:
 				current_state = State.PLAYER_DESTROYED
-		
+			
 		State.ZOOM:
-			if global_position.distance_to(player_position) > 400:
+			if state_timer.is_stopped():
 				zooming = false
 				current_state = State.BOOM
-			elif Global.player_ship_destroyed == true:
-				current_state = State.PLAYER_DESTROYED
 		
 		State.PLAYER_DESTROYED:
 			target_position = global_position + (upwards_direction * 800)
@@ -68,6 +72,12 @@ func _physics_process(delta):
 			target_position = global_position
 			if global_position.distance_to(player_position) <= 750:
 				current_state = State.BOOM
+		
+		State.BOOM2:
+			target_position = player_position + Vector3(0,0,player_ship_local.z * 0.5)  + Vector3(0,player_ship_local.y,0)
+			if state_timer.is_stopped():
+				current_state = State.BOOM
+	
 	
 	var dir_to_target = (target_position - global_position).normalized()
 	var local_forward = -global_transform.basis.z 
@@ -89,15 +99,7 @@ func _physics_process(delta):
 			var pitch_step = sign(pitch_error) * min(abs(pitch_error), pitch_speed * delta)
 			rotate_object_local(Vector3.RIGHT, pitch_step)
 	
-	if current_state != 2:
-		if global_position.distance_to(target_position) <= 100:
-			speed = 75
-		elif global_position.distance_to(target_position) <= 300:
-			speed = 100
-		elif global_position.distance_to(target_position) <= 300:
-			speed = 200
-	else:
-		speed = 200
+	
 	
 	velocity = -global_transform.basis.z.normalized() * speed
 	move_and_slide()
@@ -120,9 +122,9 @@ func hit():
 		set_physics_process(false)
 
 func shoot():
+	var bullet = bullet_scene.instantiate()
 	if fire_timer.is_stopped():
 		fire_timer.start()
-		var bullet = bullet_scene.instantiate()
 		get_tree().root.add_child(bullet)
 		bullet.global_transform = fire_point.global_transform
 		bullet.rotate_object_local(Vector3.RIGHT, randf_range(-muzzle_spread, muzzle_spread))
