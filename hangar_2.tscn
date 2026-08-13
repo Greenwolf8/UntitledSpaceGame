@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://cqgpmixv24g5a"]
+
+[ext_resource type="PackedScene" uid="uid://ccjsicxy3uojs" path="res://Hangar.glb" id="1_n5aso"]
+[ext_resource type="Script" uid="uid://de7o2f8urwc5j" path="res://hangar_2.gd" id="2_hup0b"]
+[ext_resource type="AnimationLibrary" uid="uid://c2kmasovglo5y" path="res://Global.res" id="3_1slax"]
+
+[node name="Hangar2" instance=ExtResource("1_n5aso")]
+script = ExtResource("2_hup0b")
+
+[node name="Avro Vulcan" parent="Turn Table" index="0"]
+unique_name_in_owner = true
+
+[node name="AnimationPlayer" parent="." index="14"]
+unique_name_in_owner = true
+libraries = {
+&"Global": ExtResource("3_1slax")
+}

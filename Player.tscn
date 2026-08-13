@@ -1,33 +1,143 @@
-[gd_scene load_steps=4 format=3 uid="uid://c7h767qtyhoo2"]
+[gd_scene load_steps=9 format=3 uid="uid://07reg5c5xbsn"]
 
-[ext_resource type="Script" uid="uid://d3i1s0eatkbgn" path="res://player/player.gd" id="1_a0tk4"]
-[ext_resource type="Texture2D" uid="uid://c5qd8jx3qark7" path="res://player/reticle.png" id="3_jka67"]
+[ext_resource type="Script" uid="uid://cnakptn5mu1jb" path="res://new_player.gd" id="1_xhfnw"]
+[ext_resource type="PackedScene" uid="uid://bgr4mpswlth1q" path="res://ship_terminal.tscn" id="2_kpjcp"]
+[ext_resource type="Shader" uid="uid://58yvgpih5yyp" path="res://Radar.gdshader" id="3_kne1u"]
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ehsmr"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vx57b"]
 
-[node name="Player" type="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0012140274, 0.007368088, -0.008358955)
-script = ExtResource("1_a0tk4")
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kpjcp"]
+load_path = "res://.godot/imported/reticle.png-94d8174638f634e8c9dc538a8a25a59b.ctex"
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0134655, 0)
-shape = SubResource("CapsuleShape3D_ehsmr")
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_61x8k"]
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_hde6v"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:transform")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e80uo"]
+shader = ExtResource("3_kne1u")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.800000038
+shader_parameter/scanlines_width = 0.5
+shader_parameter/grille_opacity = 0.38000001805
+shader_parameter/resolution = Vector2(1500, 150)
+shader_parameter/pixelate = false
+shader_parameter/roll = true
+shader_parameter/roll_speed = 1.0
+shader_parameter/roll_size = 15.0000007125
+shader_parameter/roll_variation = 5.0
+shader_parameter/distort_intensity = 0.010000000475
+shader_parameter/noise_opacity = 0.10000000475
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.2000000095
+shader_parameter/aberration = 4.7499999933364734e-08
+shader_parameter/brightness = 3.0
+shader_parameter/discolor = true
+shader_parameter/warp_amount = 0.0
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.2
+shader_parameter/vignette_opacity = 0.2000000095
+
+[node name="Player" type="CharacterBody3D" groups=["Player"]]
+collision_mask = 14
+script = ExtResource("1_xhfnw")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5089775, -0.34458575)
+transform = Transform3D(-4.3711385e-08, 0, 1, 0, 1, 0, -0.9999999, 0, -4.371139e-08, 0.19623756, 2.3674576, -57.480034)
+shape = SubResource("CapsuleShape3D_vx57b")
 
-[node name="Reticle" type="TextureRect" parent="."]
+[node name="PlayerCamera" type="Camera3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.19623756, 2.853992, -57.480034)
+
+[node name="FrontCast" type="RayCast3D" parent="PlayerCamera"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.450581e-09, 0.011189461, -0.21256447)
+target_position = Vector3(0, 0, -1.5)
+collision_mask = 32
+collide_with_areas = true
+
+[node name="Reticle2" type="TextureRect" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -30.0
+offset_left = -28.0
 offset_top = -30.0
-offset_right = 30.0
+offset_right = 32.0
 offset_bottom = 30.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("3_jka67")
+texture = SubResource("CompressedTexture2D_kpjcp")
 expand_mode = 1
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.3711385e-08, 0, 1, 0, 1, 0, -0.9999999, 0, -4.371139e-08, 0.19623756, 2.3518429, -57.480034)
+mesh = SubResource("CapsuleMesh_61x8k")
+skeleton = NodePath("")
+
+[node name="PressE" type="Label" parent="."]
+unique_name_in_owner = true
+visible = false
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.841
+anchor_right = 0.5
+anchor_bottom = 0.841
+offset_left = -83.0
+offset_top = -30.28003
+offset_right = 88.0
+offset_bottom = 38.71997
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 50
+text = "Press E"
+vertical_alignment = 2
+
+[node name="IsClimbing" type="Label" parent="."]
+unique_name_in_owner = true
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -11.5
+offset_right = 40.0
+offset_bottom = 11.5
+grow_vertical = 2
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_hde6v")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(-4.3711385e-08, 0, 1, 0, 1, 0, -0.9999999, 0, -4.371139e-08, 0.19623756, 2.8259792, -57.480034)
+target_position = Vector3(0, -1.5, 0)
+
+[node name="Control" parent="." instance=ExtResource("2_kpjcp")]
+layer = 0
+visible = false
+
+[node name="ColorRect2" type="ColorRect" parent="Control"]
+z_index = 10
+material = SubResource("ShaderMaterial_e80uo")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -332.0
+offset_top = -345.0
+offset_right = 358.0
+offset_bottom = 345.0
+grow_horizontal = 2
+grow_vertical = 2

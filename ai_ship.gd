@@ -22,6 +22,7 @@ var ai_health : int = 200
 var target_position = Vector3.ZERO
 var zooming = false
 var new_target_needed = true
+var last_boom: float = 0
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player_ship") as RigidBody3D
@@ -40,7 +41,7 @@ func _physics_process(delta):
 	
 	var current_transform = global_transform
 	var upwards_direction = current_transform.basis.y.normalized()
-	var right_direction = current_transform.basis.x.normalized()
+	var _right_direction = current_transform.basis.x.normalized()
 	var player_ship_local: Vector3 = player.rotation_degrees.normalized()
 	
 	if player:
@@ -49,18 +50,21 @@ func _physics_process(delta):
 	match current_state:
 		State.BOOM:
 			target_position = player_position
-			if global_position.distance_to(player_position) < 350:
-				current_state = State.BOOM2
+			if global_position.distance_to(player_position) < 450 and state_timer.is_stopped():
+				if last_boom == 2:
+					last_boom = 0
+				else:
+					last_boom += 1
 				state_timer.start()
-			elif global_position.distance_to(player_position) < 150:
+			elif global_position.distance_to(player_position) < 250:
 				current_state = State.ZOOM
 				zooming = true
-				target_position = global_position + Vector3(0,800,0)
 				state_timer.start()
 			elif Global.player_ship_destroyed == true:
 				current_state = State.PLAYER_DESTROYED
 			
 		State.ZOOM:
+			target_position = global_position + (upwards_direction * 500)
 			if state_timer.is_stopped():
 				zooming = false
 				current_state = State.BOOM
@@ -70,13 +74,18 @@ func _physics_process(delta):
 		
 		State.PATROL:
 			target_position = global_position
-			if global_position.distance_to(player_position) <= 750:
+			if global_position.distance_to(player_position) <= 1500:
 				current_state = State.BOOM
 		
 		State.BOOM2:
 			target_position = player_position + Vector3(0,0,player_ship_local.z * 0.5)  + Vector3(0,player_ship_local.y,0)
 			if state_timer.is_stopped():
 				current_state = State.BOOM
+				state_timer.start()
+			elif global_position.distance_to(player_position) < 250:
+				current_state = State.ZOOM
+				zooming = true
+				state_timer.start()
 	
 	
 	var dir_to_target = (target_position - global_position).normalized()
@@ -100,8 +109,10 @@ func _physics_process(delta):
 			rotate_object_local(Vector3.RIGHT, pitch_step)
 	
 	
-	
-	velocity = -global_transform.basis.z.normalized() * speed
+	if current_state != 0:
+		velocity = -global_transform.basis.z.normalized() * speed
+	else:
+		velocity = Vector3(0, 0, 0)
 	move_and_slide()
 
 func _on_area_entered(area: Area3D) -> void:

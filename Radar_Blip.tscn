@@ -2,7 +2,9 @@
 
 [sub_resource type="BoxMesh" id="BoxMesh_2lbkk"]
 
-[node name="Node2D" type="Node2D"]
+[node name="Node2D" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
 modulate = Color(0.17254902, 0.69411767, 0, 1)

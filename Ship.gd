@@ -2,7 +2,7 @@ extends RigidBody3D
 
 @export var engine_power = 150
 @export var roll_torque = 1200
-@export var pitch_torque = 1000
+@export var pitch_torque = 1250
 @export var bullet_scene : PackedScene = preload("res://Bullet.tscn")
 @export var muzzle_spread: float = 0.1
 @export var shoot_colliding_label: Label
@@ -10,12 +10,11 @@ extends RigidBody3D
 @onready var fire_timer = %Hardpoint_1/Cannon/Cannon/FireTimer
 @onready var pre_fire_timer = %Hardpoint_1/Cannon/Cannon/PreFireTimer
 @onready var fire_time = %Hardpoint_1/Cannon/Cannon/FireTime
-@onready var camera_3d: Camera3D = %Camera3D
-@onready var front_cast: RayCast3D = %FrontCast
+@onready var camera: Camera3D = %ShipCamera
+
 @onready var speed_label: Label = %Speed
 @onready var health_label: Label = %HealthLabel	
-@onready var radar_mesh: MeshInstance3D = $RadarScreen
-@onready var radar_viewport: SubViewport = $RadarMesh
+@onready var player: CharacterBody3D = get_tree().get_first_node_in_group("Player")
 
 var mouse_input: Vector2 = Vector2.ZERO
 var health: int = 200
@@ -23,25 +22,22 @@ var Camerafree = false
 var withPlayer = false
 
 
+
 func _ready() -> void:
-	var viewport_texture = radar_viewport.get_texture()
-	var mat = radar_mesh.material_override as StandardMaterial3D
 	health_label.text = "Health: " + str(health)
 	shoot_colliding_label.text = str(Global.shoot_colliding)
 	%Exterior.area_entered.connect(_on_area_entered)
-	
-	if mat:
-		mat.albedo_texture = viewport_texture
+	print($Camera3D.position)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if Camerafree and event is InputEventMouseMotion:
-		%Camera3D.rotation_degrees.y -= event.relative.x * 0.2
-		%Camera3D.rotation_degrees.y = clamp(
-			%Camera3D.rotation_degrees.y, 0,180
+		camera.rotation_degrees.y -= event.relative.x * 0.2
+		camera.rotation_degrees.y = clamp(
+			camera.rotation_degrees.y, 0,180
 		)
-		%Camera3D.rotation_degrees.x -= event.relative.y * 0.2
-		%Camera3D.rotation_degrees.x = clamp(
-		%Camera3D.rotation_degrees.x, -60, 75 
+		camera.rotation_degrees.x -= event.relative.y * 0.2
+		camera.rotation_degrees.x = clamp(
+		camera.rotation_degrees.x, -60, 75 
 		)
 	elif not Camerafree and event is InputEventMouseMotion:
 		mouse_input += event.relative
@@ -64,9 +60,9 @@ func _physics_process(_delta):
 	
 	if forward_input != 0:
 		if %Engine_2.volume_db < 5.0:
-			%Engine_2.volume_db += 0.05
-	elif %Engine_2.volume_db > 0.0:
-		%Engine_2.volume_db -= 0.05
+			%Engine_2.volume_db += 0.1
+	elif %Engine_2.volume_db > -5:
+		%Engine_2.volume_db -= 0.2
 	
 	if not Camerafree:
 		pitch_input += mouse_input.y * 0.1
@@ -74,11 +70,14 @@ func _physics_process(_delta):
 	else:
 		yaw_input = 0
 	
-	if %StartupTimer.is_stopped():
+	if Global.ship_on:
 		apply_central_force(forward_force)
 		apply_torque(transform.basis.z * pitch_input * pitch_torque)
 		apply_torque(transform.basis.y * yaw_input * pitch_torque)
 		apply_torque(transform.basis.x * roll_input * roll_torque)
+		
+		if not %Engine_2.playing:
+			%Engine_2.play()
 	
 	mouse_input = Vector2.ZERO
 	
@@ -95,25 +94,10 @@ func _physics_process(_delta):
 		%Gun2.stop()
 		%Gun3.play()
 
-func interact_pressed():
-	var canEnter = not withPlayer
-	var hit_object = front_cast.get_collider()
-	
-	if canEnter:
-		if hit_object == %Chair:
-			_enter_ship()
-		else:
-			pass
-	else:
-		if hit_object == %Chair:
-			_leave_ship()
-
 func _input(_event: InputEvent) -> void:
 	var cantlock = Camerafree
-	
-	if Input.is_action_just_pressed("interact"):
-		interact_pressed()
-	elif Input.is_action_just_pressed("camera_lock") and not cantlock:
+
+	if Input.is_action_just_pressed("camera_lock") and not cantlock:
 		Camerafree = true
 	elif Input.is_action_just_pressed("camera_lock") and cantlock:
 		Camerafree = false
@@ -136,29 +120,21 @@ func shoot():
 			bullet.rotate_object_local(Vector3.RIGHT, randf_range(-muzzle_spread, muzzle_spread))
 			bullet.rotate_object_local(Vector3.UP, randf_range(-muzzle_spread, muzzle_spread))
 
-func _enter_ship():
+func enter_ship():
 	health_label.show()
 	withPlayer = true
-	%OmniLight3D.light_color = Color(1.0, 0.945, 0.949, 1.0)
-	%"Press E".visible = false
 	%Speed.visible = true
-	var player = get_tree().get_first_node_in_group("Player")
-	player.enter_ship()
-	%Engine_1.play()
-	%StartupTimer.start()
-	await get_tree().create_timer(6.2).timeout
-	%Engine_2.play()
-	
+	player = get_tree().get_first_node_in_group("Player")
+	camera.current = true
+	print("enter ship called!")
 
-func _leave_ship():
+
+func leave_ship():
 	health_label.hide()
 	withPlayer = false
-	%OmniLight3D.light_color = Color(1.0, 0.0, 0.0, 1.0)
 	%Speed.visible = false
-	var player = get_tree().get_first_node_in_group("Player")
-	player.leave_ship()
-	%Engine_2.stop()
-	%Engine_3.play()
+	player = get_tree().get_first_node_in_group("Player")
+	print("leave ship called!")
 
 func _on_area_entered(area: Area3D) -> void:
 	if area.is_in_group("enemy_bullet"):
@@ -189,3 +165,25 @@ func hit():
 		%BulletStrike3.play()
 	elif bullet_sfx == 4:
 		%BulletStrike4.play()
+
+func system_start():
+	%OmniLight3D.light_color = Color(1.0, 0.945, 0.949, 1.0)
+	%OmniLight3D2.show()
+	%OmniLight3D3.show()
+	%OmniLight3D4.show()
+	%OmniLight3D5.show()
+	%SpotLight3D.show()
+	%SpotLight3D.show()
+	%Computer_Boot.play()
+	await get_tree().create_timer(5).timeout
+	%RadarScreen.show()
+	%Engine_1.play()
+	await get_tree().create_timer(6.2).timeout
+	Global.ship_on = true
+	if not %Engine_2.playing:
+		%Engine_2.play() 
+
+func system_shutdown():
+	%OmniLight3D.light_color = Color(1.0, 0.0, 0.0, 1.0)
+	%Engine_2.stop()
+	%Engine_3.play()

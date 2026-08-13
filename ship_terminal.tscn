@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://bgr4mpswlth1q"]
+
+[ext_resource type="Script" uid="uid://pwoxd7ojl1mp" path="res://ship_terminal.gd" id="1_gag4m"]
+[ext_resource type="FontFile" uid="uid://xn4y1kk2s2cu" path="res://ttf - Ac (aspect-corrected)/Ac437_ACM_VGA_9x8.ttf" id="2_kosm7"]
+[ext_resource type="FontFile" uid="uid://dcp8hd5x0r0an" path="res://ttf - Ac (aspect-corrected)/Ac437_IBM_PGC.ttf" id="3_o71qp"]
+[ext_resource type="Script" uid="uid://bqi0n1x8fredr" path="res://line_edit.gd" id="4_o71qp"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_t035j"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+script = ExtResource("1_gag4m")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="."]
+modulate = Color(0, 0, 0, 1)
+z_index = -1
+position = Vector2(550, 360)
+scale = Vector2(690, 690)
+mesh = SubResource("BoxMesh_t035j")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+visibility_layer = 2
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -330.0
+offset_top = -340.0
+offset_right = 350.0
+offset_bottom = 340.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+
+[node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
+modulate = Color(0.17254902, 0.69411767, 0, 1)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/normal_font = ExtResource("2_kosm7")
+theme_override_font_sizes/normal_font_size = 20
+theme_override_font_sizes/bold_font_size = 20
+theme_override_font_sizes/bold_italics_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+theme_override_font_sizes/mono_font_size = 20
+bbcode_enabled = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+modulate = Color(0.17254902, 0.69411767, 0, 1)
+z_index = 2
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_o71qp")
+theme_override_font_sizes/font_size = 25
+text = "C:\\DOS> "
+
+[node name="LineEdit" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+modulate = Color(0.17254902, 0.69411767, 0, 1)
+z_index = 2
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_o71qp")
+theme_override_font_sizes/font_size = 25
+keep_editing_on_text_submit = true
+expand_to_text_length = true
+script = ExtResource("4_o71qp")
+
+[connection signal="focus_exited" from="VBoxContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_focus_exited"]
+[connection signal="text_changed" from="VBoxContainer/HBoxContainer/LineEdit" to="VBoxContainer/HBoxContainer/LineEdit" method="_on_text_changed"]
+[connection signal="text_submitted" from="VBoxContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_text_submitted"]

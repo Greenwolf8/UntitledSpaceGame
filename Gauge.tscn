@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://eoe27572ecox"]
+[gd_scene load_steps=3 format=3 uid="uid://eoe27572ecox"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_gemcj"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_gemcj"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -15,3 +17,10 @@ modulate = Color(0, 0, 0, 1)
 position = Vector2(50, 50)
 scale = Vector2(100, 100)
 mesh = SubResource("BoxMesh_gemcj")
+
+[node name="MeshInstance2D2" type="MeshInstance2D" parent="."]
+modulate = Color(0.89492244, 0.89492244, 0.8949224, 1)
+position = Vector2(50, 40)
+rotation = 3.1415927
+scale = Vector2(7.5, 40)
+mesh = SubResource("PrismMesh_gemcj")

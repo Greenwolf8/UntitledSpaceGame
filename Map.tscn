@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://dmoq30qvu54ax"]
 
 [ext_resource type="Texture2D" uid="uid://bs43kg410obus" path="res://Solarsystemscope_texture_8k_stars.jpg" id="2_3h1ab"]
-[ext_resource type="PackedScene" uid="uid://b3ovqfvf46vnf" path="res://Ship.tscn" id="2_3vi7k"]
 [ext_resource type="PackedScene" uid="uid://db8ho13mf013k" path="res://AI_Ship.tscn" id="3_3h1ab"]
 [ext_resource type="PackedScene" uid="uid://csxywx67xhwy7" path="res://Asteroid.tscn" id="4_7if1s"]
+[ext_resource type="PackedScene" uid="uid://oxwne66lagxs" path="res://Main Menu.tscn" id="4_v6avs"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7if1s"]
 panorama = ExtResource("2_3h1ab")
@@ -15,10 +15,7 @@ sky_material = SubResource("PanoramaSkyMaterial_7if1s")
 background_mode = 2
 sky = SubResource("Sky_v6avs")
 
-[node name="Node3D" type="Node3D"]
-
-[node name="Avro Vulcan" parent="." instance=ExtResource("2_3vi7k")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 500, 448.0703, 0)
+[node name="Map" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_8qak7")
@@ -36,4 +33,7 @@ transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -691.0146, -68.485886, 
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -675.98895, 141.18442, 124.346344)
 
 [node name="AI_Ship_Node" parent="." instance=ExtResource("3_3h1ab")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -1000, 0, -3069.518)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 3769.6016, 0, -3069.518)
+
+[node name="Player_Ship" parent="." instance=ExtResource("4_v6avs")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1409.4431, -64.03953, -2111.3628)
