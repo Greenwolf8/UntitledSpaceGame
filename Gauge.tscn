@@ -18,9 +18,13 @@ position = Vector2(50, 50)
 scale = Vector2(100, 100)
 mesh = SubResource("BoxMesh_gemcj")
 
-[node name="MeshInstance2D2" type="MeshInstance2D" parent="."]
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(50, 50)
+rotation = -1.5707964
+
+[node name="MeshInstance2D2" type="MeshInstance2D" parent="Node2D"]
 modulate = Color(0.89492244, 0.89492244, 0.8949224, 1)
-position = Vector2(50, 40)
-rotation = 3.1415927
+position = Vector2(0, -17)
+rotation = -3.1415925
 scale = Vector2(7.5, 40)
 mesh = SubResource("PrismMesh_gemcj")

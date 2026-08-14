@@ -8,7 +8,6 @@ extends CharacterBody3D
 @onready var hangar = get_tree().get_first_node_in_group("Hangar")
 @onready var ship = get_tree().get_first_node_in_group("player_ship")
 @onready var ship_node = $"../Ship" # I know this is weird but the show() function needs it when calling ship. the "ship" variable does not work
-
 @onready var gear_ladder : CollisionShape3D = $"../Ship/Ship/Gear Ladder/GearLadder"
 @onready var interior_ladder: CollisionShape3D = $"../Ship/Ship/Interior Ladder/Inside"
 @onready var ship_console_camera: Camera3D = $"../Ship/Ship/Camera3D"

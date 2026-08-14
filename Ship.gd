@@ -11,7 +11,7 @@ extends RigidBody3D
 @onready var pre_fire_timer = %Hardpoint_1/Cannon/Cannon/PreFireTimer
 @onready var fire_time = %Hardpoint_1/Cannon/Cannon/FireTime
 @onready var camera: Camera3D = %ShipCamera
-
+@onready var throttle_label: Label = %Throttle
 @onready var speed_label: Label = %Speed
 @onready var health_label: Label = %HealthLabel	
 @onready var player: CharacterBody3D = get_tree().get_first_node_in_group("Player")
@@ -20,6 +20,8 @@ var mouse_input: Vector2 = Vector2.ZERO
 var health: int = 200
 var Camerafree = false
 var withPlayer = false
+var throttle: float = 0
+var forward_move: float = 0.0
 
 
 
@@ -27,7 +29,6 @@ func _ready() -> void:
 	health_label.text = "Health: " + str(health)
 	shoot_colliding_label.text = str(Global.shoot_colliding)
 	%Exterior.area_entered.connect(_on_area_entered)
-	print($Camera3D.position)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if Camerafree and event is InputEventMouseMotion:
@@ -47,22 +48,16 @@ func _physics_process(_delta):
 	if not withPlayer: 
 		return
 	var forward_input = Input.get_axis("throttle_down", "throttle_up")
-	var forward_force = -global_transform.basis.x * forward_input * engine_power
 	var current_speed = snapped(linear_velocity.length(), 0.1)
 	var yaw_input = Input
 	var roll_input = Input.get_axis("move_right", "move_left")
 	var pitch_input = Input.get_axis("move_back", "move_forward")
+	var forward_force: Vector3 = Vector3.ZERO
 	
 	if %ShipShoot.is_colliding():
 		Global.shoot_colliding = true
 	else: 
 		Global.shoot_colliding = false
-	
-	if forward_input != 0:
-		if %Engine_2.volume_db < 5.0:
-			%Engine_2.volume_db += 0.1
-	elif %Engine_2.volume_db > -5:
-		%Engine_2.volume_db -= 0.2
 	
 	if not Camerafree:
 		pitch_input += mouse_input.y * 0.1
@@ -70,6 +65,22 @@ func _physics_process(_delta):
 	else:
 		yaw_input = 0
 	
+	if forward_input > 0 and forward_move < 1.85:
+		forward_move += 0.015
+	elif forward_input < 0 and forward_move > -1:
+		forward_move -= 0.015
+	else:
+		pass
+	
+	if forward_move > 0:
+		%Engine_2.volume_db = forward_move * 2
+	else:
+		%Engine_2.volume_db = -forward_move * 2
+
+	if forward_move > 0.1 or forward_move < -0.1:
+		forward_force = forward_move * -global_transform.basis.x * engine_power
+	else:
+		forward_force = Vector3.ZERO
 	if Global.ship_on:
 		apply_central_force(forward_force)
 		apply_torque(transform.basis.z * pitch_input * pitch_torque)
@@ -82,6 +93,7 @@ func _physics_process(_delta):
 	mouse_input = Vector2.ZERO
 	
 	speed_label.text = "Speed: " + str(current_speed)
+	throttle_label.text = "Throttle: " + str(forward_move)
 	
 	if Input.is_action_pressed("fire") and withPlayer:
 		shoot()
@@ -126,6 +138,7 @@ func enter_ship():
 	%Speed.visible = true
 	player = get_tree().get_first_node_in_group("Player")
 	camera.current = true
+	camera.rotation_degrees = Vector3(0, 90, 0)
 	print("enter ship called!")
 
 

@@ -35,5 +35,5 @@ transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -675.98895, 141.18442, 
 [node name="AI_Ship_Node" parent="." instance=ExtResource("3_3h1ab")]
 transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 3769.6016, 0, -3069.518)
 
-[node name="Player_Ship" parent="." instance=ExtResource("4_v6avs")]
+[node name="Ship" parent="." instance=ExtResource("4_v6avs")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1409.4431, -64.03953, -2111.3628)

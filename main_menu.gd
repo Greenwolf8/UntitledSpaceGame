@@ -12,6 +12,7 @@ func _ready() -> void:
 	var viewport_texture = screen_viewport.get_texture()
 	var mat = screen_left_mesh.material_override as StandardMaterial3D
 	Global.in_hangar = true
+	print(get_tree().get_nodes_in_group("Player"))
 
 	if mat:
 		mat.albedo_texture = viewport_texture

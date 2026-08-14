@@ -9,7 +9,6 @@ const PROMPT: String = "C:/DOS>"
 func _ready() -> void:
 	history_label.text = " "
 	visibility_changed.connect(_on_visibility_changed)
-	print(player)
 
 func _on_visibility_changed() -> void:
 	if visible:
@@ -41,5 +40,5 @@ func _process_command(command: String) -> void:
 	scrollbar.value = scrollbar.max_value
 
 func _on_line_edit_focus_exited() -> void:
-	player = $"/root/Node3D/Ship/Ship/1"
+	player = get_tree().get_first_node_in_group("Player")
 	player.ship_console_interact()
