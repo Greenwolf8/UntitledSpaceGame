@@ -1,22 +1,24 @@
 extends CharacterBody3D
 
 @onready var down_cast: RayCast3D = %RayCast3D
-@onready var camera : Camera3D = %PlayerCamera
-@onready var front_cast : RayCast3D = %FrontCast
-@onready var climbing_label : Label = %IsClimbing
+@onready var camera: Camera3D = %PlayerCamera
+@onready var front_cast: RayCast3D = %FrontCast
+@onready var climbing_label: Label = %IsClimbing
+@onready var task_label: Label = %TaskLabel
+@onready var task_title_label: = %TaskHeaderLabel
 @onready var chair = "Chair:<StaticBody3D#37094426288>"
 @onready var hangar = get_tree().get_first_node_in_group("Hangar")
 @onready var ship = get_tree().get_first_node_in_group("player_ship")
 @onready var ship_node = $"/root/Map/Node3D/Ship" # I know this is weird but the show() function needs it when calling ship. the "ship" variable does not work
 
-var climb_speed : float = 2.5
-var walk : float = 5
-var sprint : float = 10
+var climb_speed: float = 2.5
+var walk: float = 5
+var sprint: float = 10
 var leave_seat_location: Vector3 = Vector3(21,3.38,57.475)
-var mouse_locked : bool = true
-var gravity : float = 11
+var mouse_locked: bool = true
+var gravity: float = 11
 var is_sprinting: bool = false
-var speed : float = walk
+var speed: float = walk
 var current_ladder: Area3D = null
 var hit_object = null
 var in_console: bool = false
@@ -25,9 +27,10 @@ var old_rotation: Vector3
 var screen_position: Vector3
 var screen_rotation: Vector3 
 var rot_diff: Vector3 = Vector3.ZERO
-var shortest_target : Vector3
+var shortest_target: Vector3
 var on_gear_ladder: bool = false
 var on_interior_ladder: bool = false
+var current_task: int = 0
 
 func _ready() -> void:
 	if name.is_valid_int():
@@ -37,6 +40,8 @@ func _ready() -> void:
 	mouse_locked = false
 	camera.current = is_multiplayer_authority()
 	print("Player spawned! Exact node path: ", get_path())
+	task_title_label.text = "Current Task: Summon Your Ship"
+	task_label.text = "Interact With The Hangar Screen"
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority():
@@ -100,6 +105,10 @@ func _physics_process(delta: float) -> void:
 				elif position.y > 0 and climb_input > 0:
 					climb_gear_ladder()
 					Global.in_ship = true
+					if current_task == 1:
+						rpc("next_task")
+					else:
+						pass
 				else:
 					velocity = ship_velocity + (world_climb_dir * climb_speed)
 			
@@ -289,6 +298,10 @@ func sync_open_hangar():
 		hangar.call_ship()
 		await get_tree().create_timer(41.6667).timeout
 		ship_node.show()
+		if current_task == 0:
+			rpc("next_task")
+		else:
+			pass
 
 func interact_pressed():
 	if not Global.is_pilot and not Global.is_wo:
@@ -337,13 +350,15 @@ func climb_gear_ladder():
 		%CollisionShape3D2.disabled = false
 
 func climb_interior_ladder():
-	var ladder_local = Vector3(23,0,59.416)
+	var ladder_local = Vector3(22.8,0,59.416)
 	if not on_interior_ladder:
 		var tween = create_tween()
 		tween.tween_property(self, "position", ladder_local, 0.25)
 		on_interior_ladder = true
+		%CollisionShape3D2.disabled= true
 	else:
 		on_interior_ladder = false
+		%CollisionShape3D2.disabled = false
 
 @rpc("any_peer", "call_local", "reliable")
 func do_climb_gear_ladder(attaching: bool, ladder_local: Vector3) -> void:
@@ -353,3 +368,24 @@ func do_climb_gear_ladder(attaching: bool, ladder_local: Vector3) -> void:
 		tween.tween_property(self, "position", ladder_local, 0.25)
 	else:
 		reparent(get_tree().current_scene, true)
+
+@rpc("any_peer", "call_local", "reliable")
+func next_task():
+	current_task += 1
+	Global.current_task += 1
+	
+	if current_task == 0:
+		task_title_label.text = "Current Task: Summon Ship"
+		task_label.text = "Interact With The Hangar Screen"
+	elif current_task == 1:
+		task_title_label.text = "Current Task: Enter Ship"
+		task_label.text = "Climb The Ship's Ladder Located In The Front Landing Gear"
+	elif current_task == 2:
+		task_title_label.text = "Current Task: Start Ship"
+		task_label.text = "Interact with the console in the rear of the cockpit.\nType HELP to see list of commands"
+	elif current_task == 3:
+		task_title_label.text = "Current Task: Hunt Down The Enemy"
+		task_label.text = "Using Shift/Control For Throttle And WASD To Steer, Locate And Hunt Down The Enemy\n You Can See Your Distance To The Enemy At The Top Right Of Your Screen"
+	elif current_task == 4:
+		task_title_label.text = "Current Task: Eliminate Enemy"
+		task_label.text = "Press F Or Left Click To Fire The Cannon, Try To Dodge The Enemy's Cannons \nDo Not Underestimate The Enemy!"

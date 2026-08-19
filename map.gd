@@ -47,3 +47,12 @@ func remove_player(id):
 @rpc("any_peer", "call_local")
 func _remove_player(id):
 	get_node(str(id)).queue_free()
+
+func _on_single_player_pressed() -> void:
+	$UI.hide()
+	multiplayer_ui.hide()
+	
+	var player = PLAYER.instantiate()
+	player.name = "1"
+	hangar.add_child(player)
+	player.global_position = Vector3(-1920, 2628.3, 0)

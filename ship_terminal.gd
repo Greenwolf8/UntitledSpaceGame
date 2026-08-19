@@ -1,7 +1,7 @@
 extends CanvasLayer
 
-@onready var history_label: RichTextLabel = $VBoxContainer/RichTextLabel
-@onready var command_input: LineEdit = $VBoxContainer/HBoxContainer/LineEdit
+@onready var history_label: RichTextLabel = %RichTextLabel
+@onready var command_input: LineEdit = %LineEdit
 @onready var player: CharacterBody3D
 
 const PROMPT: String = "C:/DOS>"
@@ -28,7 +28,7 @@ func _process_command(command: String) -> void:
 	
 	match parts:
 		"help":
-			history_label.append_text("AVAILABLE COMMANDS:\n EXEC SYS_START\n BOOT /REACTOR\n BOOT /LIFE_SUPPORT\n BOOT /DEFENCE_SYS\n EXIT\n")
+			history_label.append_text("AVAILABLE COMMANDS:\nHELP             |  SHOWS HELP COMMANDS\nEXEC SYS_START   |  STARTS THE SHIP\nEXIT             |  LEAVES TERMINAL\n") #BOOT /REACTOR\n BOOT /LIFE_SUPPORT\n BOOT /DEFENCE_SYS\n
 		"exec sys_start":
 			history_label.append_text("SYSTEM STARTING\n")
 			Global.system_start()

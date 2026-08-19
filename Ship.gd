@@ -29,7 +29,6 @@ var forward_move: float = 0.0
 
 func _ready() -> void:
 	health_label.text = "Health: " + str(health)
-	shoot_colliding_label.text = str(Global.shoot_colliding)
 	%Exterior.area_entered.connect(_on_area_entered)
 	print("camera location: " + str(%Camera3D.position))
 	print("camera rotation: " + str(%Camera3D.rotation))
@@ -48,7 +47,6 @@ func _unhandled_input(event: InputEvent) -> void:
 		mouse_input += event.relative
 
 func _physics_process(_delta):
-	shoot_colliding_label.text = str(Global.shoot_colliding)
 	if not Global.is_pilot: 
 		return
 	var forward_input = Input.get_axis("throttle_down", "throttle_up")
@@ -57,11 +55,6 @@ func _physics_process(_delta):
 	var roll_input = Input.get_axis("move_right", "move_left")
 	var pitch_input = Input.get_axis("move_back", "move_forward")
 	var forward_force: Vector3 = Vector3.ZERO
-	
-	if %ShipShoot.is_colliding():
-		Global.shoot_colliding = true
-	else: 
-		Global.shoot_colliding = false
 	
 	if not Camerafree:
 		pitch_input += mouse_input.y * 0.1

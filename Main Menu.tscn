@@ -95,13 +95,14 @@ shape = SubResource("BoxShape3D_xwd2w")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3924294, 53.056633, 0)
-light_energy = 10.0
+light_energy = 40.0
 omni_range = 200.0
 omni_attenuation = 0.9
 
 [node name="Ship" parent="." instance=ExtResource("4_12kdf")]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -41.470604, 4.4596643, 0.19554138)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.354458, 4.4596643, 0.19554138)
+visible = false
 
 [node name="Hangar2" parent="." groups=["Hangar"] instance=ExtResource("5_xwd2w")]
 unique_name_in_owner = true

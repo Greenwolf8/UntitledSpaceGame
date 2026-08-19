@@ -138,7 +138,7 @@ continuous_cd = true
 linear_damp = 1.0
 angular_damp = 3.0
 script = ExtResource("1_ix3uc")
-shoot_colliding_label = NodePath("ShootColliding")
+shoot_colliding_label = NodePath("")
 
 [node name="PilotCamera" type="Camera3D" parent="Ship"]
 unique_name_in_owner = true
@@ -151,23 +151,6 @@ unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 19.586086, 5.7281184, 0.72556204)
 current = true
 fov = 100.0
-
-[node name="Speed" type="Label" parent="Ship"]
-unique_name_in_owner = true
-offset_left = 28.0
-offset_top = 25.0
-offset_right = 68.0
-offset_bottom = 60.0
-theme_override_font_sizes/font_size = 25
-
-[node name="HealthLabel" type="Label" parent="Ship"]
-unique_name_in_owner = true
-visible = false
-offset_left = 28.0
-offset_top = 72.0
-offset_right = 68.0
-offset_bottom = 107.0
-theme_override_font_sizes/font_size = 25
 
 [node name="Hardpoint_1" type="Marker3D" parent="Ship"]
 unique_name_in_owner = true
@@ -314,10 +297,6 @@ shape = SubResource("BoxShape3D_36nsm")
 [node name="CollisionShape3D19" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.620945, 5.2448378, -0.025991857)
 shape = SubResource("BoxShape3D_yemy8")
-
-[node name="ShootColliding" type="Label" parent="Ship"]
-offset_right = 40.0
-offset_bottom = 23.0
 
 [node name="Gear Ladder" type="Area3D" parent="Ship" groups=["Ladder Gear"]]
 collision_layer = 32
@@ -535,13 +514,29 @@ size = Vector2i(100, 100)
 
 [node name="Control" parent="Ship/Avionics/GaugeMesh" instance=ExtResource("11_anqkt")]
 
-[node name="Throttle" type="Label" parent="Ship"]
-unique_name_in_owner = true
-offset_right = 40.0
-offset_bottom = 23.0
-
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Ship"]
 replication_config = SubResource("SceneReplicationConfig_snmvu")
+
+[node name="LabelContainer" type="VBoxContainer" parent="Ship"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 50.0
+offset_bottom = 111.0
+
+[node name="HealthLabel" type="Label" parent="Ship/LabelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+
+[node name="Throttle" type="Label" parent="Ship/LabelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+
+[node name="Speed" type="Label" parent="Ship/LabelContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.671085, -3.0840936, 0)

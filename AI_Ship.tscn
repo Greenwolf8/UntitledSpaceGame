@@ -36,9 +36,9 @@ properties/1/replication_mode = 1
 collision_layer = 8
 collision_mask = 132
 script = ExtResource("1_0jbod")
-ai_health_label = NodePath("AiHealth")
-state_label = NodePath("StateLabel")
-distance_label = NodePath("DistanceLabel")
+ai_health_label = NodePath("LabelContainer/AiHealth")
+state_label = NodePath("LabelContainer/StateLabel")
+distance_label = NodePath("LabelContainer/DistanceLabel")
 
 [node name="AVRO_VULCAN_GAME" parent="AI_Ship" instance=ExtResource("2_pnxum")]
 physics_interpolation_mode = 1
@@ -77,17 +77,6 @@ light_color = Color(1, 0.90015465, 0.88309574, 1)
 light_energy = 2.0
 omni_range = 15.0
 
-[node name="AiHealth" type="Label" parent="AI_Ship"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_top = 27.0
-offset_right = 20.0
-offset_bottom = 62.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 35
-
 [node name="StateTimer" type="Timer" parent="AI_Ship"]
 unique_name_in_owner = true
 wait_time = 1.5
@@ -107,25 +96,27 @@ target_position = Vector3(0, 0, -750)
 collision_mask = 384
 collide_with_areas = true
 
-[node name="StateLabel" type="Label" parent="AI_Ship"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -20.0
-offset_top = 219.0
-offset_right = 20.0
-offset_bottom = 242.0
-grow_horizontal = 2
+[node name="LabelContainer" type="VBoxContainer" parent="AI_Ship"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -70.0
+offset_top = 10.0
+offset_right = -30.0
+offset_bottom = 70.0
+grow_horizontal = 0
 
-[node name="DistanceLabel" type="Label" parent="AI_Ship"]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -28.0
-offset_top = 83.0
-offset_right = 12.0
-offset_bottom = 106.0
-grow_horizontal = 2
+[node name="DistanceLabel" type="Label" parent="AI_Ship/LabelContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+
+[node name="AiHealth" type="Label" parent="AI_Ship/LabelContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+
+[node name="StateLabel" type="Label" parent="AI_Ship/LabelContainer"]
+visible = false
+layout_mode = 2
 
 [node name="Exterior" type="Area3D" parent="AI_Ship"]
 unique_name_in_owner = true

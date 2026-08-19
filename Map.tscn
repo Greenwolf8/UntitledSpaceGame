@@ -35,7 +35,7 @@ transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -691.0146, -68.485886, 
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -675.98895, 141.18442, 124.346344)
 
 [node name="AI_Ship_Node" parent="." instance=ExtResource("3_3h1ab")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -7500, 2500, -100)
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -6000, 2500, 0)
 
 [node name="Node3D" parent="." instance=ExtResource("4_v6avs")]
 unique_name_in_owner = true
@@ -70,6 +70,12 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 60
 text = "Untitled Space Game"
 
+[node name="Single Player" type="Button" parent="UI/Multiplayer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "Single Player
+"
+
 [node name="Host" type="Button" parent="UI/Multiplayer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
@@ -87,5 +93,6 @@ spawn_path = NodePath("../PlayerBulletContainer")
 
 [node name="PlayerBulletContainer" type="Node3D" parent="."]
 
+[connection signal="pressed" from="UI/Multiplayer/VBoxContainer/Single Player" to="." method="_on_single_player_pressed"]
 [connection signal="pressed" from="UI/Multiplayer/VBoxContainer/Host" to="." method="_on_host_pressed"]
 [connection signal="pressed" from="UI/Multiplayer/VBoxContainer/Join" to="." method="_on_join_pressed"]

@@ -1,8 +1,8 @@
 extends CharacterBody3D
 
-@export var speed: float = 215
+@export var speed: float = 250
 @export var rotation_speed: float = 1.6
-@export var pitch_speed: float = 1
+@export var pitch_speed: float = 0.8
 @export var ai_health_label: Label
 @export var state_label: Label
 @export var distance_label: Label
@@ -44,7 +44,10 @@ func _physics_process(delta):
 	if state_label:
 		state_label.text = "State: " + str(current_state)
 	if distance_label:
-		distance_label.text = "Distance: " + str(global_position.distance_to(player_position))
+		if global_position.distance_to(player_position) > 999:
+			distance_label.text = "Distance To Enemy: " + str(snappedf(global_position.distance_to(player_position) / 1000, 0.1)) + "km"
+		else:
+			distance_label.text = "Distance To Enemy: " + str(int(round(global_position.distance_to(player_position)))) + "m"
 	
 	if %Trigger.is_colliding() and current_state == State.BOOM:
 		shoot()
@@ -63,7 +66,9 @@ func _physics_process(delta):
 			target_position = global_position
 			if global_position.distance_to(player_position) <= 1500:
 				current_state = State.BOOM
-	
+				if Global.current_task == 3:
+					Global.next_task()
+		
 		State.BOOM:
 			if current_speed < speed * 1.025:
 				current_speed += 1
@@ -115,11 +120,11 @@ func _physics_process(delta):
 		var roll_error = atan2(dot_right, dot_up)
 		
 		if current_state == State.BOOM:
-			pitch_speed = 1.25
-		elif current_state == State.ZOOM:
-			pitch_speed = 1.5
-		else:
 			pitch_speed = 1
+		elif current_state == State.ZOOM:
+			pitch_speed = 1.25
+		else:
+			pitch_speed = 0.8
 		
 		if abs(roll_error) > 0.01: 
 			var roll_step = sign(roll_error) * min(abs(roll_error), rotation_speed * delta)
