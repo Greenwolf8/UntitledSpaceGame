@@ -1,8 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://07reg5c5xbsn"]
+[gd_scene load_steps=7 format=3 uid="uid://07reg5c5xbsn"]
 
 [ext_resource type="Script" uid="uid://cnakptn5mu1jb" path="res://new_player.gd" id="1_xhfnw"]
 [ext_resource type="PackedScene" uid="uid://bgr4mpswlth1q" path="res://ship_terminal.tscn" id="2_kpjcp"]
-[ext_resource type="Shader" uid="uid://58yvgpih5yyp" path="res://Radar.gdshader" id="3_kne1u"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vx57b"]
 
@@ -22,33 +21,13 @@ properties/2/path = NodePath(".:transform")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_e80uo"]
-shader = ExtResource("3_kne1u")
-shader_parameter/overlay = true
-shader_parameter/scanlines_opacity = 0.800000038
-shader_parameter/scanlines_width = 0.5
-shader_parameter/grille_opacity = 0.38000001805
-shader_parameter/resolution = Vector2(1500, 150)
-shader_parameter/pixelate = false
-shader_parameter/roll = true
-shader_parameter/roll_speed = 1.0
-shader_parameter/roll_size = 15.0000007125
-shader_parameter/roll_variation = 5.0
-shader_parameter/distort_intensity = 0.010000000475
-shader_parameter/noise_opacity = 0.10000000475
-shader_parameter/noise_speed = 5.0
-shader_parameter/static_noise_intensity = 0.2000000095
-shader_parameter/aberration = 4.7499999933364734e-08
-shader_parameter/brightness = 3.0
-shader_parameter/discolor = true
-shader_parameter/warp_amount = 0.0
-shader_parameter/clip_warp = false
-shader_parameter/vignette_intensity = 0.2
-shader_parameter/vignette_opacity = 0.2000000095
-
 [node name="Player" type="CharacterBody3D" groups=["Player"]]
 collision_mask = 14
 script = ExtResource("1_xhfnw")
+
+[node name="Control" parent="." instance=ExtResource("2_kpjcp")]
+layer = 0
+visible = false
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
 unique_name_in_owner = true
@@ -122,22 +101,3 @@ replication_config = SubResource("SceneReplicationConfig_hde6v")
 unique_name_in_owner = true
 transform = Transform3D(-4.3711385e-08, 0, 1, 0, 1, 0, -0.9999999, 0, -4.371139e-08, 0.19623756, 2.8259792, -57.480034)
 target_position = Vector3(0, -1.5, 0)
-
-[node name="Control" parent="." instance=ExtResource("2_kpjcp")]
-layer = 0
-visible = false
-
-[node name="ColorRect2" type="ColorRect" parent="Control"]
-z_index = 10
-material = SubResource("ShaderMaterial_e80uo")
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -332.0
-offset_top = -345.0
-offset_right = 358.0
-offset_bottom = 345.0
-grow_horizontal = 2
-grow_vertical = 2

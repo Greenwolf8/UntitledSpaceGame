@@ -1,11 +1,38 @@
-[gd_scene load_steps=6 format=3 uid="uid://bgr4mpswlth1q"]
+[gd_scene load_steps=9 format=3 uid="uid://bgr4mpswlth1q"]
 
 [ext_resource type="Script" uid="uid://pwoxd7ojl1mp" path="res://ship_terminal.gd" id="1_gag4m"]
 [ext_resource type="FontFile" uid="uid://xn4y1kk2s2cu" path="res://ttf - Ac (aspect-corrected)/Ac437_ACM_VGA_9x8.ttf" id="2_kosm7"]
 [ext_resource type="FontFile" uid="uid://dcp8hd5x0r0an" path="res://ttf - Ac (aspect-corrected)/Ac437_IBM_PGC.ttf" id="3_o71qp"]
 [ext_resource type="Script" uid="uid://bqi0n1x8fredr" path="res://line_edit.gd" id="4_o71qp"]
+[ext_resource type="Shader" uid="uid://58yvgpih5yyp" path="res://Radar.gdshader" id="5_t7is7"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_t035j"]
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_o71qp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e167j"]
+shader = ExtResource("5_t7is7")
+shader_parameter/overlay = true
+shader_parameter/scanlines_opacity = 0.800000038
+shader_parameter/scanlines_width = 0.5
+shader_parameter/grille_opacity = 0.38000001805
+shader_parameter/resolution = Vector2(1500, 150)
+shader_parameter/pixelate = false
+shader_parameter/roll = true
+shader_parameter/roll_speed = 1.0
+shader_parameter/roll_size = 15.0000007125
+shader_parameter/roll_variation = 5.0
+shader_parameter/distort_intensity = 0.010000000475
+shader_parameter/noise_opacity = 0.10000000475
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.2000000095
+shader_parameter/aberration = 4.7499999933364734e-08
+shader_parameter/brightness = 3.0
+shader_parameter/discolor = true
+shader_parameter/warp_amount = 0.0
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 0.2
+shader_parameter/vignette_opacity = 0.2000000095
 
 [node name="CanvasLayer" type="CanvasLayer"]
 script = ExtResource("1_gag4m")
@@ -13,7 +40,7 @@ script = ExtResource("1_gag4m")
 [node name="MeshInstance2D" type="MeshInstance2D" parent="."]
 modulate = Color(0, 0, 0, 1)
 z_index = -1
-position = Vector2(550, 360)
+position = Vector2(540, 360)
 scale = Vector2(690, 690)
 mesh = SubResource("BoxMesh_t035j")
 
@@ -24,9 +51,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -330.0
+offset_left = -340.0
 offset_top = -340.0
-offset_right = 350.0
+offset_right = 340.0
 offset_bottom = 340.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -64,6 +91,26 @@ theme_override_font_sizes/font_size = 25
 keep_editing_on_text_submit = true
 expand_to_text_length = true
 script = ExtResource("4_o71qp")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_o71qp")
+
+[node name="ColorRect2" type="ColorRect" parent="."]
+z_index = 10
+material = SubResource("ShaderMaterial_e167j")
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -345.0
+offset_top = -345.0
+offset_right = 345.0
+offset_bottom = 345.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 
 [connection signal="focus_exited" from="VBoxContainer/HBoxContainer/LineEdit" to="." method="_on_line_edit_focus_exited"]
 [connection signal="text_changed" from="VBoxContainer/HBoxContainer/LineEdit" to="VBoxContainer/HBoxContainer/LineEdit" method="_on_text_changed"]

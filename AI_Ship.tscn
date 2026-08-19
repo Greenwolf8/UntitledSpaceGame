@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://db8ho13mf013k"]
+[gd_scene load_steps=11 format=3 uid="uid://db8ho13mf013k"]
 
 [ext_resource type="Script" uid="uid://dchqc2wuhpd8b" path="res://ai_ship.gd" id="1_0jbod"]
 [ext_resource type="PackedScene" uid="uid://caf4dxmt3a5uf" path="res://AVRO.VULCAN_GAME.fbx" id="2_pnxum"]
@@ -21,6 +21,14 @@ size = Vector3(1069.2839, 852.0584, 2891.345)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7e1ky"]
 size = Vector3(143.96436, 70, 150)
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_pnxum"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
 
 [node name="AI_Ship_Node" type="Node3D"]
 
@@ -178,3 +186,6 @@ shape = SubResource("BoxShape3D_grfkr")
 [node name="CollisionShape3D5" type="CollisionShape3D" parent="AI_Ship/StaticBody3D"]
 transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, -0.26852375, -1.5157614, 11.791683)
 shape = SubResource("BoxShape3D_dre73")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="AI_Ship"]
+replication_config = SubResource("SceneReplicationConfig_pnxum")

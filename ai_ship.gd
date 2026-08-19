@@ -1,118 +1,140 @@
 extends CharacterBody3D
 
-@export var speed := 175
-@export var rotation_speed := 1.5
-@export var pitch_speed := 0.85
-@export var ai_health_label : Label
-@export var state_label : Label
-@export var distance_label : Label
+@export var speed: float = 215
+@export var rotation_speed: float = 1.6
+@export var pitch_speed: float = 1
+@export var ai_health_label: Label
+@export var state_label: Label
+@export var distance_label: Label
 @export var roll_threshold: float = 0.25
 @export var muzzle_spread: float = 0.25
+
 @onready var bullet_scene : PackedScene = preload("res://Enemy_bullet.tscn")
-@onready var state_timer = %StateTimer
+@onready var state_timer: Timer = %StateTimer
 @onready var fire_point = %Hardpoint_1/Cannon/Cannon/MuzzleExit
 @onready var fire_timer = %Hardpoint_1/Cannon/Cannon/FireTimer
 @onready var sight_area = %Sight
 @onready var player : RigidBody3D
 
-enum State {PATROL, BOOM, ZOOM, PLAYER_DESTROYED, BOOM2}
+enum State {PATROL, BOOM, ZOOM, EVADE, PLAYER_DESTROYED}
 var current_state = State.PATROL
-var player_position := Vector3.ZERO
+var player_position: Vector3 = Vector3.ZERO
 var ai_health : int = 200
-var target_position = Vector3.ZERO
-var zooming = false
-var new_target_needed = true
-var last_boom: float = 0
+var target_position: Vector3 = Vector3.ZERO
+var zooming: bool = false
+var current_speed: int = 175
+var evade_vector: Vector3 = Vector3.ZERO
+var boom_offset: Vector3 = Vector3.ZERO
+var evade_roll_dir: float = 1
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player_ship") as RigidBody3D
-	ai_health_label.text = "Enemy Ship Health: " + str(ai_health)
-	state_label.text = "State: " + str(current_state) + str(zooming)
-	distance_label.text = "Distance: " + str(global_position.distance_to(player_position))
+	if ai_health_label:
+		ai_health_label.text = "Enemy Ship Health: " + str(ai_health)
 	%Exterior.area_entered.connect(_on_area_entered)
 	%Trigger.add_exception(self)
 
 func _physics_process(delta):
-	state_label.text = "State: " + str(current_state) + " " + str(zooming)
-	distance_label.text = "Distance: " + str(global_position.distance_to(player_position))
+	if not player:
+		return
 	
-	if %Trigger.is_colliding():
+	player_position = player.global_position
+	var dist_to_player = global_position.distance_to(player_position)
+	
+	if state_label:
+		state_label.text = "State: " + str(current_state)
+	if distance_label:
+		distance_label.text = "Distance: " + str(global_position.distance_to(player_position))
+	
+	if %Trigger.is_colliding() and current_state == State.BOOM:
 		shoot()
 	
-	var current_transform = global_transform
-	var upwards_direction = current_transform.basis.y.normalized()
-	var _right_direction = current_transform.basis.x.normalized()
-	var player_ship_local: Vector3 = player.rotation_degrees.normalized()
-	
-	if player:
-		player_position = player.global_position
+	var local_forward = -global_transform.basis.z
+	var local_up = global_transform.basis.y
+	var local_right = global_transform.basis.x
 	
 	match current_state:
-		State.BOOM:
-			target_position = player_position
-			if global_position.distance_to(player_position) < 450 and state_timer.is_stopped():
-				if last_boom == 2:
-					last_boom = 0
-				else:
-					last_boom += 1
-				state_timer.start()
-			elif global_position.distance_to(player_position) < 250:
-				current_state = State.ZOOM
-				zooming = true
-				state_timer.start()
-			elif Global.player_ship_destroyed == true:
-				current_state = State.PLAYER_DESTROYED
-			
-		State.ZOOM:
-			target_position = global_position + (upwards_direction * 500)
-			if state_timer.is_stopped():
-				zooming = false
-				current_state = State.BOOM
-		
-		State.PLAYER_DESTROYED:
-			target_position = global_position + (upwards_direction * 800)
-		
 		State.PATROL:
+			if current_speed < speed * 0:
+				current_speed += 1
+			elif current_speed > speed * 0:
+				current_speed -= 1
+			
 			target_position = global_position
 			if global_position.distance_to(player_position) <= 1500:
 				current_state = State.BOOM
-		
-		State.BOOM2:
-			target_position = player_position + Vector3(0,0,player_ship_local.z * 0.5)  + Vector3(0,player_ship_local.y,0)
+	
+		State.BOOM:
+			if current_speed < speed * 1.025:
+				current_speed += 1
+			elif current_speed > speed * 0.975:
+				current_speed -= 1
+				
+			target_position = player_position + (player.global_transform.basis.x * boom_offset.x)
+				
+			if dist_to_player < 220:
+				current_state = State.ZOOM
+				state_timer.start(2.5)
+				
+			if Global.player_ship_destroyed:
+				current_state = State.PLAYER_DESTROYED
+			
+		State.ZOOM:
+			if current_speed < speed * 1.5:
+				current_speed += 1
+			elif current_speed > speed * 1.5:
+				current_speed -= 1
+				
+			target_position = global_position + (local_forward * 500) + (local_up * 150)
+			
+			if state_timer.is_stopped():
+				boom_offset = Vector3(randf_range(-40.0, 40.0), randf_range(-20.0, 20.0), 0)
+				current_state = State.BOOM
+		State.EVADE:
+			if current_speed < speed * 1.3:
+				current_speed += 1
+			elif current_speed > speed * 1.3:
+				current_speed -= 1
+			rotate_object_local(Vector3.RIGHT, pitch_speed * 1.3 * delta)
+			rotate_object_local(Vector3.BACK, rotation_speed * 0.9 * evade_roll_dir * delta)
+			
 			if state_timer.is_stopped():
 				current_state = State.BOOM
-				state_timer.start()
-			elif global_position.distance_to(player_position) < 250:
-				current_state = State.ZOOM
-				zooming = true
-				state_timer.start()
-	
-	
-	var dir_to_target = (target_position - global_position).normalized()
-	var local_forward = -global_transform.basis.z 
-	var local_up = global_transform.basis.y
-	var local_right = global_transform.basis.x
-	var dot_up = dir_to_target.dot(local_up)
-	var dot_right = dir_to_target.dot(local_right)
-	var roll_error = atan2(dot_right, dot_up)
-	
-	if abs(roll_error) > 0.01: 
-		var roll_step = sign(roll_error) * min(abs(roll_error), rotation_speed * delta)
-		rotate_object_local(Vector3.BACK, -roll_step) 
-	
-	if abs(roll_error) < roll_threshold:
-		var dot_forward = dir_to_target.dot(local_forward)
-		var pitch_error = atan2(dot_up, dot_forward)
 		
-		if abs(pitch_error) > 0.01:
-			var pitch_step = sign(pitch_error) * min(abs(pitch_error), pitch_speed * delta)
-			rotate_object_local(Vector3.RIGHT, pitch_step)
+		State.PLAYER_DESTROYED:
+			if current_speed < speed * 0.5:
+				current_speed += 1
+			elif current_speed > speed * 0.5:
+				current_speed -= 1
+			target_position = global_position + (local_up * 250) + (local_forward * 250)
 	
+	if current_state != State.EVADE:
+		var dir_to_target = (target_position - global_position).normalized()
+		var dot_up = dir_to_target.dot(local_up)
+		var dot_right = dir_to_target.dot(local_right)
+		var roll_error = atan2(dot_right, dot_up)
+		
+		if current_state == State.BOOM:
+			pitch_speed = 1.25
+		elif current_state == State.ZOOM:
+			pitch_speed = 1.5
+		else:
+			pitch_speed = 1
+		
+		if abs(roll_error) > 0.01: 
+			var roll_step = sign(roll_error) * min(abs(roll_error), rotation_speed * delta)
+			rotate_object_local(Vector3.BACK, -roll_step) 
+		
+		if abs(roll_error) < roll_threshold:
+			var dot_forward = dir_to_target.dot(local_forward)
+			var pitch_error = atan2(dot_up, dot_forward)
+			
+			if abs(pitch_error) > 0.01:
+				var pitch_step = sign(pitch_error) * min(abs(pitch_error), pitch_speed * delta)
+				rotate_object_local(Vector3.RIGHT, pitch_step)
 	
-	if current_state != 0:
-		velocity = -global_transform.basis.z.normalized() * speed
-	else:
-		velocity = Vector3(0, 0, 0)
+	velocity = -global_transform.basis.z.normalized() * current_speed
+	
 	move_and_slide()
 
 func _on_area_entered(area: Area3D) -> void:
@@ -125,8 +147,8 @@ func hit():
 	if ai_health <0:
 		ai_health = 0
 	ai_health_label.text = "Enemy Ship Health: " + str(ai_health)
-	if current_state == 0:
-		current_state = State.BOOM
+	if current_state != State.EVADE and randf() < 0.6:
+		trigger_evasion()
 	if ai_health <= 0:
 		self.hide()
 		print("Enemy Destroyed!")
@@ -140,3 +162,8 @@ func shoot():
 		bullet.global_transform = fire_point.global_transform
 		bullet.rotate_object_local(Vector3.RIGHT, randf_range(-muzzle_spread, muzzle_spread))
 		bullet.rotate_object_local(Vector3.UP, randf_range(-muzzle_spread, muzzle_spread))
+
+func trigger_evasion():
+	current_state = State.EVADE
+	evade_roll_dir = 1 if randf() > 0.5 else -1
+	state_timer.start(randf_range(2, 4))

@@ -5,7 +5,8 @@ extends Node
 @onready var shoot_colliding: bool = false
 @onready var in_hangar: bool = false
 @onready var hangar_open: bool = false
-@onready var can_enter: bool = true
+@onready var is_pilot: bool = false
+@onready var is_wo: bool = false
 @onready var in_ship: bool = false
 @onready var ship = get_tree().get_first_node_in_group("player_ship") as RigidBody3D
 @onready var ship_on: bool = false

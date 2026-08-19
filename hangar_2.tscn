@@ -7,10 +7,10 @@
 [node name="Hangar2" instance=ExtResource("1_n5aso")]
 script = ExtResource("2_hup0b")
 
-[node name="Avro Vulcan" parent="Turn Table" index="0"]
+[node name="Avro Vulcan_001" parent="Turn Table" index="0"]
 unique_name_in_owner = true
 
-[node name="AnimationPlayer" parent="." index="14"]
+[node name="AnimationPlayer" parent="." index="13"]
 unique_name_in_owner = true
 libraries = {
 &"Global": ExtResource("3_1slax")

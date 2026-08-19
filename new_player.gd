@@ -7,10 +7,7 @@ extends CharacterBody3D
 @onready var chair = "Chair:<StaticBody3D#37094426288>"
 @onready var hangar = get_tree().get_first_node_in_group("Hangar")
 @onready var ship = get_tree().get_first_node_in_group("player_ship")
-@onready var ship_node = $"../Ship" # I know this is weird but the show() function needs it when calling ship. the "ship" variable does not work
-@onready var gear_ladder : CollisionShape3D = $"../Ship/Ship/Gear Ladder/GearLadder"
-@onready var interior_ladder: CollisionShape3D = $"../Ship/Ship/Interior Ladder/Inside"
-@onready var ship_console_camera: Camera3D = $"../Ship/Ship/Camera3D"
+@onready var ship_node = $"/root/Map/Node3D/Ship" # I know this is weird but the show() function needs it when calling ship. the "ship" variable does not work
 
 var climb_speed : float = 2.5
 var walk : float = 5
@@ -33,7 +30,6 @@ var on_gear_ladder: bool = false
 var on_interior_ladder: bool = false
 
 func _ready() -> void:
-	reparent(hangar, true)
 	if name.is_valid_int():
 		set_multiplayer_authority(name.to_int())
 	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -99,8 +95,7 @@ func _physics_process(delta: float) -> void:
 				var world_climb_dir : Vector3 = ship.global_transform.basis * local_ladder_dir * climb_input
 				
 				if position.y < -5.82 and climb_input < 0:
-					climb_gear_ladder()
-					reparent(get_tree().current_scene, true)
+					do_climb_gear_ladder.rpc(false, Vector3.ZERO)
 					Global.in_ship = false
 				elif position.y > 0 and climb_input > 0:
 					climb_gear_ladder()
@@ -184,8 +179,8 @@ func _physics_process(delta: float) -> void:
 				move_and_slide()
 
 func hangar_console_interact():
-	screen_position = Vector3(8.3377744, 1.37692, -53.19952)
-	screen_rotation = Vector3(-1.186824, 3.1416, 0.0)
+	screen_position = Vector3(-1916.744, 2629.374, -53.20243)
+	screen_rotation = Vector3(-1.169371, -3.141593, 0.0)
 	var tween = create_tween()
 	
 	if not in_console:
@@ -212,53 +207,78 @@ func hangar_console_interact():
 		in_console = false 
 
 func ship_console_interact():
-	screen_position = Vector3(0.554, 3, -57)
-	screen_rotation = Vector3(0.7854, -1.5708, 57)
+	var ship_target_pos = Vector3(29.52, 6.555, -0.44)
+	var ship_target_rot = Vector3(0.785398, -1.570796, 0.0)
+	var ship_target_transform = Transform3D(Basis.from_euler(ship_target_rot), ship_target_pos)
+	var world_target_transform = ship.global_transform * ship_target_transform
+	var player_local_transform = global_transform.affine_inverse() * world_target_transform
+	var target_local_pos = player_local_transform.origin
+	var target_local_rot = player_local_transform.basis.get_euler()
 	var tween = create_tween()
-	print("console interact called")
 	
 	if not Global.in_ship_console:
-		old_rotation.x = wrapf(camera.rotation.x, -PI, PI)
-		old_rotation.y = wrapf(camera.rotation.y, -PI, PI)
+		old_rotation = camera.rotation
 		old_position = camera.position
 		
-		rot_diff.x = wrapf(screen_rotation.x - camera.rotation.x, -PI, PI)
-		rot_diff.y = wrapf(screen_rotation.y - camera.rotation.y, -PI, PI)
+		rot_diff.x = wrapf(target_local_rot.x - camera.rotation.x, -PI, PI)
+		rot_diff.y = wrapf(target_local_rot.y - camera.rotation.y, -PI, PI)
+		rot_diff.z = wrapf(target_local_rot.z - camera.rotation.z, -PI, PI)
 		shortest_target = camera.rotation + rot_diff
-		tween.tween_property(camera, "position", screen_position, 0.25)
+		
+		tween.tween_property(camera, "position", target_local_pos, 0.25)
 		tween.parallel().tween_property(camera, "rotation", shortest_target, 0.25)
+		
 		$Control.show()
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		Global.in_ship_console = true
 		set_physics_process(false)
 	else:
-		print("console leave called")
-		rot_diff.x = wrapf(old_rotation.x - camera.global_rotation.x, -PI, PI)
-		rot_diff.y = wrapf(old_rotation.y - camera.global_rotation.y, -PI, PI)
-		shortest_target = camera.global_rotation + rot_diff
+		rot_diff.x = wrapf(old_rotation.x - camera.rotation.x, -PI, PI)
+		rot_diff.y = wrapf(old_rotation.y - camera.rotation.y, -PI, PI)
+		rot_diff.z = wrapf(old_rotation.z - camera.rotation.z, -PI, PI)
+		shortest_target = camera.rotation + rot_diff
+		
 		tween.tween_property(camera, "position", old_position, 0.5)
 		tween.parallel().tween_property(camera, "rotation", shortest_target, 0.5)
+		
 		$Control.hide()
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 		Global.in_ship_console = false 
 		set_physics_process(true)
 
-func enter_ship():
+func enter_pilot_seat():
 	set_physics_process(false)
 	hide()
 	%PressE.hide()
-	ship.enter_ship()
+	ship.enter_pilot()
 	camera.current = false
-	Global.can_enter = false
+	Global.is_pilot = true
 
-func leave_ship():
+func leave_pilot_seat():
 	position = leave_seat_location
 	velocity = get_platform_velocity()
 	set_physics_process(true)
 	show()
-	ship.leave_ship()
+	ship.leave_pilot()
 	camera.current = true 
-	Global.can_enter = true
+	Global.is_pilot = false
+
+func enter_wo_seat():
+	set_physics_process(false)
+	hide()
+	%PressE.hide()
+	ship.enter_wo()
+	camera.current = false
+	Global.is_wo = true
+
+func leave_wo_seat():
+	position = leave_seat_location
+	velocity = get_platform_velocity()
+	set_physics_process(true)
+	show()
+	ship.leave_wo()
+	camera.current = true 
+	Global.is_wo = false
 
 @rpc("any_peer", "call_local", "reliable")
 func sync_open_hangar():
@@ -271,10 +291,15 @@ func sync_open_hangar():
 		ship_node.show()
 
 func interact_pressed():
-	if Global.can_enter:
-		if hit_object and hit_object.is_in_group("chair"):
+	if not Global.is_pilot and not Global.is_wo:
+		if hit_object and hit_object.is_in_group("Pilot Seat"):
 			camera.current = false
-			enter_ship()
+			enter_pilot_seat()
+			hide()
+			_physics_process(false)
+		if hit_object and hit_object.is_in_group("WO Seat"):
+			camera.current = false
+			enter_wo_seat()
 			hide()
 			_physics_process(false)
 		elif hit_object and hit_object.is_in_group("Hangar_Screen"):
@@ -292,8 +317,11 @@ func interact_pressed():
 			climb_interior_ladder()
 		elif on_gear_ladder:
 			climb_gear_ladder()
-	else:
-		leave_ship()
+	elif Global.is_pilot:
+		leave_pilot_seat()
+		
+	elif Global.is_wo:
+		leave_wo_seat()
 
 func _enter_tree():
 	set_multiplayer_authority(name.to_int())
@@ -301,9 +329,7 @@ func _enter_tree():
 func climb_gear_ladder():
 	var ladder_local = Vector3(20,-5.5,57.475)
 	if not on_gear_ladder:
-		var tween = create_tween()
-		reparent(ship, true)
-		tween.tween_property(self, "position", ladder_local, 0.25)
+		do_climb_gear_ladder.rpc(true, ladder_local)
 		on_gear_ladder = true
 		%CollisionShape3D2.disabled = true
 	else:
@@ -318,3 +344,12 @@ func climb_interior_ladder():
 		on_interior_ladder = true
 	else:
 		on_interior_ladder = false
+
+@rpc("any_peer", "call_local", "reliable")
+func do_climb_gear_ladder(attaching: bool, ladder_local: Vector3) -> void:
+	var tween = create_tween()
+	if attaching:
+		reparent(ship, true)
+		tween.tween_property(self, "position", ladder_local, 0.25)
+	else:
+		reparent(get_tree().current_scene, true)

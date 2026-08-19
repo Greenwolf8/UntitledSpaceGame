@@ -41,7 +41,3 @@ shape = SubResource("CapsuleShape3D_ayd6b")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Bullet"]
 transform = Transform3D(0.01, 0, 0, 0, 0.01, 0, 0, 0, 0.01, 0, 0, 0)
 shape = SubResource("CapsuleShape3D_ayd6b")
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24.46146)
-visible = false

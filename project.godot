@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Space Game"
-run/main_scene="uid://oxwne66lagxs"
+run/main_scene="uid://dmoq30qvu54ax"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -34,13 +34,14 @@ player_ship=""
 enemy_ship=""
 bullet=""
 enemy_bullet=""
-chair=""
 Hangar=""
 Player=""
 Hangar_Screen=""
 Ship_Console=""
 "Ladder Interior"=""
 "Ladder Gear"=""
+"Pilot Seat"=""
+"WO Seat"=""
 
 [input]
 

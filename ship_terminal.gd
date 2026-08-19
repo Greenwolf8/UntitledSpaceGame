@@ -28,11 +28,11 @@ func _process_command(command: String) -> void:
 	
 	match parts:
 		"help":
-			history_label.append_text("AVAILABLE COMMANDS:\n EXEC SYS_START\n BOOT /REACTOR\n BOOT /LIFE_SUPPORT\n BOOT /DEFENCE_SYS\n LEAVE\n")
+			history_label.append_text("AVAILABLE COMMANDS:\n EXEC SYS_START\n BOOT /REACTOR\n BOOT /LIFE_SUPPORT\n BOOT /DEFENCE_SYS\n EXIT\n")
 		"exec sys_start":
 			history_label.append_text("SYSTEM STARTING\n")
 			Global.system_start()
-		"leave":
+		"exit":
 			command_input.release_focus()
 		
 	await get_tree().process_frame
