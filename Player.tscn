@@ -39,6 +39,10 @@ cache/0/16/0/scale = 1.0
 collision_mask = 271
 script = ExtResource("1_xhfnw")
 
+[node name="Control" parent="." instance=ExtResource("2_kpjcp")]
+layer = 0
+visible = false
+
 [node name="Task Container" type="VBoxContainer" parent="."]
 offset_left = 10.0
 offset_top = 110.0
@@ -54,10 +58,6 @@ theme_override_font_sizes/font_size = 18
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 15
-
-[node name="Control" parent="." instance=ExtResource("2_kpjcp")]
-layer = 0
-visible = false
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
 unique_name_in_owner = true

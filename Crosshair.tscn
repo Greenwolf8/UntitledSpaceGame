@@ -1,33 +1,51 @@
-[gd_scene load_steps=2 format=3 uid="uid://cjwlf7pqeioda"]
-
-[sub_resource type="QuadMesh" id="QuadMesh_0fadd"]
+[gd_scene format=3 uid="uid://cjwlf7pqeioda"]
 
 [node name="Crosshair" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
-[node name="Top" type="MeshInstance2D" parent="."]
-position = Vector2(540, 340)
-scale = Vector2(4, 15)
-mesh = SubResource("QuadMesh_0fadd")
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_left = -23.75
+offset_top = -23.75
+offset_right = 16.25
+offset_bottom = 16.25
 
-[node name="Bottom" type="MeshInstance2D" parent="."]
-position = Vector2(540, 380)
-scale = Vector2(4, 15)
-mesh = SubResource("QuadMesh_0fadd")
+[node name="Control" type="Control" parent="CenterContainer"]
+layout_mode = 2
+mouse_filter = 2
 
-[node name="Left" type="MeshInstance2D" parent="."]
-position = Vector2(520, 360)
-rotation = 1.5707964
-scale = Vector2(4, 15)
-mesh = SubResource("QuadMesh_0fadd")
+[node name="ColorRect" type="ColorRect" parent="CenterContainer/Control"]
+layout_mode = 0
+offset_left = -25.0
+offset_top = -2.0
+offset_right = -10.0
+offset_bottom = 2.0
 
-[node name="Right" type="MeshInstance2D" parent="."]
-position = Vector2(560, 360)
-rotation = 1.5707964
-scale = Vector2(4, 15)
-mesh = SubResource("QuadMesh_0fadd")
+[node name="ColorRect2" type="ColorRect" parent="CenterContainer/Control"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = -25.0
+offset_right = 2.0
+offset_bottom = -10.0
+
+[node name="ColorRect3" type="ColorRect" parent="CenterContainer/Control"]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 10.0
+offset_right = 2.0
+offset_bottom = 25.0
+
+[node name="ColorRect4" type="ColorRect" parent="CenterContainer/Control"]
+layout_mode = 0
+offset_left = 10.0
+offset_top = -2.0
+offset_right = 25.0
+offset_bottom = 2.0
