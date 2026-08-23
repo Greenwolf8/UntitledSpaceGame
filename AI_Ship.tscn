@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://db8ho13mf013k"]
+[gd_scene load_steps=12 format=3 uid="uid://db8ho13mf013k"]
 
 [ext_resource type="Script" uid="uid://dchqc2wuhpd8b" path="res://ai_ship.gd" id="1_0jbod"]
 [ext_resource type="PackedScene" uid="uid://caf4dxmt3a5uf" path="res://AVRO.VULCAN_GAME.fbx" id="2_pnxum"]
 [ext_resource type="PackedScene" uid="uid://dv22jiaawgv6j" path="res://Cannon.tscn" id="3_pnxum"]
+[ext_resource type="PackedScene" uid="uid://b1b3t0ixectso" path="res://explosion.tscn" id="4_grfkr"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0jbod"]
 size = Vector3(60.02215, 6.265419, 19.179157)
@@ -180,3 +181,7 @@ shape = SubResource("BoxShape3D_dre73")
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="AI_Ship"]
 replication_config = SubResource("SceneReplicationConfig_pnxum")
+
+[node name="Explosion" parent="AI_Ship" instance=ExtResource("4_grfkr")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.47428894, 2.385519, 38.23781)

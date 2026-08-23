@@ -23,6 +23,7 @@ Global="*res://Global.gd"
 
 window/size/viewport_width=1080
 window/size/viewport_height=720
+window/stretch/mode="canvas_items"
 
 [editor_plugins]
 
@@ -42,6 +43,8 @@ Ship_Console=""
 "Ladder Gear"=""
 "Pilot Seat"=""
 "WO Seat"=""
+Map=""
+"Hangar Script"=""
 
 [input]
 
@@ -131,13 +134,10 @@ pointing/emulate_touch_from_mouse=true
 3d_physics/layer_6="Interactable"
 3d_physics/layer_7="AI_Bullets"
 3d_physics/layer_8="Ship_Exterior"
+3d_physics/layer_9="Player No-Go"
 
 [physics]
 
 common/physics_ticks_per_second=120
 3d/default_gravity=0.0
-
-[rendering]
-
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
+common/physics_interpolation=true

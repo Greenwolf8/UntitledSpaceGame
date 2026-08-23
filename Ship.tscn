@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=3 uid="uid://b3ovqfvf46vnf"]
+[gd_scene load_steps=61 format=3 uid="uid://b3ovqfvf46vnf"]
 
 [ext_resource type="Script" uid="uid://dmt2egmpr1xr6" path="res://Ship.gd" id="1_ix3uc"]
 [ext_resource type="PackedScene" uid="uid://cn6a4gvubxnxi" path="res://AVRO.VULCAN.glb" id="2_qyh8x"]
@@ -22,7 +22,7 @@
 size = Vector3(78.80298, 6.52526, 26.983994)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0p50t"]
-size = Vector3(47.16062, 9.227827, 14.018057)
+size = Vector3(47.16062, 8.548168, 22.091795)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_oj4er"]
 size = Vector3(119.93239, 39.461365, 128.09103)
@@ -30,32 +30,62 @@ size = Vector3(119.93239, 39.461365, 128.09103)
 [sub_resource type="BoxShape3D" id="BoxShape3D_6xtlq"]
 size = Vector3(1.4251709, 1.1499023, 1.0093956)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_g0nn0"]
-size = Vector3(7.604973, 0.095825195, 10.297447)
+[sub_resource type="BoxShape3D" id="BoxShape3D_snmvu"]
+size = Vector3(5.96286, 0.61279297, 5.381592)
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_s83w2"]
-size = Vector3(6.9161377, 0.13134766, 6.534912)
+[sub_resource type="BoxShape3D" id="BoxShape3D_rnkl5"]
+size = Vector3(0.980011, 0.5957031, 4.0358887)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_g0nn0"]
+size = Vector3(7.085449, 0.609375, 5.370178)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_41uc2"]
-size = Vector3(4.1137543, 4.9920044, 2.3510742)
+size = Vector3(5.369385, 2.2247314, 0.21972656)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s83w2"]
+size = Vector3(4.167053, 2.2545166, 0.15905762)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0ieyr"]
-size = Vector3(5.24498, 3.2773132, 0.041931152)
+size = Vector3(4.844269, 3.6569824, 0.5786133)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_odhj8"]
-size = Vector3(10.130951, 2.5028992, 0.09814453)
+size = Vector3(5.423828, 3.8945313, 0.45703125)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_uwcpx"]
-size = Vector3(20.499603, 0.2602539, 1.9543457)
+size = Vector3(3.5343018, 4.623108, 0.2524414)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_36nsm"]
-size = Vector3(5.177246, 0.075683594, 1)
+size = Vector3(1.1248779, 1.0038452, 2.5054932)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yemy8"]
-size = Vector3(1.493042, 1.081543, 2.494995)
+size = Vector3(0.9397888, 2.3342896, 1.7474365)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_rfc6q"]
+size = Vector3(18.986893, 0.10211182, 1.9448853)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_kg0wn"]
+size = Vector3(1, 1.7796974, 1.8713379)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_td346"]
+size = Vector3(15.997833, 3.2058105, 0.13323975)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_qm6vp"]
+size = Vector3(7.46875, 0.08874512, 9.572327)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_xu1bw"]
+size = Vector3(7.665344, 3.1330566, 0.2319336)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tic06"]
+size = Vector3(0.11035156, 3.159912, 4.086426)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vx0vd"]
+size = Vector3(0.105895996, 3.1018066, 2.8199463)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_7jh6g"]
 size = Vector3(0.18725836, 4.9269104, 0.81132317)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_uymhy"]
+size = Vector3(0.7751465, 2.3517914, 1.744812)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_g0nn0"]
 size = Vector2(4.25, 4.25)
@@ -68,9 +98,6 @@ resource_local_to_scene = true
 shading_mode = 0
 albedo_texture = SubResource("ViewportTexture_s83w2")
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_uymhy"]
-size = Vector3(4.53125, 0.69140625, 4.1567383)
-
 [sub_resource type="ViewportTexture" id="ViewportTexture_oj4er"]
 viewport_path = NodePath("Ship/Avionics/RadarMesh")
 
@@ -82,6 +109,23 @@ albedo_texture = SubResource("ViewportTexture_oj4er")
 [sub_resource type="PlaneMesh" id="PlaneMesh_anqkt"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_ipukm")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_snmvu"]
+viewport_path = NodePath("Ship/Console")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rnkl5"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_snmvu")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_s83w2"]
+material = SubResource("StandardMaterial3D_rnkl5")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_rnkl5"]
+viewport_path = NodePath("Ship/Console")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g0nn0"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_rnkl5")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0ieyr"]
 shader = ExtResource("9_41uc2")
@@ -126,11 +170,21 @@ properties/1/path = NodePath(".:rotation")
 properties/1/spawn = true
 properties/1/replication_mode = 1
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_snmvu"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_krpvt"]
+size = Vector3(4.2701416, 1.8691406, 2.0750732)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nmspu"]
+size = Vector3(1.0609341, 2.9247665, 0.66748047)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d8om2"]
+size = Vector3(6.67572, 2.2439575, 4.4858413)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dto61"]
+size = Vector3(1.8312988, 2.9628906, 1)
 
 [node name="Avro Vulcan" type="Node3D"]
 
-[node name="Ship" type="RigidBody3D" parent="." node_paths=PackedStringArray("shoot_colliding_label") groups=["player_ship"]]
+[node name="Ship" type="RigidBody3D" parent="." groups=["player_ship"]]
 unique_name_in_owner = true
 collision_layer = 128
 collision_mask = 4
@@ -138,19 +192,21 @@ continuous_cd = true
 linear_damp = 1.0
 angular_damp = 3.0
 script = ExtResource("1_ix3uc")
-shoot_colliding_label = NodePath("")
 
 [node name="PilotCamera" type="Camera3D" parent="Ship"]
 unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 19.586086, 5.7281184, -0.67497)
-current = true
 fov = 100.0
+near = 0.1
+far = 205000.0
 
 [node name="WOCamera" type="Camera3D" parent="Ship"]
 unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 19.586086, 5.7281184, 0.72556204)
 current = true
 fov = 100.0
+near = 0.15
+far = 205000.0
 
 [node name="Hardpoint_1" type="Marker3D" parent="Ship"]
 unique_name_in_owner = true
@@ -169,14 +225,14 @@ collide_with_areas = true
 [node name="Exterior" type="Area3D" parent="Ship"]
 unique_name_in_owner = true
 collision_layer = 128
-collision_mask = 64
+collision_mask = 65
 
-[node name="CollisionShape3D7" type="CollisionShape3D" parent="Ship/Exterior"]
+[node name="Rear" type="CollisionShape3D" parent="Ship/Exterior"]
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 58.877834, 2.8490539, 0.073810704)
 shape = SubResource("BoxShape3D_qyh8x")
 
-[node name="CollisionShape3D8" type="CollisionShape3D" parent="Ship/Exterior"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.065506, 3.5327463, 0.005194664)
+[node name="Front" type="CollisionShape3D" parent="Ship/Exterior"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 24.065506, 3.8725758, -0.69011974)
 shape = SubResource("BoxShape3D_0p50t")
 
 [node name="AiShootZone" type="Area3D" parent="Ship"]
@@ -222,81 +278,97 @@ one_shot = true
 collision_layer = 2
 collision_mask = 0
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.327572, 0.9722314, -0.06471634)
+[node name="Top Floor Front" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.587986, 4.4451714, -0.020874023)
+shape = SubResource("BoxShape3D_snmvu")
+
+[node name="Top Floor Mid" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.080654, 4.4537163, -0.6586914)
+shape = SubResource("BoxShape3D_rnkl5")
+
+[node name="Top Floor Back" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.119171, 4.4468803, -0.0057678223)
 shape = SubResource("BoxShape3D_g0nn0")
 
-[node name="CollisionShape3D2" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.082775, 4.6745453, -0.44885254)
-shape = SubResource("BoxShape3D_s83w2")
-
-[node name="CollisionShape3D3" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 27.056171, 4.6924314, -0.6269512)
-shape = SubResource("BoxShape3D_s83w2")
-
-[node name="CollisionShape3D4" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 23.20155, 4.6745453, -1.9185457)
-shape = SubResource("BoxShape3D_s83w2")
-
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 16.158245, -1.8313131, 0.0031738281)
+[node name="Top Wall Back" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 30.565704, 5.8707266, -0.00049710274)
 shape = SubResource("BoxShape3D_41uc2")
 
-[node name="CollisionShape3D6" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(0.7069958, 0, 0.7072178, 0, 1, 0, -0.7072178, 0, 0.7069958, 19.724236, 6.0416994, -1.8908939)
+[node name="Top Wall BR" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.430298, 5.883361, -2.743003)
+shape = SubResource("BoxShape3D_s83w2")
+
+[node name="Top Wall BL" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 28.430298, 5.883361, 2.7434561)
+shape = SubResource("BoxShape3D_s83w2")
+
+[node name="Top Wall FR" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(0.9746012, 0.16038136, 0.15630206, 0, 0.6979404, -0.7161558, -0.22394758, 0.69796634, 0.6802136, 24.26086, 7.2140985, -1.6828663)
 shape = SubResource("BoxShape3D_0ieyr")
 
-[node name="CollisionShape3D7" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(0.58778524, 0, -0.809017, 0, 1, 0, 0.809017, 0, 0.58778524, 19.574253, 6.0416994, 1.4541607)
-shape = SubResource("BoxShape3D_0ieyr")
-
-[node name="CollisionShape3D8" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.438564, 5.9873934, 2.5634882)
+[node name="Top Wall FL" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(0.9881483, 0.10986116, -0.107209, 7.262537e-09, 0.69841534, 0.7156928, 0.15350324, -0.7072105, 0.69013774, 23.838608, 7.048275, 1.7826979)
 shape = SubResource("BoxShape3D_odhj8")
 
-[node name="CollisionShape3D9" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.438564, 5.9873934, -2.6283615)
-shape = SubResource("BoxShape3D_odhj8")
-
-[node name="CollisionShape3D17" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(0.97437006, 0, 0.22495104, 0, 1, 0, -0.22495104, 0, 0.97437006, 25.438564, 2.2804513, -4.112792)
-shape = SubResource("BoxShape3D_odhj8")
-
-[node name="CollisionShape3D18" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(0.97437006, 0, -0.22495104, 0, 1, 0, 0.22495104, 0, 0.97437006, 25.438564, 2.2804513, 4.126337)
-shape = SubResource("BoxShape3D_odhj8")
-
-[node name="CollisionShape3D10" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 30.665783, 6.0416994, -0.036359906)
-shape = SubResource("BoxShape3D_0ieyr")
-
-[node name="CollisionShape3D11" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 40.354656, 0.8895426, -0.009246826)
+[node name="Top Wall FFL" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(0.7337299, 0.52048224, -0.43673643, 0, 0.64278764, 0.7660443, 0.6794414, -0.56206965, 0.47163242, 19.994461, 7.2524734, -0.04881087)
 shape = SubResource("BoxShape3D_uwcpx")
 
-[node name="CollisionShape3D12" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 30.025524, 2.6493459, -3.6078627)
-shape = SubResource("BoxShape3D_0ieyr")
+[node name="Top Wall FFR" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(0.7823908, 0.47708315, 0.4003203, 0, 0.64278764, -0.7660443, -0.6227879, 0.59934616, 0.50291115, 20.151495, 7.2524734, -0.04881087)
+shape = SubResource("BoxShape3D_uwcpx")
 
-[node name="CollisionShape3D13" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 30.025524, 2.6493459, 3.584962)
-shape = SubResource("BoxShape3D_0ieyr")
-
-[node name="CollisionShape3D15" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 22.527056, 2.6493459, 3.2021632)
-shape = SubResource("BoxShape3D_0ieyr")
-
-[node name="CollisionShape3D16" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 22.527056, 2.6493459, -3.2068954)
-shape = SubResource("BoxShape3D_0ieyr")
-
-[node name="CollisionShape3D14" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(0.42261824, -0.9063078, 0, 0.9063078, 0.42261824, 0, 0, 0, 1, 21.402077, -1.3019204, 0)
+[node name="Seats" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.81046, 5.2557282, -0.0065307617)
 shape = SubResource("BoxShape3D_36nsm")
 
-[node name="CollisionShape3D19" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.620945, 5.2448378, -0.025991857)
+[node name="Console" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.013414, 5.922873, -0.004638672)
 shape = SubResource("BoxShape3D_yemy8")
+
+[node name="Bomb Bay Walkway" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 39.472065, 0.97316575, -0.010223389)
+shape = SubResource("BoxShape3D_rfc6q")
+
+[node name="Bomb Bay Barrier Back" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 46.564743, 1.8808289, -0.0340271)
+shape = SubResource("BoxShape3D_kg0wn")
+
+[node name="Bomb Bay Barrier Right" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.06976, 2.5926208, -1.05152)
+shape = SubResource("BoxShape3D_td346")
+
+[node name="Bomb Bay Barrier Left" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 38.06976, 2.5926208, 1.0377439)
+shape = SubResource("BoxShape3D_td346")
+
+[node name="Bottom Floor" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 26.268585, 0.9850371, -0.32598877)
+shape = SubResource("BoxShape3D_qm6vp")
+
+[node name="Bottom Wall Right" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(0.97591674, 0, 0.21814324, 0, 1, 0, -0.21814324, 0, 0.97591674, 26.246035, 2.5790339, -4.372309)
+shape = SubResource("BoxShape3D_xu1bw")
+
+[node name="Bottom Wall Left" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(0.97591674, 0, -0.21814324, 0, 1, 0, 0.21814324, 0, 0.97591674, 26.246035, 2.5790339, 4.344937)
+shape = SubResource("BoxShape3D_xu1bw")
+
+[node name="Bottom Wall BL" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.065794, 2.6204157, 3.0308428)
+shape = SubResource("BoxShape3D_tic06")
+
+[node name="Bottom Wall BR" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 30.044956, 2.6204157, -3.0332003)
+shape = SubResource("BoxShape3D_tic06")
+
+[node name="Bottom Wall FR" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.482302, 2.5836725, -2.007293)
+shape = SubResource("BoxShape3D_vx0vd")
+
+[node name="Bottom Wall FL" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.482302, 2.5836725, 2.0042179)
+shape = SubResource("BoxShape3D_vx0vd")
 
 [node name="Gear Ladder" type="Area3D" parent="Ship" groups=["Ladder Gear"]]
 collision_layer = 32
@@ -313,29 +385,32 @@ collision_layer = 32
 transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 0, 0, 0, 1, 22.59394, 3.457068, 1.9413606)
 shape = SubResource("BoxShape3D_7jh6g")
 
+[node name="Console Interact" type="StaticBody3D" parent="Ship" groups=["Ship_Console"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 29.8198, 6.855312, -0.4395761)
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ship/Console Interact"]
+transform = Transform3D(1, -2.3874236e-12, -2.4868996e-14, -4.440892e-16, 1, 2.270809e-16, 0, 1.3436802e-14, 1, 0.11242676, -0.942955, 0.43571472)
+shape = SubResource("BoxShape3D_uymhy")
+
 [node name="Console2" type="MeshInstance3D" parent="Ship"]
-transform = Transform3D(-2.3537605e-09, -0.7071067, 0.09192386, -8.036241e-09, -0.7071067, -0.09192386, 0.13, -5.6514153e-08, -4.01812e-09, 29.8198, 6.855312, -0.4395761)
+transform = Transform3D(-9.458815e-09, -0.70710677, 0.106066026, -1.6015525e-08, -0.7071068, -0.10606602, 0.15, -1.2008718e-07, -4.636293e-09, 29.815, 6.851, -0.44)
 mesh = SubResource("PlaneMesh_g0nn0")
 skeleton = NodePath("../Avionics/RadarScreen")
 surface_material_override/0 = SubResource("StandardMaterial3D_41uc2")
 
-[node name="StaticBody3D" type="StaticBody3D" parent="Ship/Console2" groups=["Ship_Console"]]
-collision_layer = 32
-collision_mask = 0
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ship/Console2/StaticBody3D"]
-transform = Transform3D(1, -2.2794211e-11, -2.4868996e-14, -4.440892e-16, 1, 2.270809e-16, 0, 1.3437432e-14, 1, 0.13671732, -0.15429688, 0.054016113)
-shape = SubResource("BoxShape3D_uymhy")
+[node name="Console3" type="MeshInstance3D" parent="Ship"]
+transform = Transform3D(-9.458815e-09, -0.70710677, 0.106066026, -1.6015525e-08, -0.7071068, -0.10606602, 0.15, -1.2008718e-07, -4.636293e-09, 29.815, 6.851, 0.445)
+mesh = SubResource("PlaneMesh_g0nn0")
+skeleton = NodePath("../Avionics/RadarScreen")
+surface_material_override/0 = SubResource("StandardMaterial3D_41uc2")
 
 [node name="Console" type="SubViewport" parent="Ship"]
 size = Vector2i(550, 550)
 
 [node name="Control" parent="Ship/Console" instance=ExtResource("19_s83w2")]
 layer = 0
-
-[node name="Camera3D" type="Camera3D" parent="Ship"]
-unique_name_in_owner = true
-transform = Transform3D(-4.371139e-08, -0.7071068, -0.7071067, 0, 0.7071067, -0.7071068, 1, -3.090862e-08, -3.0908616e-08, 29.52, 6.555, -0.44)
 
 [node name="AVRO_VULCAN" parent="Ship" instance=ExtResource("2_qyh8x")]
 
@@ -409,10 +484,9 @@ bus = &"Engines"
 
 [node name="OmniLight3D" type="OmniLight3D" parent="Ship/Lights"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.521578, 7.968589, 0.15600061)
-visible = false
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.329838, 7.968589, 0.0049852133)
 light_color = Color(1, 0, 0, 1)
-light_energy = 2.0
+light_energy = 5.0
 omni_range = 15.0
 
 [node name="OmniLight3D4" type="OmniLight3D" parent="Ship/Lights"]
@@ -436,7 +510,7 @@ unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 64.61, 1.2, 38.49)
 visible = false
 light_color = Color(1, 0.94588345, 0.94768494, 1)
-light_energy = 150.0
+light_energy = 400.0
 spot_range = 2000.0
 spot_angle = 20.0
 spot_angle_attenuation = 0.43527067
@@ -446,7 +520,7 @@ unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 64.619286, 1.2, -38.495605)
 visible = false
 light_color = Color(1, 0.94509804, 0.9490196, 1)
-light_energy = 150.0
+light_energy = 400.0
 spot_range = 2000.0
 spot_angle = 20.0
 spot_angle_attenuation = 0.43527508
@@ -466,14 +540,29 @@ light_color = Color(1, 0.94509804, 0.9490196, 1)
 omni_range = 50.0
 
 [node name="Avionics" type="Node3D" parent="Ship"]
-transform = Transform3D(0.012901248, 0.9335804, 0, -0.033608895, 0.35836798, 0, 0, 0, 0.036, 18.914389, 5.461173, -0.6995481)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.914389, 5.461173, -0.6995481)
 
 [node name="RadarScreen" type="MeshInstance3D" parent="Ship/Avionics"]
 unique_name_in_owner = true
-transform = Transform3D(-5.65672e-08, -0.6786661, 3.6100328, -5.305053e-09, 0.9997016, 0.0031761602, -3.6111114, -1.1225887e-06, -6.0150676e-08, 5.9273834, 0.004020691, 0.081445694)
+transform = Transform3D(-5.9010374e-09, 0.9238795, 0.05166228, 0, 0.38268355, -0.12472374, -0.135, -4.0384055e-08, -2.25823e-09, 0.07843208, -0.19950676, 0.0012581348)
 visible = false
 mesh = SubResource("PlaneMesh_anqkt")
 skeleton = NodePath("../..")
+
+[node name="RadarScreenL" type="MeshInstance3D" parent="Ship/Avionics"]
+unique_name_in_owner = true
+transform = Transform3D(-5.9010374e-09, 0.9238795, 0.05166228, 0, 0.38268355, -0.12472374, -0.135, -4.0384055e-08, -2.25823e-09, 0.073667526, -0.18765831, 1.3764443)
+visible = false
+mesh = SubResource("PlaneMesh_anqkt")
+skeleton = NodePath("../..")
+
+[node name="MiniScreen" type="MeshInstance3D" parent="Ship/Avionics"]
+unique_name_in_owner = true
+transform = Transform3D(-3.584334e-09, 0.9316912, 0.029786598, 0, 0.36325118, -0.076398686, -0.082, -4.0725517e-08, -1.3020135e-09, 0.0042324066, -0.016715527, 0.27258468)
+visible = false
+mesh = SubResource("PlaneMesh_s83w2")
+skeleton = NodePath("../..")
+surface_material_override/0 = SubResource("StandardMaterial3D_g0nn0")
 
 [node name="RadarMesh" type="SubViewport" parent="Ship/Avionics"]
 disable_3d = true
@@ -495,17 +584,17 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="GaugeRight" type="MeshInstance3D" parent="Ship/Avionics"]
-transform = Transform3D(1, 9.536743e-07, 0, 9.313226e-10, 1.0000001, 0, 0, 0, 1, 0.00061035156, -0.0004234314, -2.6792183)
+transform = Transform3D(0.014066318, 0.092050485, 0, -0.033138175, 0.039073106, 0, 0, 0, 0.036, -0.0030727386, -6.6280365e-05, -0.09328902)
 mesh = SubResource("PlaneMesh_6xtlq")
 skeleton = NodePath("")
 
 [node name="GaugeCentre" type="MeshInstance3D" parent="Ship/Avionics"]
-transform = Transform3D(1, 9.536743e-07, 0, 9.313226e-10, 1.0000001, 0, 0, 0, 1, 0, 0, 0)
+transform = Transform3D(0.014066318, 0.092050485, 0, -0.033138175, 0.039073106, 0, 0, 0, 0.036, 0, 0.00093507767, 0.0012386441)
 mesh = SubResource("PlaneMesh_6xtlq")
 skeleton = NodePath("")
 
 [node name="GaugeLeft" type="MeshInstance3D" parent="Ship/Avionics"]
-transform = Transform3D(1, 9.536743e-07, 0, 9.313226e-10, 1.0000001, 0, 0, 0, 1, 0.00061035156, -0.0004234314, 2.5707817)
+transform = Transform3D(0.014066318, 0.092050485, 0, -0.033138175, 0.039073106, 0, 0, 0, 0.036, 0.00061035156, 0.0013456345, 0.09667939)
 mesh = SubResource("PlaneMesh_6xtlq")
 skeleton = NodePath("")
 
@@ -538,7 +627,33 @@ unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.671085, -3.0840936, 0)
-visible = false
-mesh = SubResource("CapsuleMesh_snmvu")
+[node name="Landing Gear Colliders" type="StaticBody3D" parent="Ship"]
+collision_layer = 128
+collision_mask = 0
+
+[node name="Front Gear Bottom" type="CollisionShape3D" parent="Ship/Landing Gear Colliders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.671326, -3.483326, -0.0010375977)
+shape = SubResource("BoxShape3D_krpvt")
+
+[node name="Front Gear Top" type="CollisionShape3D" parent="Ship/Landing Gear Colliders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.745585, -1.0586858, 0.004638672)
+shape = SubResource("BoxShape3D_nmspu")
+
+[node name="Right Gear Bottom" type="CollisionShape3D" parent="Ship/Landing Gear Colliders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.53548, -3.7866402, -13.04238)
+shape = SubResource("BoxShape3D_d8om2")
+
+[node name="Right Gear Top" type="CollisionShape3D" parent="Ship/Landing Gear Colliders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.238785, -1.1661267, -12.986558)
+shape = SubResource("BoxShape3D_dto61")
+
+[node name="Left Gear Bottom" type="CollisionShape3D" parent="Ship/Landing Gear Colliders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.53548, -3.7866402, 12.957494)
+shape = SubResource("BoxShape3D_d8om2")
+
+[node name="Left Gear Top" type="CollisionShape3D" parent="Ship/Landing Gear Colliders"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 61.238785, -1.1661267, 13.0157175)
+shape = SubResource("BoxShape3D_dto61")
+
+[connection signal="body_entered" from="Ship/Exterior" to="Ship" method="_on_exterior_body_entered"]
+[connection signal="body_exited" from="Ship/Exterior" to="Ship" method="_on_exterior_body_exited"]

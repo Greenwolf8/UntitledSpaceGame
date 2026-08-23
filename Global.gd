@@ -7,25 +7,28 @@ extends Node
 @onready var is_pilot: bool = false
 @onready var is_wo: bool = false
 @onready var in_ship: bool = false
-@onready var ship = get_tree().get_first_node_in_group("player_ship") as RigidBody3D
-@onready var player = get_tree().get_first_node_in_group("Player") as CharacterBody3D
+@onready var ship: RigidBody3D = get_tree().get_first_node_in_group("player_ship")
+@onready var map = get_tree().get_first_node_in_group("Map")
+@onready var hangar = get_tree().get_first_node_in_group("Hangar Script")
+@onready var player: CharacterBody3D
 @onready var ship_on: bool = false
 @onready var in_ship_console: bool = false
+@onready var ai_attacking: bool = false
+@onready var bullet_container: Node3D = $/root/Map/PlayerBulletContainer
 
 var current_task: float = 0
 
 func next_task():
 	player = get_tree().get_first_node_in_group("Player") as CharacterBody3D
-	player.rpc("next_task")
+	player.next_task()
 
 func system_start():
 	player = get_tree().get_first_node_in_group("Player") as CharacterBody3D
 	ship.system_start()
 	if current_task == 2:
 		next_task()
+	hangar.open_hangar()
 
-func open_hangar():
-	pass
-
-func close_hangar():
-	pass
+func enemy_destroyed():
+	player.enemy_destroyed()
+	map.spawn_enemy("Random")

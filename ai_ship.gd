@@ -2,7 +2,6 @@ extends CharacterBody3D
 
 @export var speed: float = 250
 @export var rotation_speed: float = 1.6
-@export var pitch_speed: float = 0.8
 @export var ai_health_label: Label
 @export var state_label: Label
 @export var distance_label: Label
@@ -15,8 +14,12 @@ extends CharacterBody3D
 @onready var fire_timer = %Hardpoint_1/Cannon/Cannon/FireTimer
 @onready var sight_area = %Sight
 @onready var player : RigidBody3D
+@onready var explosionsfx: Node3D = %Explosion
+
+const pitch_speed: float = 0.8
 
 enum State {PATROL, BOOM, ZOOM, EVADE, PLAYER_DESTROYED}
+
 var current_state = State.PATROL
 var player_position: Vector3 = Vector3.ZERO
 var ai_health : int = 200
@@ -26,6 +29,8 @@ var current_speed: int = 175
 var evade_vector: Vector3 = Vector3.ZERO
 var boom_offset: Vector3 = Vector3.ZERO
 var evade_roll_dir: float = 1
+var is_dead: bool = false
+var current_pitch_speed: float = 0.8
 
 func _ready() -> void:
 	player = get_tree().get_first_node_in_group("player_ship") as RigidBody3D
@@ -33,6 +38,11 @@ func _ready() -> void:
 		ai_health_label.text = "Enemy Ship Health: " + str(ai_health)
 	%Exterior.area_entered.connect(_on_area_entered)
 	%Trigger.add_exception(self)
+	if Global.ai_attacking == true:
+		current_state = State.BOOM
+	else:
+		current_state = State.PATROL
+	Global.ai_attacking = true
 
 func _physics_process(delta):
 	if not player:
@@ -100,7 +110,7 @@ func _physics_process(delta):
 				current_speed += 1
 			elif current_speed > speed * 1.3:
 				current_speed -= 1
-			rotate_object_local(Vector3.RIGHT, pitch_speed * 1.3 * delta)
+			rotate_object_local(Vector3.RIGHT, current_pitch_speed * 1.3 * delta)
 			rotate_object_local(Vector3.BACK, rotation_speed * 0.9 * evade_roll_dir * delta)
 			
 			if state_timer.is_stopped():
@@ -120,11 +130,11 @@ func _physics_process(delta):
 		var roll_error = atan2(dot_right, dot_up)
 		
 		if current_state == State.BOOM:
-			pitch_speed = 1
+			current_pitch_speed = pitch_speed * 1.2
 		elif current_state == State.ZOOM:
-			pitch_speed = 1.25
+			current_pitch_speed = pitch_speed * 1.5
 		else:
-			pitch_speed = 0.8
+			current_pitch_speed = pitch_speed
 		
 		if abs(roll_error) > 0.01: 
 			var roll_step = sign(roll_error) * min(abs(roll_error), rotation_speed * delta)
@@ -135,7 +145,7 @@ func _physics_process(delta):
 			var pitch_error = atan2(dot_up, dot_forward)
 			
 			if abs(pitch_error) > 0.01:
-				var pitch_step = sign(pitch_error) * min(abs(pitch_error), pitch_speed * delta)
+				var pitch_step = sign(pitch_error) * min(abs(pitch_error), current_pitch_speed * delta)
 				rotate_object_local(Vector3.RIGHT, pitch_step)
 	
 	velocity = -global_transform.basis.z.normalized() * current_speed
@@ -154,10 +164,15 @@ func hit():
 	ai_health_label.text = "Enemy Ship Health: " + str(ai_health)
 	if current_state != State.EVADE and randf() < 0.6:
 		trigger_evasion()
-	if ai_health <= 0:
+	if ai_health <= 0 and not is_dead:
+		is_dead = true
 		self.hide()
+		explosionsfx.Boom()
 		print("Enemy Destroyed!")
 		set_physics_process(false)
+		Global.enemy_destroyed()
+		await get_tree().create_timer(3).timeout
+		queue_free()
 
 func shoot():
 	var bullet = bullet_scene.instantiate()

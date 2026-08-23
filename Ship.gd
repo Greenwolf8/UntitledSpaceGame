@@ -17,7 +17,7 @@ extends RigidBody3D
 @onready var speed_label: Label = %Speed
 @onready var health_label: Label = %HealthLabel	
 @onready var player: CharacterBody3D = get_tree().get_first_node_in_group("Player")
-@onready var bullet_container: Node3D = $"../../../PlayerBulletContainer"
+@onready var bullet_container = Global.bullet_container
 
 var mouse_input: Vector2 = Vector2.ZERO
 var health: int = 200
@@ -30,8 +30,6 @@ var forward_move: float = 0.0
 func _ready() -> void:
 	health_label.text = "Health: " + str(health)
 	%Exterior.area_entered.connect(_on_area_entered)
-	print("camera location: " + str(%Camera3D.position))
-	print("camera rotation: " + str(%Camera3D.rotation))
 
 func _unhandled_input(event: InputEvent) -> void:
 	if Camerafree and event is InputEventMouseMotion:
@@ -57,8 +55,8 @@ func _physics_process(_delta):
 	var forward_force: Vector3 = Vector3.ZERO
 	
 	if not Camerafree:
-		pitch_input += mouse_input.y * 0.1
-		yaw_input = -mouse_input.x * 0.1
+		pitch_input += mouse_input.y * 0.02
+		yaw_input = -mouse_input.x * 0.05
 	else:
 		yaw_input = 0
 	
@@ -106,13 +104,22 @@ func _physics_process(_delta):
 
 func _input(_event: InputEvent) -> void:
 	var cantlock = Camerafree
-
-	if Input.is_action_just_pressed("camera_lock") and not cantlock:
-		Camerafree = true
-	elif Input.is_action_just_pressed("camera_lock") and cantlock:
-		Camerafree = false
-		%Camera3D.rotation_degrees.x = 0
-		%Camera3D.rotation_degrees.y = 90
+	
+	if Global.is_pilot:
+		if Input.is_action_just_pressed("camera_lock") and not cantlock:
+			Camerafree = true
+		elif Input.is_action_just_pressed("camera_lock") and cantlock:
+			Camerafree = false
+			pilot_camera.rotation_degrees.x = 0
+			pilot_camera.rotation_degrees.y = 90
+	
+	if Global.is_wo:
+		if Input.is_action_just_pressed("camera_lock") and not cantlock:
+			Camerafree = true
+		elif Input.is_action_just_pressed("camera_lock") and cantlock:
+			Camerafree = false
+			wo_camera.rotation_degrees.x = 0
+			wo_camera.rotation_degrees.y = 90
 
 @rpc("any_peer", "call_local", "reliable")
 func just_shot() -> void:
@@ -126,9 +133,7 @@ func just_shot() -> void:
 func request_shoot(muzzle_transform:  Transform3D) -> void:
 	if not multiplayer.is_server():
 		return
-	print("1")
 	if fire_timer.is_stopped() and pre_fire_timer.is_stopped() and fire_time.time_left > 0:
-		print("firing... apparently")
 		var bullet = bullet_scene.instantiate()
 		bullet.global_transform = muzzle_transform
 		%Gun2.play()
@@ -145,13 +150,11 @@ func enter_pilot():
 	Camerafree = false
 	pilot_camera.current = true
 	pilot_camera.rotation_degrees = Vector3(0, 90, 0)
-	print("enter Pilot called!")
 
 func leave_pilot():
 	health_label.hide()
 	%Speed.visible = false
 	player = get_tree().get_first_node_in_group("Player")
-	print("leave Pilot called!")
 
 func enter_wo():
 	health_label.show()
@@ -160,13 +163,11 @@ func enter_wo():
 	Camerafree = false
 	wo_camera.current = true
 	wo_camera.rotation_degrees = Vector3(0, 90, 0)
-	print("enter WO called!")
 
 func leave_wo():
 	health_label.hide()
 	%Speed.visible = false
 	player = get_tree().get_first_node_in_group("Player")
-	print("leave WO called!")
 
 func _on_area_entered(area: Area3D) -> void:
 	if area.is_in_group("enemy_bullet"):
@@ -209,10 +210,12 @@ func sync_system_start():
 	%OmniLight3D4.show()
 	%OmniLight3D5.show()
 	%SpotLight3D.show()
-	%SpotLight3D.show()
+	%SpotLight3D2.show()
 	%Computer_Boot.play()
 	await get_tree().create_timer(5).timeout
 	%RadarScreen.show()
+	%RadarScreenL.show()
+	%MiniScreen.show()
 	%Engine_1.play()
 	await get_tree().create_timer(6.2).timeout
 	Global.ship_on = true
@@ -223,3 +226,9 @@ func system_shutdown():
 	%OmniLight3D.light_color = Color(1.0, 0.0, 0.0, 1.0)
 	%Engine_2.stop()
 	%Engine_3.play()
+
+func _on_exterior_body_exited(body: Node3D) -> void:
+	print(body.name, "exited!")
+
+func _on_exterior_body_entered(body: Node3D) -> void:
+	print(body.name, "entered!!")

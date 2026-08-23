@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjwlf7pqeioda"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_0fadd"]
+
+[node name="Crosshair" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Top" type="MeshInstance2D" parent="."]
+position = Vector2(540, 340)
+scale = Vector2(4, 15)
+mesh = SubResource("QuadMesh_0fadd")
+
+[node name="Bottom" type="MeshInstance2D" parent="."]
+position = Vector2(540, 380)
+scale = Vector2(4, 15)
+mesh = SubResource("QuadMesh_0fadd")
+
+[node name="Left" type="MeshInstance2D" parent="."]
+position = Vector2(520, 360)
+rotation = 1.5707964
+scale = Vector2(4, 15)
+mesh = SubResource("QuadMesh_0fadd")
+
+[node name="Right" type="MeshInstance2D" parent="."]
+position = Vector2(560, 360)
+rotation = 1.5707964
+scale = Vector2(4, 15)
+mesh = SubResource("QuadMesh_0fadd")

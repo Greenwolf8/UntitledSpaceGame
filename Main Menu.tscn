@@ -1,20 +1,23 @@
-[gd_scene load_steps=18 format=3 uid="uid://oxwne66lagxs"]
+[gd_scene load_steps=19 format=3 uid="uid://oxwne66lagxs"]
 
 [ext_resource type="Script" uid="uid://bx0dvwgrokvtx" path="res://main_menu.gd" id="1_wlsky"]
 [ext_resource type="PackedScene" uid="uid://b3ovqfvf46vnf" path="res://Ship.tscn" id="4_12kdf"]
-[ext_resource type="PackedScene" uid="uid://cqgpmixv24g5a" path="res://hangar_2.tscn" id="5_xwd2w"]
 [ext_resource type="PackedScene" uid="uid://ba1njo63ddmbj" path="res://Hangar Terminal.tscn" id="6_wfgb2"]
 [ext_resource type="Script" uid="uid://b1sw3pi3k4mhx" path="res://button.gd" id="7_bcalf"]
+[ext_resource type="PackedScene" uid="uid://cp8l0j0ht7but" path="res://hangar.tscn" id="7_wlsky"]
 [ext_resource type="Shader" uid="uid://58yvgpih5yyp" path="res://Radar.gdshader" id="8_ht6vt"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_i5qic"]
-size = Vector3(188.70212, 1, 159.70451)
+size = Vector3(190.89954, 1, 159.70451)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_12kdf"]
 size = Vector3(251.57767, 0.51672363, 59.94363)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_xwd2w"]
-size = Vector3(7.522064, 1.2592773, 0.6157532)
+size = Vector3(7.522064, 1.2592773, 0.6950836)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wlsky"]
+size = Vector3(2.0648804, 1.2171631, 0.5107422)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_wfgb2"]
 size = Vector3(0.76605225, 0.38208008, 0.51086426)
@@ -65,7 +68,6 @@ shader_parameter/vignette_intensity = 0.2
 shader_parameter/vignette_opacity = 0.2000000095
 
 [node name="Node3D" type="Node3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.32071102, 0)
 script = ExtResource("1_wlsky")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
@@ -74,7 +76,7 @@ collision_layer = 4
 collision_mask = 0
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 13.213852, -0.55429447, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.115143, -0.55429447, 0)
 shape = SubResource("BoxShape3D_i5qic")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
@@ -86,12 +88,20 @@ transform = Transform3D(1, 0, 0, 0, -4.371139e-08, -1, 0, 1, -4.371139e-08, 1.53
 shape = SubResource("BoxShape3D_12kdf")
 
 [node name="CollisionShape3D4" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, 96.8233, 30, 0)
+transform = Transform3D(-4.371139e-08, 1, -4.371139e-08, 0, -4.371139e-08, -1, -1, -4.371139e-08, 1.9106855e-15, 107.60446, 30, 0)
 shape = SubResource("BoxShape3D_12kdf")
 
-[node name="CollisionShape3D5" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.850136, 0.59189796, -53.144238)
+[node name="Console Centre" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.850136, 0.59189796, -53.183903)
 shape = SubResource("BoxShape3D_xwd2w")
+
+[node name="Console Right" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(0.7071067, 0, -0.7071067, 0, 1, 0, 0.7071067, 0, 0.7071067, 2.5216007, 0.5881748, -53.74507)
+shape = SubResource("BoxShape3D_wlsky")
+
+[node name="Console Left" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(0.7071067, 0, 0.7071067, 0, 1, 0, -0.7071067, 0, 0.7071067, 11.126213, 0.5881748, -53.737614)
+shape = SubResource("BoxShape3D_wlsky")
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.3924294, 53.056633, 0)
@@ -102,10 +112,8 @@ omni_attenuation = 0.9
 [node name="Ship" parent="." instance=ExtResource("4_12kdf")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40.354458, 4.4596643, 0.19554138)
-visible = false
 
-[node name="Hangar2" parent="." groups=["Hangar"] instance=ExtResource("5_xwd2w")]
-unique_name_in_owner = true
+[node name="Hangar3" parent="." instance=ExtResource("7_wlsky")]
 
 [node name="Console" type="StaticBody3D" parent="." groups=["Hangar_Screen"]]
 collision_layer = 32
@@ -124,7 +132,7 @@ transform = Transform3D(1, 0, 0, 0, 0.92718387, 0.37460658, 0, -0.37460658, 0.92
 shape = SubResource("BoxShape3D_6viy2")
 
 [node name="ScreenLeft" type="MeshInstance3D" parent="."]
-transform = Transform3D(-0.29, 3.246601e-08, 1.5422454e-08, 0, 0.9284858, -0.07055989, -2.5352605e-08, -0.37136784, -0.1764123, 8.356, 1.115, -53.11)
+transform = Transform3D(-0.29, 3.246601e-08, 1.5422454e-08, 0, 0.9284858, -0.07055989, -2.5352605e-08, -0.37136784, -0.1764123, 8.346265, 1.0898653, -53.070522)
 mesh = SubResource("PlaneMesh_ht6vt")
 surface_material_override/0 = SubResource("StandardMaterial3D_bcalf")
 

@@ -1,8 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dmoq30qvu54ax"]
+[gd_scene load_steps=11 format=3 uid="uid://dmoq30qvu54ax"]
 
 [ext_resource type="Script" uid="uid://dkdtj043nn603" path="res://map.gd" id="1_v6avs"]
 [ext_resource type="Texture2D" uid="uid://bs43kg410obus" path="res://Solarsystemscope_texture_8k_stars.jpg" id="2_3h1ab"]
-[ext_resource type="PackedScene" uid="uid://db8ho13mf013k" path="res://AI_Ship.tscn" id="3_3h1ab"]
+[ext_resource type="Texture2D" uid="uid://cw0j3cfmike4c" path="res://8k_sun.jpg" id="3_v6avs"]
 [ext_resource type="PackedScene" uid="uid://csxywx67xhwy7" path="res://Asteroid.tscn" id="4_7if1s"]
 [ext_resource type="PackedScene" uid="uid://oxwne66lagxs" path="res://Main Menu.tscn" id="4_v6avs"]
 
@@ -15,12 +15,36 @@ sky_material = SubResource("PanoramaSkyMaterial_7if1s")
 [sub_resource type="Environment" id="Environment_8qak7"]
 background_mode = 2
 sky = SubResource("Sky_v6avs")
+glow_enabled = true
 
-[node name="Map" type="Node3D"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v6avs"]
+albedo_texture = ExtResource("3_v6avs")
+emission_enabled = true
+emission = Color(0.99606293, 0.46851563, 0.2519317, 1)
+emission_energy_multiplier = 2.0
+emission_texture = ExtResource("3_v6avs")
+
+[sub_resource type="SphereMesh" id="SphereMesh_8qak7"]
+material = SubResource("StandardMaterial3D_v6avs")
+radius = 70000.0
+height = 140000.0
+
+[node name="Map" type="Node3D" groups=["Map"]]
 script = ExtResource("1_v6avs")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_8qak7")
+
+[node name="Star" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -100000, 0, 100000)
+mesh = SubResource("SphereMesh_8qak7")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Star"]
+transform = Transform3D(0.70710677, 0, -0.70710677, 0, 1, 0, 0.70710677, 0, 0.70710677, 0, 0, 0)
+light_color = Color(0.9999998, 0.95113283, 0.7421898, 1)
+light_energy = 2.0
+light_indirect_energy = 100.0
+directional_shadow_max_distance = 300000.0
 
 [node name="AsteroidNode" parent="." instance=ExtResource("4_7if1s")]
 transform = Transform3D(50, 0, 0, 0, 50, 0, 0, 0, 50, -1500, 0, 0)
@@ -33,9 +57,6 @@ transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -691.0146, -68.485886, 
 
 [node name="AsteroidNode4" parent="." instance=ExtResource("4_7if1s")]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -675.98895, 141.18442, 124.346344)
-
-[node name="AI_Ship_Node" parent="." instance=ExtResource("3_3h1ab")]
-transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, -6000, 2500, 0)
 
 [node name="Node3D" parent="." instance=ExtResource("4_v6avs")]
 unique_name_in_owner = true
@@ -73,15 +94,17 @@ text = "Untitled Space Game"
 [node name="Single Player" type="Button" parent="UI/Multiplayer/VBoxContainer"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
-text = "Single Player
+text = "Play
 "
 
 [node name="Host" type="Button" parent="UI/Multiplayer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
 text = "Host"
 
 [node name="Join" type="Button" parent="UI/Multiplayer/VBoxContainer"]
+visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
 text = "Join
@@ -92,6 +115,9 @@ _spawnable_scenes = PackedStringArray("uid://dkgqrgnm6bsvi")
 spawn_path = NodePath("../PlayerBulletContainer")
 
 [node name="PlayerBulletContainer" type="Node3D" parent="."]
+
+[node name="Enemy Spawn Timer" type="Timer" parent="."]
+unique_name_in_owner = true
 
 [connection signal="pressed" from="UI/Multiplayer/VBoxContainer/Single Player" to="." method="_on_single_player_pressed"]
 [connection signal="pressed" from="UI/Multiplayer/VBoxContainer/Host" to="." method="_on_host_pressed"]

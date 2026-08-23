@@ -6,8 +6,9 @@ extends CharacterBody3D
 @onready var climbing_label: Label = %IsClimbing
 @onready var task_label: Label = %TaskLabel
 @onready var task_title_label: = %TaskHeaderLabel
+@onready var kill_label: = %"Kill Label"
 @onready var chair = "Chair:<StaticBody3D#37094426288>"
-@onready var hangar = get_tree().get_first_node_in_group("Hangar")
+@onready var hangar = get_tree().get_first_node_in_group("Hangar Script")
 @onready var ship = get_tree().get_first_node_in_group("player_ship")
 @onready var ship_node = $"/root/Map/Node3D/Ship" # I know this is weird but the show() function needs it when calling ship. the "ship" variable does not work
 
@@ -40,15 +41,16 @@ func _ready() -> void:
 	mouse_locked = false
 	camera.current = is_multiplayer_authority()
 	print("Player spawned! Exact node path: ", get_path())
-	task_title_label.text = "Current Task: Summon Your Ship"
-	task_label.text = "Interact With The Hangar Screen"
+	if is_multiplayer_authority():
+		task_title_label.text = "Current Task: Summon Your Ship"
+		task_label.text = "Interact With The Hangar Screen"
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority():
 		return
 		
 	if not in_console and not Global.in_ship_console:
-		if not mouse_locked and event is not InputEventMouseMotion:
+		if event is not InputEventMouseMotion: #not mouse_locked and 
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			await get_tree().create_timer(0.05).timeout
 			mouse_locked = true
@@ -78,13 +80,13 @@ func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
 	
-	if not in_console or not Global.in_ship_console:
-		if front_cast.is_colliding():
-			%PressE.show()
-			hit_object = front_cast.get_collider()
-		else:
+	if not in_console and not Global.in_ship_console and not Global.is_pilot and not Global.is_wo:
+		if not front_cast.is_colliding():
 			%PressE.hide()
 			hit_object = null
+		else:
+			%PressE.show()
+			hit_object = front_cast.get_collider()
 		
 		if Input.is_action_pressed("sprint"):
 			speed = sprint
@@ -99,14 +101,15 @@ func _physics_process(delta: float) -> void:
 				var local_ladder_dir: Vector3 = Vector3(0.4663, 1.0, 0.0).normalized()
 				var world_climb_dir : Vector3 = ship.global_transform.basis * local_ladder_dir * climb_input
 				
-				if position.y < -5.82 and climb_input < 0:
+				if position.y < -5.7 and climb_input < 0:
 					do_climb_gear_ladder.rpc(false, Vector3.ZERO)
 					Global.in_ship = false
+					climb_gear_ladder()
 				elif position.y > 0 and climb_input > 0:
 					climb_gear_ladder()
 					Global.in_ship = true
 					if current_task == 1:
-						rpc("next_task")
+						next_task() #rpc("next_task")
 					else:
 						pass
 				else:
@@ -186,9 +189,11 @@ func _physics_process(delta: float) -> void:
 				velocity.z = move_toward(velocity.z, 0, speed)
 			if not in_console:
 				move_and_slide()
+	else:
+		%PressE.hide()
 
 func hangar_console_interact():
-	screen_position = Vector3(-1916.744, 2629.374, -53.20243)
+	screen_position = Vector3(-1916.744, 2629.374, -53.17)
 	screen_rotation = Vector3(-1.169371, -3.141593, 0.0)
 	var tween = create_tween()
 	
@@ -236,6 +241,7 @@ func ship_console_interact():
 		
 		tween.tween_property(camera, "position", target_local_pos, 0.25)
 		tween.parallel().tween_property(camera, "rotation", shortest_target, 0.25)
+		await tween.finished
 		
 		$Control.show()
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -299,7 +305,9 @@ func sync_open_hangar():
 		await get_tree().create_timer(41.6667).timeout
 		ship_node.show()
 		if current_task == 0:
-			rpc("next_task")
+			print("next task called")
+			#rpc("next_task")
+			next_task()
 		else:
 			pass
 
@@ -369,23 +377,32 @@ func do_climb_gear_ladder(attaching: bool, ladder_local: Vector3) -> void:
 	else:
 		reparent(get_tree().current_scene, true)
 
-@rpc("any_peer", "call_local", "reliable")
+#@rpc("any_peer", "call_local")
 func next_task():
-	current_task += 1
 	Global.current_task += 1
+	print("next task part 1")
 	
-	if current_task == 0:
-		task_title_label.text = "Current Task: Summon Ship"
-		task_label.text = "Interact With The Hangar Screen"
-	elif current_task == 1:
-		task_title_label.text = "Current Task: Enter Ship"
-		task_label.text = "Climb The Ship's Ladder Located In The Front Landing Gear"
-	elif current_task == 2:
-		task_title_label.text = "Current Task: Start Ship"
-		task_label.text = "Interact with the console in the rear of the cockpit.\nType HELP to see list of commands"
-	elif current_task == 3:
-		task_title_label.text = "Current Task: Hunt Down The Enemy"
-		task_label.text = "Using Shift/Control For Throttle And WASD To Steer, Locate And Hunt Down The Enemy\n You Can See Your Distance To The Enemy At The Top Right Of Your Screen"
-	elif current_task == 4:
-		task_title_label.text = "Current Task: Eliminate Enemy"
-		task_label.text = "Press F Or Left Click To Fire The Cannon, Try To Dodge The Enemy's Cannons \nDo Not Underestimate The Enemy!"
+	if is_multiplayer_authority():
+		current_task += 1
+		print("next task part 2")
+		if current_task == 0:
+			task_title_label.text = "Current Task: Summon Ship"
+			task_label.text = "Interact With The Hangar Screen And Wait For The Ship To Be Summoned"
+		elif current_task == 1:
+			task_title_label.text = "Current Task: Enter Ship"
+			task_label.text = "Climb The Ship's Ladder Located In The Front Landing Gear"
+		elif current_task == 2:
+			task_title_label.text = "Current Task: Start Ship"
+			task_label.text = "Interact with the console in the rear of the cockpit.\nType HELP to see list of commands"
+		elif current_task == 3:
+			task_title_label.text = "Current Task: Hunt Down The Enemy"
+			task_label.text = "Using Shift/Control For Throttle And WASD To Steer, Locate And Hunt Down The Enemy\n You Can See Your Distance To The Enemy At The Top Right Of Your Screen"
+		elif current_task == 4:
+			task_title_label.text = "Current Task: Eliminate Enemy"
+			task_label.text = "Press F Or Left Click To Fire The Cannon, Try To Dodge The Enemy's Cannons \nDo Not Underestimate The Enemy!"
+
+func enemy_destroyed():
+	kill_label.show()
+	await get_tree().create_timer(2).timeout
+	var tween = create_tween()
+	tween.tween_property(kill_label, "modulate:a", 0.0, 0.5 )

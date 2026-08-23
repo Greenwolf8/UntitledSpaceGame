@@ -1,12 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://07reg5c5xbsn"]
+[gd_scene load_steps=8 format=3 uid="uid://07reg5c5xbsn"]
 
 [ext_resource type="Script" uid="uid://cnakptn5mu1jb" path="res://new_player.gd" id="1_xhfnw"]
 [ext_resource type="PackedScene" uid="uid://bgr4mpswlth1q" path="res://ship_terminal.tscn" id="2_kpjcp"]
+[ext_resource type="PackedScene" uid="uid://cjwlf7pqeioda" path="res://Crosshair.tscn" id="3_kne1u"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_vx57b"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_kpjcp"]
-load_path = "res://.godot/imported/reticle.png-94d8174638f634e8c9dc538a8a25a59b.ctex"
+height = 2.2739258
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_61x8k"]
 
@@ -21,9 +20,40 @@ properties/2/path = NodePath(".:transform")
 properties/2/spawn = true
 properties/2/replication_mode = 1
 
+[sub_resource type="FontFile" id="FontFile_kpjcp"]
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
+cache/0/35/0/ascent = 0.0
+cache/0/35/0/descent = 0.0
+cache/0/35/0/underline_position = 0.0
+cache/0/35/0/underline_thickness = 0.0
+cache/0/35/0/scale = 1.0
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+
 [node name="Player" type="CharacterBody3D" groups=["Player"]]
-collision_mask = 14
+collision_mask = 271
 script = ExtResource("1_xhfnw")
+
+[node name="Task Container" type="VBoxContainer" parent="."]
+offset_left = 10.0
+offset_top = 110.0
+offset_right = 50.0
+offset_bottom = 162.0
+
+[node name="TaskHeaderLabel" type="Label" parent="Task Container"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+
+[node name="TaskLabel" type="Label" parent="Task Container"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 15
 
 [node name="Control" parent="." instance=ExtResource("2_kpjcp")]
 layer = 0
@@ -31,12 +61,14 @@ visible = false
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(-4.3711385e-08, 0, 1, 0, 1, 0, -0.9999999, 0, -4.371139e-08, 0.19623756, 2.3674576, -57.480034)
+transform = Transform3D(-3.4969112e-08, 0, 0.8, 0, 0.8, 0, -0.8, 0, -3.4969112e-08, 0.19623756, 2.2578874, -57.480034)
 shape = SubResource("CapsuleShape3D_vx57b")
 
 [node name="PlayerCamera" type="Camera3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 0.19623756, 2.853992, -57.480034)
+near = 0.1
+far = 205000.0
 
 [node name="FrontCast" type="RayCast3D" parent="PlayerCamera"]
 unique_name_in_owner = true
@@ -44,21 +76,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.450581e-09, 0.011189461, -0
 target_position = Vector3(0, 0, -1.5)
 collision_mask = 32
 collide_with_areas = true
-
-[node name="Reticle2" type="TextureRect" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -28.0
-offset_top = -30.0
-offset_right = 32.0
-offset_bottom = 30.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = SubResource("CompressedTexture2D_kpjcp")
-expand_mode = 1
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.3711385e-08, 0, 1, 0, 1, 0, -0.9999999, 0, -4.371139e-08, 0.19623756, 2.3518429, -57.480034)
@@ -103,18 +120,21 @@ unique_name_in_owner = true
 transform = Transform3D(-4.3711385e-08, 0, 1, 0, 1, 0, -0.9999999, 0, -4.371139e-08, 0.19623756, 2.8259792, -57.480034)
 target_position = Vector3(0, -1.5, 0)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
-offset_left = 10.0
-offset_top = 110.0
-offset_right = 50.0
-offset_bottom = 150.0
-
-[node name="TaskHeaderLabel" type="Label" parent="VBoxContainer"]
+[node name="Kill Label" type="Label" parent="."]
 unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 18
+visible = false
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -66.0
+offset_top = 124.0
+offset_right = 66.0
+offset_bottom = 147.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.8006259, 9.32052e-05, 0.0350002, 1)
+theme_override_fonts/font = SubResource("FontFile_kpjcp")
+theme_override_font_sizes/font_size = 35
+text = "Enemy Defeated!"
 
-[node name="TaskLabel" type="Label" parent="VBoxContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 15
+[node name="Control2" parent="." instance=ExtResource("3_kne1u")]
+mouse_filter = 2
