@@ -50,18 +50,19 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 		
 	if not in_console and not Global.in_ship_console:
-		if event is not InputEventMouseMotion: #not mouse_locked and 
+		if not mouse_locked and event is not InputEventMouseMotion:
 			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 			await get_tree().create_timer(0.05).timeout
 			mouse_locked = true
 		
-		if event.is_action_pressed("ui_cancel"):
-			if mouse_locked == true:
+		if mouse_locked and event.is_action_pressed("ui_cancel"):
 				Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 				await get_tree().create_timer(0.5).timeout
 				mouse_locked = false
+		
 		elif event.is_action_pressed("interact"):
 			interact_pressed()
+		
 		elif event.is_action_pressed("P"):
 			print(position)
 			print(global_position)
@@ -72,6 +73,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			camera.rotation_degrees.x = clamp(
 			camera.rotation_degrees.x, -80.0, 80.0
 			)
+	
 	else:
 		if event.is_action_pressed("interact"):
 			hangar_console_interact()
@@ -79,6 +81,9 @@ func _unhandled_input(event: InputEvent) -> void:
 func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
+	
+	#if not in_console and not Global.in_ship_console and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+	#	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	if not in_console and not Global.in_ship_console and not Global.is_pilot and not Global.is_wo:
 		if not front_cast.is_colliding():
