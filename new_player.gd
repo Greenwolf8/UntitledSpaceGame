@@ -82,8 +82,8 @@ func _physics_process(delta: float) -> void:
 	if not is_multiplayer_authority():
 		return
 	
-	#if not in_console and not Global.in_ship_console and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-	#	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	if not in_console and not Global.in_ship_console and Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
+		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	
 	if not in_console and not Global.in_ship_console and not Global.is_pilot and not Global.is_wo:
 		if not front_cast.is_colliding():
