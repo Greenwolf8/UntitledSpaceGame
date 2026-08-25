@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=3 uid="uid://db8ho13mf013k"]
+[gd_scene load_steps=13 format=3 uid="uid://db8ho13mf013k"]
 
 [ext_resource type="Script" uid="uid://dchqc2wuhpd8b" path="res://ai_ship.gd" id="1_0jbod"]
 [ext_resource type="PackedScene" uid="uid://dv22jiaawgv6j" path="res://Cannon.tscn" id="3_pnxum"]
 [ext_resource type="PackedScene" uid="uid://cn6a4gvubxnxi" path="res://AVRO.VULCAN.glb" id="4_dre73"]
 [ext_resource type="PackedScene" uid="uid://b1b3t0ixectso" path="res://explosion.tscn" id="4_grfkr"]
+[ext_resource type="PackedScene" uid="uid://dff5tv7jasl84" path="res://Afterburner.tscn" id="5_dre73"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0jbod"]
 size = Vector3(60.02215, 6.265419, 19.179157)
@@ -184,3 +185,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.47428894, 2.385519, 38.237
 
 [node name="AVRO_VULCAN" parent="AI_Ship" instance=ExtResource("4_dre73")]
 transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="LAfterburner" parent="AI_Ship" instance=ExtResource("5_dre73")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.3824673, 1.883975, 72.691864)
+
+[node name="RAfterburner" parent="AI_Ship" instance=ExtResource("5_dre73")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.126667, 1.883975, 72.691864)

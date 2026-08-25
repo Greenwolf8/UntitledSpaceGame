@@ -24,7 +24,7 @@ var health: int = 200
 var Camerafree = false
 var throttle: float = 0
 var forward_move: float = 0.0
-var rwr_detection_range: float = 5000
+var rwr_detection_range: float = 10000
 var rwr_active_threats: Array = []
 
 
@@ -116,7 +116,7 @@ func _process(_delta: float) -> void:
 		var distance = Vector2(local_position.x, local_position.z).length()
 		var distance_2d = distance / rwr_detection_range
 		
-		if distance <= rwr_detection_range and distance >= 500:
+		if distance <= rwr_detection_range and distance >= 1000:
 			var angle = atan2(-local_position.z, -local_position.x)
 			
 			rad_to_deg(angle)

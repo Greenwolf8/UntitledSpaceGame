@@ -12,7 +12,8 @@ var peer = WebSocketMultiplayerPeer.new()
 
 func _ready() -> void:
 	spawn_enemy("start")
-
+	spawn_enemy("random")
+	spawn_enemy("random")
 func _on_join_pressed() -> void:
 	var error = peer.create_client("wss://reexamine-swooned-sloping.ngrok-free.dev")
 	if error == OK:
@@ -66,7 +67,7 @@ func spawn_enemy(Position: String) -> void:
 	await get_tree().create_timer(5).timeout
 	var enemy = AI_SHIP.instantiate()
 	get_tree().current_scene.add_child(enemy)
-	if Position == "Random":
+	if Position == "random":
 		enemy.global_position = Vector3(randf_range(-15000, -6000), randf_range(-1000, 5000), randf_range(-10000, 10000))
 	elif Position == "start":
 		enemy.global_position = Vector3(-10000, 3500, 4500)

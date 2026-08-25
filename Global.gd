@@ -31,4 +31,4 @@ func system_start():
 
 func enemy_destroyed():
 	player.enemy_destroyed()
-	map.spawn_enemy("Random")
+	map.spawn_enemy("random")

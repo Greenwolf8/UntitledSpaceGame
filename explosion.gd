@@ -10,9 +10,6 @@ extends Node3D
 @onready var bulletstrike3: AudioStreamPlayer3D = %BulletStrike3
 @onready var bulletstrike4: AudioStreamPlayer3D = %BulletStrike4
 
-func _ready() -> void:
-	Boom()
-
 func Boom():
 	flash.restart()
 	fireball.restart()

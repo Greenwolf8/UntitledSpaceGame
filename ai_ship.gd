@@ -167,6 +167,8 @@ func hit():
 	if ai_health <= 0 and not is_dead:
 		is_dead = true
 		$AVRO_VULCAN.hide()
+		%RAfterburner.hide()
+		%LAfterburner.hide()
 		explosionsfx.Boom()
 		print("Enemy Destroyed!")
 		set_physics_process(false)
