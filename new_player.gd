@@ -5,8 +5,9 @@ extends CharacterBody3D
 @onready var front_cast: RayCast3D = %FrontCast
 @onready var climbing_label: Label = %IsClimbing
 @onready var task_label: Label = %TaskLabel
-@onready var task_title_label: = %TaskHeaderLabel
-@onready var kill_label: = %"Kill Label"
+@onready var task_title_label: Label = %TaskHeaderLabel
+@onready var kill_label: Label = %"Kill Label"
+@onready var points_label: Label = %PointsLabel
 @onready var chair = "Chair:<StaticBody3D#37094426288>"
 @onready var hangar = get_tree().get_first_node_in_group("Hangar Script")
 @onready var ship = get_tree().get_first_node_in_group("player_ship")
@@ -32,6 +33,7 @@ var shortest_target: Vector3
 var on_gear_ladder: bool = false
 var on_interior_ladder: bool = false
 var current_task: int = 0
+var enemies_destroyed: int = 0
 
 func _ready() -> void:
 	if name.is_valid_int():
@@ -44,6 +46,7 @@ func _ready() -> void:
 	if is_multiplayer_authority():
 		task_title_label.text = "Current Task: Summon Your Ship"
 		task_label.text = "Interact With The Hangar Screen"
+		points_label.text = "Enemies Destroyed: " + str(enemies_destroyed)
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_multiplayer_authority():
@@ -414,3 +417,5 @@ func enemy_destroyed():
 	await get_tree().create_timer(2).timeout
 	var tween = create_tween()
 	tween.tween_property(kill_label, "modulate:a", 0.0, 0.5 )
+	enemies_destroyed += 16
+	points_label.text = "Enemies Destroyed:" + str(enemies_destroyed)

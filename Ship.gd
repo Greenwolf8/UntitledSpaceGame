@@ -115,7 +115,8 @@ func _process(_delta: float) -> void:
 		var local_position = to_local(threat.global_position)
 		var distance = Vector2(local_position.x, local_position.z).length()
 		var distance_2d = distance / rwr_detection_range
-		if distance <= rwr_detection_range:
+		
+		if distance <= rwr_detection_range and distance >= 500:
 			var angle = atan2(-local_position.z, -local_position.x)
 			
 			rad_to_deg(angle)
