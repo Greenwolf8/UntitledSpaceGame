@@ -22,7 +22,7 @@ enum State {PATROL, BOOM, ZOOM, EVADE, PLAYER_DESTROYED}
 
 var current_state = State.PATROL
 var player_position: Vector3 = Vector3.ZERO
-var ai_health : int = 200
+var ai_health : int = 1
 var target_position: Vector3 = Vector3.ZERO
 var zooming: bool = false
 var current_speed: int = 175
@@ -166,7 +166,7 @@ func hit():
 		trigger_evasion()
 	if ai_health <= 0 and not is_dead:
 		is_dead = true
-		self.hide()
+		$AVRO_VULCAN.hide()
 		explosionsfx.Boom()
 		print("Enemy Destroyed!")
 		set_physics_process(false)

@@ -417,5 +417,5 @@ func enemy_destroyed():
 	await get_tree().create_timer(2).timeout
 	var tween = create_tween()
 	tween.tween_property(kill_label, "modulate:a", 0.0, 0.5 )
-	enemies_destroyed += 16
+	enemies_destroyed += 1
 	points_label.text = "Enemies Destroyed:" + str(enemies_destroyed)

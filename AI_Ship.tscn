@@ -1,8 +1,8 @@
 [gd_scene load_steps=12 format=3 uid="uid://db8ho13mf013k"]
 
 [ext_resource type="Script" uid="uid://dchqc2wuhpd8b" path="res://ai_ship.gd" id="1_0jbod"]
-[ext_resource type="PackedScene" uid="uid://caf4dxmt3a5uf" path="res://AVRO.VULCAN_GAME.fbx" id="2_pnxum"]
 [ext_resource type="PackedScene" uid="uid://dv22jiaawgv6j" path="res://Cannon.tscn" id="3_pnxum"]
+[ext_resource type="PackedScene" uid="uid://cn6a4gvubxnxi" path="res://AVRO.VULCAN.glb" id="4_dre73"]
 [ext_resource type="PackedScene" uid="uid://b1b3t0ixectso" path="res://explosion.tscn" id="4_grfkr"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_0jbod"]
@@ -40,10 +40,6 @@ script = ExtResource("1_0jbod")
 ai_health_label = NodePath("LabelContainer/AiHealth")
 state_label = NodePath("LabelContainer/StateLabel")
 distance_label = NodePath("LabelContainer/DistanceLabel")
-
-[node name="AVRO_VULCAN_GAME" parent="AI_Ship" instance=ExtResource("2_pnxum")]
-physics_interpolation_mode = 1
-transform = Transform3D(1.1924881e-08, 0, -1, 0, 1, 0, 1, 0, 1.1924881e-08, 0, 0, 0.023462296)
 
 [node name="SpotLight3D" type="SpotLight3D" parent="AI_Ship"]
 transform = Transform3D(1, 0, 5.6101932e-08, 0, 1, 0, -5.6101932e-08, 0, 1, -38.466537, 1.2, 64.63346)
@@ -185,3 +181,6 @@ replication_config = SubResource("SceneReplicationConfig_pnxum")
 [node name="Explosion" parent="AI_Ship" instance=ExtResource("4_grfkr")]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.47428894, 2.385519, 38.23781)
+
+[node name="AVRO_VULCAN" parent="AI_Ship" instance=ExtResource("4_dre73")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
