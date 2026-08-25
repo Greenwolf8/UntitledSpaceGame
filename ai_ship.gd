@@ -22,7 +22,7 @@ enum State {PATROL, BOOM, ZOOM, EVADE, PLAYER_DESTROYED}
 
 var current_state = State.PATROL
 var player_position: Vector3 = Vector3.ZERO
-var ai_health : int = 1
+var ai_health : int = 150
 var target_position: Vector3 = Vector3.ZERO
 var zooming: bool = false
 var current_speed: int = 175

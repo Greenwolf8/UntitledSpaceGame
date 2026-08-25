@@ -12,8 +12,6 @@ var peer = WebSocketMultiplayerPeer.new()
 
 func _ready() -> void:
 	spawn_enemy("start")
-	spawn_enemy("random")
-	spawn_enemy("random")
 func _on_join_pressed() -> void:
 	var error = peer.create_client("wss://reexamine-swooned-sloping.ngrok-free.dev")
 	if error == OK:
