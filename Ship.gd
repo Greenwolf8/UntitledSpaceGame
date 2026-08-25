@@ -24,6 +24,8 @@ var health: int = 200
 var Camerafree = false
 var throttle: float = 0
 var forward_move: float = 0.0
+var rwr_detection_range: float = 5000
+var rwr_active_threats: Array = []
 
 
 
@@ -101,6 +103,30 @@ func _physics_process(_delta):
 		if Input.is_action_just_released("fire"):
 			%Gun2.stop()
 			%Gun3.play()
+
+func _process(_delta: float) -> void:
+	rwr_active_threats.clear()
+	var potential_threats = get_tree().get_nodes_in_group("enemy_ship")
+	
+	for threat in potential_threats:
+		if not threat is Node3D:
+			continue
+		
+		var local_position = to_local(threat.global_position)
+		var distance = Vector2(local_position.x, local_position.z).length()
+		var distance_2d = distance / rwr_detection_range
+		if distance <= rwr_detection_range:
+			var angle = atan2(-local_position.z, -local_position.x)
+			
+			rad_to_deg(angle)
+			
+			rwr_active_threats.append({
+				"angle": angle,
+				"distance": distance_2d,
+				"locking": threat.get("is_locking") if "is_locking" in threat else false,
+				"name": threat.get("emitter_name") if "emitter_name" in threat else "hostile"
+			})
+	%"RWR Screen".update_threats(rwr_active_threats)
 
 func _input(_event: InputEvent) -> void:
 	var cantlock = Camerafree

@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://b3ovqfvf46vnf"]
+[gd_scene load_steps=62 format=3 uid="uid://b3ovqfvf46vnf"]
 
 [ext_resource type="Script" uid="uid://dmt2egmpr1xr6" path="res://Ship.gd" id="1_ix3uc"]
 [ext_resource type="PackedScene" uid="uid://cn6a4gvubxnxi" path="res://AVRO.VULCAN.glb" id="2_qyh8x"]
@@ -14,6 +14,7 @@
 [ext_resource type="AudioStream" uid="uid://csj482gww7emp" path="res://Gun_2 (1).wav" id="15_snmvu"]
 [ext_resource type="AudioStream" uid="uid://b0kkpy0jrkj0f" path="res://Gun_3 (1).wav" id="16_rnkl5"]
 [ext_resource type="AudioStream" uid="uid://ct6xruwsgfar5" path="res://Engine_1 (1).wav" id="17_g0nn0"]
+[ext_resource type="PackedScene" uid="uid://fg556xl2dhxn" path="res://rwr_screen.tscn" id="18_rnkl5"]
 [ext_resource type="AudioStream" uid="uid://qvyw5kd2eidg" path="res://Engine_2 (1).wav" id="18_s83w2"]
 [ext_resource type="AudioStream" uid="uid://rej1pfytl4o6" path="res://Engine_3 (1).wav" id="19_41uc2"]
 [ext_resource type="PackedScene" uid="uid://bgr4mpswlth1q" path="res://ship_terminal.tscn" id="19_s83w2"]
@@ -121,10 +122,11 @@ albedo_texture = SubResource("ViewportTexture_snmvu")
 material = SubResource("StandardMaterial3D_rnkl5")
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_rnkl5"]
-viewport_path = NodePath("Ship/Console")
+viewport_path = NodePath("Ship/Avionics/RWRMesh")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g0nn0"]
 resource_local_to_scene = true
+shading_mode = 0
 albedo_texture = SubResource("ViewportTexture_rnkl5")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0ieyr"]
@@ -559,7 +561,6 @@ skeleton = NodePath("../..")
 [node name="MiniScreen" type="MeshInstance3D" parent="Ship/Avionics"]
 unique_name_in_owner = true
 transform = Transform3D(-3.584334e-09, 0.9316912, 0.029786598, 0, 0.36325118, -0.076398686, -0.082, -4.0725517e-08, -1.3020135e-09, 0.0042324066, -0.016715527, 0.27258468)
-visible = false
 mesh = SubResource("PlaneMesh_s83w2")
 skeleton = NodePath("../..")
 surface_material_override/0 = SubResource("StandardMaterial3D_g0nn0")
@@ -602,6 +603,16 @@ skeleton = NodePath("")
 size = Vector2i(100, 100)
 
 [node name="Control" parent="Ship/Avionics/GaugeMesh" instance=ExtResource("11_anqkt")]
+
+[node name="RWRMesh" type="SubViewport" parent="Ship/Avionics"]
+size = Vector2i(653, 644)
+
+[node name="RWR Screen" parent="Ship/Avionics/RWRMesh" instance=ExtResource("18_rnkl5")]
+unique_name_in_owner = true
+offset_left = 0.0
+offset_top = 0.0
+offset_right = -1.0
+offset_bottom = 0.0
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Ship"]
 replication_config = SubResource("SceneReplicationConfig_snmvu")
