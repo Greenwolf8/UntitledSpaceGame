@@ -1,4 +1,4 @@
-[gd_scene load_steps=62 format=3 uid="uid://b3ovqfvf46vnf"]
+[gd_scene load_steps=68 format=3 uid="uid://b3ovqfvf46vnf"]
 
 [ext_resource type="Script" uid="uid://dmt2egmpr1xr6" path="res://Ship.gd" id="1_ix3uc"]
 [ext_resource type="PackedScene" uid="uid://cn6a4gvubxnxi" path="res://AVRO.VULCAN.glb" id="2_qyh8x"]
@@ -17,6 +17,7 @@
 [ext_resource type="PackedScene" uid="uid://fg556xl2dhxn" path="res://rwr_screen.tscn" id="18_rnkl5"]
 [ext_resource type="AudioStream" uid="uid://qvyw5kd2eidg" path="res://Engine_2 (1).wav" id="18_s83w2"]
 [ext_resource type="AudioStream" uid="uid://rej1pfytl4o6" path="res://Engine_3 (1).wav" id="19_41uc2"]
+[ext_resource type="PackedScene" uid="uid://cbrx65qj4a55u" path="res://Gun Sight.tscn" id="19_g0nn0"]
 [ext_resource type="PackedScene" uid="uid://bgr4mpswlth1q" path="res://ship_terminal.tscn" id="19_s83w2"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_qyh8x"]
@@ -29,7 +30,7 @@ size = Vector3(47.16062, 8.548168, 22.091795)
 size = Vector3(119.93239, 39.461365, 128.09103)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6xtlq"]
-size = Vector3(1.4251709, 1.1499023, 1.0093956)
+size = Vector3(1.4251709, 1.2108154, 1.0093956)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_snmvu"]
 size = Vector3(5.96286, 0.61279297, 5.381592)
@@ -56,7 +57,7 @@ size = Vector3(5.423828, 3.8945313, 0.45703125)
 size = Vector3(3.5343018, 4.623108, 0.2524414)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_36nsm"]
-size = Vector3(1.1248779, 1.0038452, 2.5054932)
+size = Vector3(1.1248779, 1.0468445, 2.5054932)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_yemy8"]
 size = Vector3(0.9397888, 2.3342896, 1.7474365)
@@ -164,6 +165,23 @@ albedo_texture = SubResource("ViewportTexture_anqkt")
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_6xtlq")
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_g0nn0"]
+viewport_path = NodePath("Ship/Avionics/GunSightMesh")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s83w2"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_g0nn0")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_41uc2"]
+material = SubResource("StandardMaterial3D_s83w2")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_41uc2"]
+viewport_path = NodePath("Ship/Avionics/GunSightMesh")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ieyr"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_41uc2")
+
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_snmvu"]
 properties/0/path = NodePath(".:position")
 properties/0/spawn = true
@@ -197,8 +215,8 @@ script = ExtResource("1_ix3uc")
 
 [node name="PilotCamera" type="Camera3D" parent="Ship"]
 unique_name_in_owner = true
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 19.586086, 5.7281184, -0.67497)
-fov = 100.0
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 19.55605, 5.769116, -0.67497)
+fov = 90.0
 near = 0.1
 far = 205000.0
 
@@ -251,7 +269,7 @@ collision_layer = 32
 collision_mask = 0
 
 [node name="Pilot Seat Collider" type="CollisionShape3D" parent="Ship/Pilot Seat"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.77283, 5.1599913, -0.6691747)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.77283, 5.190448, -0.6691747)
 shape = SubResource("BoxShape3D_6xtlq")
 
 [node name="WO Seat" type="StaticBody3D" parent="Ship" groups=["WO Seat"]]
@@ -321,7 +339,7 @@ transform = Transform3D(0.7823908, 0.47708315, 0.4003203, 0, 0.64278764, -0.7660
 shape = SubResource("BoxShape3D_uwcpx")
 
 [node name="Seats" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.81046, 5.2557282, -0.0065307617)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.81046, 5.277228, -0.0065307617)
 shape = SubResource("BoxShape3D_36nsm")
 
 [node name="Console" type="CollisionShape3D" parent="Ship/InteriorCollisions"]
@@ -546,8 +564,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.914389, 5.461173, -0.69954
 
 [node name="RadarScreen" type="MeshInstance3D" parent="Ship/Avionics"]
 unique_name_in_owner = true
-transform = Transform3D(-5.9010374e-09, 0.9238795, 0.05166228, 0, 0.38268355, -0.12472374, -0.135, -4.0384055e-08, -2.25823e-09, 0.07843208, -0.19950676, 0.0012581348)
-visible = false
+transform = Transform3D(-5.9010374e-09, 0.9238795, 0.05166228, 0, 0.38268355, -0.12472374, -0.135, -4.0384055e-08, -2.25823e-09, 0.028297424, -0.112044334, 0.0040001273)
 mesh = SubResource("PlaneMesh_anqkt")
 skeleton = NodePath("../..")
 
@@ -585,17 +602,17 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="GaugeRight" type="MeshInstance3D" parent="Ship/Avionics"]
-transform = Transform3D(0.014066318, 0.092050485, 0, -0.033138175, 0.039073106, 0, 0, 0, 0.036, -0.0030727386, -6.6280365e-05, -0.09328902)
+transform = Transform3D(0.011124611, 0.095105655, 0, -0.034238033, 0.030901698, 0, 0, 0, 0.036, -0.025985718, 0.06933451, -0.09328902)
 mesh = SubResource("PlaneMesh_6xtlq")
 skeleton = NodePath("")
 
 [node name="GaugeCentre" type="MeshInstance3D" parent="Ship/Avionics"]
-transform = Transform3D(0.014066318, 0.092050485, 0, -0.033138175, 0.039073106, 0, 0, 0, 0.036, 0, 0.00093507767, 0.0012386441)
+transform = Transform3D(0.013485839, 0.092718385, 0, -0.033378616, 0.037460666, 0, 0, 0, 0.036, -0.026679993, 0.070335865, 0.0012386441)
 mesh = SubResource("PlaneMesh_6xtlq")
 skeleton = NodePath("")
 
 [node name="GaugeLeft" type="MeshInstance3D" parent="Ship/Avionics"]
-transform = Transform3D(0.014066318, 0.092050485, 0, -0.033138175, 0.039073106, 0, 0, 0, 0.036, 0.00061035156, 0.0013456345, 0.09667939)
+transform = Transform3D(0.014066318, 0.092050485, 0, -0.033138175, 0.039073106, 0, 0, 0, 0.036, -0.025865555, 0.07074642, 0.09667939)
 mesh = SubResource("PlaneMesh_6xtlq")
 skeleton = NodePath("")
 
@@ -613,6 +630,16 @@ offset_left = 0.0
 offset_top = 0.0
 offset_right = -1.0
 offset_bottom = 0.0
+
+[node name="GunSight" type="MeshInstance3D" parent="Ship/Avionics"]
+transform = Transform3D(-0.05000001, 0.08660254, 0, -0.08660254, -0.05000001, 0, 0, 0, 0.1, -0.09671402, 0.24330044, 0.0036714077)
+mesh = SubResource("PlaneMesh_41uc2")
+surface_material_override/0 = SubResource("StandardMaterial3D_0ieyr")
+
+[node name="GunSightMesh" type="SubViewport" parent="Ship/Avionics"]
+transparent_bg = true
+
+[node name="Control" parent="Ship/Avionics/GunSightMesh" instance=ExtResource("19_g0nn0")]
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Ship"]
 replication_config = SubResource("SceneReplicationConfig_snmvu")

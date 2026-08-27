@@ -2,8 +2,8 @@
 
 [sub_resource type="Curve" id="Curve_2loqg"]
 _limits = [0.0, 20.0, 0.0, 1.0]
-_data = [Vector2(0, 10.465658), 0.0, 0.0, 0, 0, Vector2(0.05182927, 1.6880093), 0.0, 0.0, 0, 0, Vector2(0.11585366, 3.365736), 0.0, 0.0, 0, 0, Vector2(1, 3.365736), 0.0, 0.0, 0, 0]
-point_count = 4
+_data = [Vector2(0, 10.048604), 0.0, 0.0, 0, 0, Vector2(0.05182927, 1.6880093), 0.0, 0.0, 0, 0, Vector2(0.11585366, 4.993925), 0.0, 0.0, 0, 0, Vector2(0.75000006, 3.730257), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
 
 [sub_resource type="CurveTexture" id="CurveTexture_qn8cn"]
 curve = SubResource("Curve_2loqg")
@@ -34,6 +34,5 @@ size = Vector3(0.5, 0.3, 0.7)
 
 [node name="Underlying" type="GPUParticles3D" parent="."]
 amount = 5000
-lifetime = 2.0
 process_material = SubResource("ParticleProcessMaterial_qn8cn")
 draw_pass_1 = SubResource("BoxMesh_qn8cn")
