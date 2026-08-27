@@ -14,10 +14,10 @@ extends RigidBody3D
 @onready var pilot_camera: Camera3D = %PilotCamera
 @onready var wo_camera: Camera3D = %WOCamera
 @onready var throttle_label: Label = %Throttle
-@onready var speed_label: Label = %Speed
 @onready var health_label: Label = %HealthLabel	
 @onready var player: CharacterBody3D = get_tree().get_first_node_in_group("Player")
 @onready var bullet_container = Global.bullet_container
+@onready var ai_ship: Node3D = null
 
 var mouse_input: Vector2 = Vector2.ZERO
 var health: int = 200
@@ -26,8 +26,6 @@ var throttle: float = 0
 var forward_move: float = 0.0
 var rwr_detection_range: float = 10000
 var rwr_active_threats: Array = []
-
-
 
 func _ready() -> void:
 	health_label.text = "Health: " + str(health)
@@ -49,8 +47,9 @@ func _unhandled_input(event: InputEvent) -> void:
 func _physics_process(_delta):
 	if not Global.is_pilot: 
 		return
+	
 	var forward_input = Input.get_axis("throttle_down", "throttle_up")
-	var current_speed = snapped(linear_velocity.length(), 0.1)
+	var current_speed: int = snapped(linear_velocity.length(), 0.1)
 	var yaw_input = Input
 	var roll_input = Input.get_axis("move_right", "move_left")
 	var pitch_input = Input.get_axis("move_back", "move_forward")
@@ -61,6 +60,14 @@ func _physics_process(_delta):
 		yaw_input = -mouse_input.x * 0.05
 	else:
 		yaw_input = 0
+	
+	if not is_instance_valid(ai_ship):
+		ai_ship = get_tree().get_first_node_in_group("enemy_ship")
+	
+	if is_instance_valid(ai_ship.global_position):
+		%"Gun Sight".distance = float(round(global_position.distance_to(ai_ship.global_position)))
+	
+	%"Gun Sight".speed = current_speed
 	
 	if forward_input > 0 and forward_move < 1.985:
 		forward_move += 0.015
@@ -89,7 +96,6 @@ func _physics_process(_delta):
 	
 	mouse_input = Vector2.ZERO
 	
-	speed_label.text = "Speed: " + str(current_speed)
 	throttle_label.text = "Throttle: " + str(int(ceil((forward_move * 50)))) + "%"
 	
 	if Global.is_pilot:
@@ -125,7 +131,7 @@ func _process(_delta: float) -> void:
 				"angle": angle,
 				"distance": distance_2d,
 				"locking": threat.get("is_locking") if "is_locking" in threat else false,
-				"name": threat.get("emitter_name") if "emitter_name" in threat else "hostile"
+				"name": threat.get("emitter_name") if "emitter_name" in threat else "HOSTILE"
 			})
 	%"RWR Screen".update_threats(rwr_active_threats)
 
@@ -242,7 +248,7 @@ func sync_system_start():
 	await get_tree().create_timer(5).timeout
 	%RadarScreen.show()
 	%RadarScreenL.show()
-	%MiniScreen.show()
+	%RWRScreen.show()
 	%Engine_1.play()
 	await get_tree().create_timer(6.2).timeout
 	Global.ship_on = true

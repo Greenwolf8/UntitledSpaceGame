@@ -279,6 +279,7 @@ func enter_pilot_seat():
 	ship.enter_pilot()
 	camera.current = false
 	Global.is_pilot = true
+	%CrossHair.hide()
 
 func leave_pilot_seat():
 	position = leave_seat_location
@@ -288,6 +289,7 @@ func leave_pilot_seat():
 	ship.leave_pilot()
 	camera.current = true 
 	Global.is_pilot = false
+	%CrossHair.show()
 
 func enter_wo_seat():
 	set_physics_process(false)
@@ -296,6 +298,7 @@ func enter_wo_seat():
 	ship.enter_wo()
 	camera.current = false
 	Global.is_wo = true
+	%CrossHair.hide()
 
 func leave_wo_seat():
 	position = leave_seat_location
@@ -305,6 +308,7 @@ func leave_wo_seat():
 	ship.leave_wo()
 	camera.current = true 
 	Global.is_wo = false
+	%CrossHair.show()
 
 @rpc("any_peer", "call_local", "reliable")
 func sync_open_hangar():

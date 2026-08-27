@@ -141,4 +141,5 @@ theme_override_fonts/font = SubResource("FontFile_kpjcp")
 theme_override_font_sizes/font_size = 35
 text = "Enemy Defeated!"
 
-[node name="Control2" parent="." instance=ExtResource("3_kne1u")]
+[node name="CrossHair" parent="." instance=ExtResource("3_kne1u")]
+unique_name_in_owner = true

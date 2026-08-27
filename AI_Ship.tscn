@@ -40,7 +40,7 @@ collision_mask = 132
 script = ExtResource("1_0jbod")
 ai_health_label = NodePath("LabelContainer/AiHealth")
 state_label = NodePath("LabelContainer/StateLabel")
-distance_label = NodePath("LabelContainer/DistanceLabel")
+distance_label = NodePath("")
 
 [node name="SpotLight3D" type="SpotLight3D" parent="AI_Ship"]
 transform = Transform3D(1, 0, 5.6101932e-08, 0, 1, 0, -5.6101932e-08, 0, 1, -38.466537, 1.2, 64.63346)
@@ -103,10 +103,6 @@ offset_top = 10.0
 offset_right = -30.0
 offset_bottom = 70.0
 grow_horizontal = 0
-
-[node name="DistanceLabel" type="Label" parent="AI_Ship/LabelContainer"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
 
 [node name="AiHealth" type="Label" parent="AI_Ship/LabelContainer"]
 layout_mode = 2

@@ -1,4 +1,4 @@
-[gd_scene load_steps=68 format=3 uid="uid://b3ovqfvf46vnf"]
+[gd_scene load_steps=70 format=3 uid="uid://b3ovqfvf46vnf"]
 
 [ext_resource type="Script" uid="uid://dmt2egmpr1xr6" path="res://Ship.gd" id="1_ix3uc"]
 [ext_resource type="PackedScene" uid="uid://cn6a4gvubxnxi" path="res://AVRO.VULCAN.glb" id="2_qyh8x"]
@@ -16,6 +16,7 @@
 [ext_resource type="AudioStream" uid="uid://ct6xruwsgfar5" path="res://Engine_1 (1).wav" id="17_g0nn0"]
 [ext_resource type="PackedScene" uid="uid://fg556xl2dhxn" path="res://rwr_screen.tscn" id="18_rnkl5"]
 [ext_resource type="AudioStream" uid="uid://qvyw5kd2eidg" path="res://Engine_2 (1).wav" id="18_s83w2"]
+[ext_resource type="Shader" uid="uid://7ou6gn5xumll" path="res://RWR.gdshader" id="19_0ieyr"]
 [ext_resource type="AudioStream" uid="uid://rej1pfytl4o6" path="res://Engine_3 (1).wav" id="19_41uc2"]
 [ext_resource type="PackedScene" uid="uid://cbrx65qj4a55u" path="res://Gun Sight.tscn" id="19_g0nn0"]
 [ext_resource type="PackedScene" uid="uid://bgr4mpswlth1q" path="res://ship_terminal.tscn" id="19_s83w2"]
@@ -136,7 +137,7 @@ shader_parameter/overlay = false
 shader_parameter/scanlines_opacity = 0.800000038
 shader_parameter/scanlines_width = 0.5
 shader_parameter/grille_opacity = 0.0
-shader_parameter/resolution = Vector2(250, 150)
+shader_parameter/resolution = Vector2(150, 100)
 shader_parameter/pixelate = false
 shader_parameter/roll = true
 shader_parameter/roll_speed = 1.0
@@ -145,7 +146,7 @@ shader_parameter/roll_variation = 2.00000009174012
 shader_parameter/distort_intensity = 0.02
 shader_parameter/noise_opacity = 0.25
 shader_parameter/noise_speed = 5.0
-shader_parameter/static_noise_intensity = 0.2000000095
+shader_parameter/static_noise_intensity = 0.150000007125
 shader_parameter/aberration = 4.7499999933364734e-08
 shader_parameter/brightness = 2.0
 shader_parameter/discolor = true
@@ -165,6 +166,30 @@ albedo_texture = SubResource("ViewportTexture_anqkt")
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_6xtlq")
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_odhj8"]
+shader = ExtResource("19_0ieyr")
+shader_parameter/overlay = false
+shader_parameter/scanlines_opacity = 1.0
+shader_parameter/scanlines_width = 0.5
+shader_parameter/grille_opacity = 0.0
+shader_parameter/resolution = Vector2(150, 50)
+shader_parameter/pixelate = false
+shader_parameter/roll = true
+shader_parameter/roll_speed = 2.0
+shader_parameter/roll_size = 15.0
+shader_parameter/roll_variation = 1.4
+shader_parameter/distort_intensity = 0.02
+shader_parameter/noise_opacity = 0.25
+shader_parameter/noise_speed = 5.0
+shader_parameter/static_noise_intensity = 0.150000007125
+shader_parameter/aberration = 4.7499999933364734e-08
+shader_parameter/brightness = 1.0
+shader_parameter/discolor = true
+shader_parameter/warp_amount = 0.50000002375
+shader_parameter/clip_warp = false
+shader_parameter/vignette_intensity = 1.0
+shader_parameter/vignette_opacity = 0.4
+
 [sub_resource type="ViewportTexture" id="ViewportTexture_g0nn0"]
 viewport_path = NodePath("Ship/Avionics/GunSightMesh")
 
@@ -180,6 +205,8 @@ viewport_path = NodePath("Ship/Avionics/GunSightMesh")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0ieyr"]
 resource_local_to_scene = true
+transparency = 1
+shading_mode = 0
 albedo_texture = SubResource("ViewportTexture_41uc2")
 
 [sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_snmvu"]
@@ -215,15 +242,15 @@ script = ExtResource("1_ix3uc")
 
 [node name="PilotCamera" type="Camera3D" parent="Ship"]
 unique_name_in_owner = true
-transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 19.55605, 5.769116, -0.67497)
-fov = 90.0
+transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 19.55605, 5.677681, -0.6953553)
+current = true
+fov = 80.0
 near = 0.1
 far = 205000.0
 
 [node name="WOCamera" type="Camera3D" parent="Ship"]
 unique_name_in_owner = true
 transform = Transform3D(-4.371139e-08, 0, 1, 0, 1, 0, -1, 0, -4.371139e-08, 19.586086, 5.7281184, 0.72556204)
-current = true
 fov = 100.0
 near = 0.15
 far = 205000.0
@@ -575,7 +602,7 @@ visible = false
 mesh = SubResource("PlaneMesh_anqkt")
 skeleton = NodePath("../..")
 
-[node name="MiniScreen" type="MeshInstance3D" parent="Ship/Avionics"]
+[node name="RWRScreen" type="MeshInstance3D" parent="Ship/Avionics"]
 unique_name_in_owner = true
 transform = Transform3D(-3.584334e-09, 0.9316912, 0.029786598, 0, 0.36325118, -0.076398686, -0.082, -4.0725517e-08, -1.3020135e-09, 0.0042324066, -0.016715527, 0.27258468)
 mesh = SubResource("PlaneMesh_s83w2")
@@ -587,10 +614,9 @@ disable_3d = true
 size = Vector2i(550, 550)
 render_target_update_mode = 4
 
-[node name="Control" parent="Ship/Avionics/RadarMesh" node_paths=PackedStringArray("player_ship") instance=ExtResource("8_0p50t")]
+[node name="Control" parent="Ship/Avionics/RadarMesh" instance=ExtResource("8_0p50t")]
 size_flags_horizontal = 4
 size_flags_vertical = 4
-player_ship = NodePath("../../..")
 
 [node name="ColorRect" type="ColorRect" parent="Ship/Avionics/RadarMesh"]
 z_index = 10
@@ -622,24 +648,37 @@ size = Vector2i(100, 100)
 [node name="Control" parent="Ship/Avionics/GaugeMesh" instance=ExtResource("11_anqkt")]
 
 [node name="RWRMesh" type="SubViewport" parent="Ship/Avionics"]
-size = Vector2i(653, 644)
+size = Vector2i(652, 644)
 
 [node name="RWR Screen" parent="Ship/Avionics/RWRMesh" instance=ExtResource("18_rnkl5")]
 unique_name_in_owner = true
 offset_left = 0.0
 offset_top = 0.0
-offset_right = -1.0
+offset_right = 0.0
 offset_bottom = 0.0
 
+[node name="ColorRect" type="ColorRect" parent="Ship/Avionics/RWRMesh"]
+z_index = 10
+material = SubResource("ShaderMaterial_odhj8")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [node name="GunSight" type="MeshInstance3D" parent="Ship/Avionics"]
-transform = Transform3D(-0.05000001, 0.08660254, 0, -0.08660254, -0.05000001, 0, 0, 0, 0.1, -0.09671402, 0.24330044, 0.0036714077)
+transform = Transform3D(-4.371139e-09, 0.08660254, -0.05000001, 0, -0.05000001, -0.08660254, -0.1, -3.7855172e-09, 2.1855697e-09, -0.0992775, 0.24330044, 0.0036714077)
 mesh = SubResource("PlaneMesh_41uc2")
 surface_material_override/0 = SubResource("StandardMaterial3D_0ieyr")
 
 [node name="GunSightMesh" type="SubViewport" parent="Ship/Avionics"]
 transparent_bg = true
+size = Vector2i(550, 550)
 
-[node name="Control" parent="Ship/Avionics/GunSightMesh" instance=ExtResource("19_g0nn0")]
+[node name="Gun Sight" parent="Ship/Avionics/GunSightMesh" instance=ExtResource("19_g0nn0")]
+unique_name_in_owner = true
+offset_right = 0.0
+offset_bottom = 0.0
 
 [node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="Ship"]
 replication_config = SubResource("SceneReplicationConfig_snmvu")
@@ -656,11 +695,6 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 20
 
 [node name="Throttle" type="Label" parent="Ship/LabelContainer"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 20
-
-[node name="Speed" type="Label" parent="Ship/LabelContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
