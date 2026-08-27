@@ -19,5 +19,5 @@ func _draw() -> void:
 		var y = center.y - cos(threat["angle"]) * blip_distance
 		
 		var blip_colour = Color.RED if threat["locking"] else Color.GREEN
-		draw_circle(Vector2(x,y), 10, blip_colour)
-		draw_string(ThemeDB.fallback_font, Vector2(x + 20, y + 10), threat["name"], HORIZONTAL_ALIGNMENT_LEFT, -1, 10, blip_colour)
+		draw_circle(Vector2(x,y), 15, blip_colour)
+		draw_string(ThemeDB.fallback_font, Vector2(x + 20, y - 25), threat["name"], HORIZONTAL_ALIGNMENT_LEFT, -1, 75, blip_colour)
