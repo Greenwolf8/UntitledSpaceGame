@@ -15,7 +15,8 @@ func _draw() -> void:
 
 func _process(delta: float) -> void:
 	speed_label.text = str(speed) + " Km/h"
+	var display_distance = round(distance)
 	if distance <= 999:
-		distance_label.text = str(distance) + " m"
+		distance_label.text = str(display_distance) + " m"
 	else:
-		distance_label.text = str(distance / 1000) + " Km"
+		distance_label.text = str(snapped(display_distance / 1000, 0.1)) + " Km"

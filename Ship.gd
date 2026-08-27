@@ -18,6 +18,7 @@ extends RigidBody3D
 @onready var player: CharacterBody3D = get_tree().get_first_node_in_group("Player")
 @onready var bullet_container = Global.bullet_container
 @onready var ai_ship: Node3D = null
+@onready var distance: float = 0
 
 var mouse_input: Vector2 = Vector2.ZERO
 var health: int = 200
@@ -49,7 +50,6 @@ func _physics_process(_delta):
 		return
 	
 	var forward_input = Input.get_axis("throttle_down", "throttle_up")
-	var current_speed: int = snapped(linear_velocity.length(), 0.1)
 	var yaw_input = Input
 	var roll_input = Input.get_axis("move_right", "move_left")
 	var pitch_input = Input.get_axis("move_back", "move_forward")
@@ -60,14 +60,6 @@ func _physics_process(_delta):
 		yaw_input = -mouse_input.x * 0.05
 	else:
 		yaw_input = 0
-	
-	if not is_instance_valid(ai_ship):
-		ai_ship = get_tree().get_first_node_in_group("enemy_ship")
-	
-	if is_instance_valid(ai_ship.global_position):
-		%"Gun Sight".distance = float(round(global_position.distance_to(ai_ship.global_position)))
-	
-	%"Gun Sight".speed = current_speed
 	
 	if forward_input > 0 and forward_move < 1.985:
 		forward_move += 0.015
@@ -119,7 +111,7 @@ func _process(_delta: float) -> void:
 			continue
 		
 		var local_position = to_local(threat.global_position)
-		var distance = Vector2(local_position.x, local_position.z).length()
+		distance = Vector2(local_position.x, local_position.z).length()
 		var distance_2d = distance / rwr_detection_range
 		
 		if distance <= rwr_detection_range and distance >= 1000:
@@ -134,6 +126,17 @@ func _process(_delta: float) -> void:
 				"name": threat.get("emitter_name") if "emitter_name" in threat else "HOSTILE"
 			})
 	%"RWR Screen".update_threats(rwr_active_threats)
+	
+	# Sends distnace from enemy and speed to gun sight
+	var current_speed: int = snapped(linear_velocity.length(), 0.1)
+	if not is_instance_valid(ai_ship):
+		ai_ship = get_tree().get_first_node_in_group("enemy_ship")
+		return
+	
+	if is_instance_valid(ai_ship):
+		%"Gun Sight".distance = distance
+	
+	%"Gun Sight".speed = current_speed
 
 func _input(_event: InputEvent) -> void:
 	var cantlock = Camerafree
@@ -178,7 +181,6 @@ func request_shoot(muzzle_transform:  Transform3D) -> void:
 
 func enter_pilot():
 	health_label.show()
-	%Speed.visible = true
 	player = get_tree().get_first_node_in_group("Player")
 	Camerafree = false
 	pilot_camera.current = true
@@ -186,12 +188,10 @@ func enter_pilot():
 
 func leave_pilot():
 	health_label.hide()
-	%Speed.visible = false
 	player = get_tree().get_first_node_in_group("Player")
 
 func enter_wo():
 	health_label.show()
-	%Speed.visible = true
 	player = get_tree().get_first_node_in_group("Player")
 	Camerafree = false
 	wo_camera.current = true
@@ -199,7 +199,6 @@ func enter_wo():
 
 func leave_wo():
 	health_label.hide()
-	%Speed.visible = false
 	player = get_tree().get_first_node_in_group("Player")
 
 func _on_area_entered(area: Area3D) -> void:
