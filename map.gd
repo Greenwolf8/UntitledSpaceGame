@@ -3,6 +3,8 @@ extends Node3D
 @onready var multiplayer_ui = $UI/Multiplayer
 @onready var hangar = %Node3D
 @onready var ship = get_tree().get_first_node_in_group("player_ship")
+@onready var play_button: Button = %"Single Player"
+@onready var settings_button: Button = %Settings
 
 const AI_SHIP = preload("res://AI_Ship.tscn")
 const PLAYER = preload("res://Player.tscn")
@@ -12,6 +14,9 @@ var peer = WebSocketMultiplayerPeer.new()
 
 func _ready() -> void:
 	spawn_enemy("start")
+	play_button.pivot_offset = play_button.size / 2
+	settings_button.pivot_offset = settings_button.size / 2
+
 func _on_join_pressed() -> void:
 	var error = peer.create_client("wss://reexamine-swooned-sloping.ngrok-free.dev")
 	if error == OK:
@@ -70,3 +75,25 @@ func spawn_enemy(Position: String) -> void:
 	elif Position == "start":
 		enemy.global_position = Vector3(-10000, 3500, 4500)
 		enemy.rotation = Vector3(0.0, 56.6, -90)
+
+func hovering(button: Button):
+	var tween = create_tween()
+	
+	tween.tween_property(button, "scale", Vector2.ONE * 1.25, 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+func stopped_hovering(button: Button):
+	var tween = create_tween()
+	
+	tween.tween_property(button, "scale", Vector2.ONE, 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+
+func _on_single_player_mouse_entered() -> void:
+	hovering(play_button)
+
+func _on_single_player_mouse_exited() -> void:
+	stopped_hovering(play_button)
+
+func _on_settings_mouse_entered() -> void:
+	hovering(settings_button)
+
+func _on_settings_mouse_exited() -> void:
+	stopped_hovering(settings_button)
