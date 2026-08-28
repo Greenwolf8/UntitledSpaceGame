@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmkd2tal0jooe"]
+
+[ext_resource type="Texture2D" uid="uid://h3odu1wpdjd2" path="res://RENDER_1.png" id="1_tuusc"]
+
+[node name="Menu Screen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Render1" type="Sprite2D" parent="."]
+position = Vector2(530, 360)
+texture = ExtResource("1_tuusc")
