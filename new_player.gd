@@ -36,11 +36,12 @@ var current_task: int = 0
 var enemies_destroyed: int = 0
 
 func _ready() -> void:
+	$fade_transition/AnimationPlayer.play("fade_out")
 	if name.is_valid_int():
 		set_multiplayer_authority(name.to_int())
-	Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	front_cast.add_exception(self)
-	mouse_locked = false
+	mouse_locked = true
 	camera.current = is_multiplayer_authority()
 	print("Player spawned! Exact node path: ", get_path())
 	if is_multiplayer_authority():
