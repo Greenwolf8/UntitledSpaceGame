@@ -13,11 +13,15 @@ config_version=5
 config/name="Space Game"
 run/main_scene="uid://1sl6oqalns15"
 config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://Misc/icon.svg"
+
+[audio]
+
+buses/default_bus_layout="res://Misc/default_bus_layout.tres"
 
 [autoload]
 
-Global="*res://Global.gd"
+Global="*res://Scripts/Global.gd"
 
 [display]
 
